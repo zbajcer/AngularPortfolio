@@ -1,0 +1,280 @@
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">zoran bajcer &nbsp;&nbsp;&nbsp;<i class="fa fa-spinner" style="font-size:28px;color:grey"></i></a>
+  <button style="width: 50px;border-radius: 50%; background-color: grey;" class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+  data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+  aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="!isNavbarCollapsed" class="navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a href="#home" (click)="collapseAll()">*home</a></li>
+      <li class="nav-item"><a href="#biography" (click)="collapseAll()">*biography</a></li>
+      <li class="nav-item"><a href="#converter" (click)="collapseAll()">*converter</a></li>
+      <li class="nav-item"><a href="#weather" (click)="collapseAll()">*weather</a></li>
+      <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
+      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*GitHub&nbsp;&nbsp;<i class="fa fa-github" style="font-size:20px"></i></a></li>
+    </ul>
+  </div>
+</nav><a name="home"></a>
+<br><br><br>
+
+<div class="container">
+  <h1>&home</h1>
+  <div class="row">
+    <div class="col-sm-4" id="home1" style="background-color:lavender;"></div>
+    <div class="col-sm-4" id="home2" style="background-color:lavenderblush;"></div>
+    <div class="col-sm-4" id="home3" style="background-color:lavender;"></div>
+  </div>
+</div><a name="biography" ></a>
+<hr><br>
+
+<div class="container" >
+  <h1>&biography</h1>
+    <div class="row">
+      <div class="col-sm-6">
+        <label for="autorithy" [hidden]="(aprovall == 'OK')">Please enter a password to unlock biography:</label>
+        <br><input type="password" class="form-control" id="psw" #bioPsw [hidden]="(aprovall == 'OK')"><br>
+        <button type="submit" name="btnBio" style="font-weight:bold; background-color: grey; color: white; padding-bottom: 40px;" id="select" class="form-control" [hidden]="(aprovall == 'OK')"  (click)="approval(bioPsw.value)">Submit</button>
+      </div>
+      <div class="col-sm-6" id="sesame">
+
+      </div>
+  </div>
+</div>
+<div class="container" id="bio" [hidden]="(aprovall != 'OK')">
+      <hr><br>
+      <h6>Education:</h6>
+      <p>Područna škola Podgora – 4 years <br>
+        Osnovna škola Augusta Cesarca u Krapini – 4 years <br>
+        Srednja škola Zlatar - from 2006. to 2010. <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : Post and telecommunicatios
+        technician <br>
+        Tehničko veleučilište u Zagrebu - from 2018. to 2021. <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : e-Business, IT <br>
+        Additional knowledge: - English - 9/10 <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-German language – 3/10 <br>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Programming - Java,
+        SpringBoot, Angular, Typescript, HTML, CSS, SQL <br>
+      </p> <br>
+      <hr> <br>
+      <h6>Work experience:</h6>
+      <p>
+        Jari d.o.o. (shift manager ) -2011-2016 <br>
+        Prostoria d.o.o. (CNC operator) - 2017 <br>
+        Stražaplastika d.d. (shift manager) - 2017-2018 <br>
+        Generali Osiguranje d.d. (Web developer) since December, 2018. <br>
+      </p> <br>
+      <hr> <br>
+      <h6>Web development:</h6>
+      <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing insurence application. Programming is also my favourite hobby. In free time I developed this great application in Angular framework.
+        It is great because of backend
+        which is developed in Java SpringBoot. It is also connected to MySQL database. In the section "Currency converter" you can choose currency list by date and my app is dinamicaly checking if the choosen currency by date exists in database. If
+        doesnt exist, it connects to HNB web api, downloads currency in JSON, store values in database and proceeds with serving those currencyes to frontend, Angular. I have also implemented statistics. On every click it updates counter of each
+        chosen start value.
+      </p>
+      <p>I have also developed some simple apps which you can find on my <a href="https://github.com/zbajcer?tab=repositories" target="_blank">GitHub</a> account.</p>
+      <br>
+      <h6>Machine work:</h6>
+      <p>In 2012, I was on the training exam for Engel victory 120, which I successfully passed. Since then, I have been perfectly familiar with the machine and all its features and options.</p> <br>
+      <p>On presentation of the machine in production by Neofyton d.o.o. I learned to work on a modern machine that uses a touch screen and a modern management interface. I also learned which key parts to maintain, such as sliding rails for the movable
+        side of the pick-up plate and sliding extruder guides, as well as all safety devices for protecting worker working on the machine. </p>
+      <p>I am also qualified to perform the following safe and efficient:</p>
+      <p style="padding-left: 80px;">
+        Setting moulds on the machine
+        <br>
+        -Connecting safety electronic devices from mould to machine with connectors
+        <br>
+        -Use the setup mode to determine the opening and closing speeds for automatic production
+        <br>
+        -Use the teach mode to build a branch with the sequence of functions that this mould requires, including all delays and other terms for each function at any given time
+        <br>
+        -Adjust the force of closing according to the weight of the mould and the weight of the article
+        <br>
+        -Adjust the values for the pressures and the speed of the injection, and to fine-tune the value for the finish pressures and the swiching position to it
+        <br>
+        -Set the values for the dosing speed and the return pressure force to make each cycle equal to the previous one
+        <br>
+        -Set the cooling time and the flow rate of the coolant so that the production cycle is faster and the article quality remains high
+        <br>
+        -During automatic production, change settings for fine tuning to get the most perfect item in a short time
+      </p>
+      <br>
+      <p>In 2013, as member of the production team I visited the German company Arburg Gmbh & Co KG. There I attended lecture and training for the work on the Arburg Allrounder for two-component injection using the rotating unit on the movable panel.
+      </p>
+
+      <br>
+      <p>In this lecture, I learned to successfully manage the machine using the Selogica interface, all the details about maintaining the machine, running a simple tool and running the tool that uses the rotary unit and the other extruder.
+        While working on the machine, I have learned in detail all its options and capabilities, as well as the requirements that must be fulfilled so that the machine can safely and normally work. I also have a lot of experience in adjusting the tools
+        that uses hot runners and running the same with cycles less than ten seconds.
+      </p>
+      <br>
+      <p>In the year of 2014. I participated in the installation of the new machine of Krauss Maffei in the company. The installation and preparation of the machine was led by a team of experts from the company KMS from Slovenia. Participating in this
+        process, I learned all that is needed to get the machine ready for operation, from tipping a certain quantity of hydraulic oil into the tank, venting the system on all blocks, turning on the machine, setting the mould, adjusting all the
+        parameters and starting the automatic production.
+
+        <p>In 2017, I was employed as a production manager in a company employing 120 people and engaged in plastic injection. In this workplace I manage daily with a team of 15 people and with 10 to 15 machines, and the accompanying mechanization. The
+          main tasks at work are the organization of the workforce, the management of the production of articles by means of work orders, the start-up of machines, the solution of programming and minor mechanical problems on machines and moulds, the
+          replacement of moulds as needed, and the completion of accompanying documentation.
+        </p><br><hr><br>
+</div><a name="converter"></a>
+<br><hr><br>
+
+
+<div class="container">
+  <h1>&currency converter</h1>
+    <div class="row">
+        <div class="col-md-12 col-lg-6">
+          <div class="content" role="main">
+            <p style="font-weight: bold; padding-left:0px;">Choose rate date:</p>
+            <input  class="form-control" id="conv" type="date" [value]="dt" [(ngModel)]="dt" (change)='sendDateToService(dt)' (change)='getJsonResponse()' >
+            <p style="font-weight:bold;" id="p">Start value:</p>
+            <select name="options" #firstSelect id="slc" style="font-weight:bold;" class="form-control">
+            <option *ngFor="let a of parsedJson; index as jsonID" class="form-control" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="intervalCurrencyStats()" [(value)]="a.Srednji">{{a.Valuta}} &nbsp;{{a.Drzava}}</option>
+            </select>
+            <p style="font-weight:bold;" id="p">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter" style="cursor: pointer;" (click)="changeDropdowns()"><i class="fa fa-arrows-v" style="font-size:24px;"></i></a></p>
+            <select name="options2" #secondSelect id="slc" class="form-control" style="font-weight:bold;">
+            <option *ngFor="let a of parsedJson; index as jsonID2" class="form-control" (click)="secondSelectValues(a.Jedinica, a.Valuta)" [(value)]="a.Srednji">{{a.Valuta}} &nbsp;{{a.Drzava}}</option>
+            </select>
+            <p style="font-weight: bold; padding-left:0px;">Conversion amount:</p>
+            <input type="text" name="iznos" placeholder="0.0" id="select" style="font-weight:bold;" #inputValue class="form-control">
+            <input type="submit" name="btn" style="font-weight:bold; background-color: grey; color: white;" class="form-control" id="select" value="Calculate" (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value)" (click)="postRequest()">
+            <p style="font-weight:bold; margin:0; padding:0;">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight:bolder; font-size:20px; color:red;">{{rezultat}} {{valutaEndView}}</span></p>
+            </div>
+          </div>
+        <div class="col-md-12 col-lg-6">
+            <div style="display: block">
+              <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
+              </canvas>
+            </div><hr>
+            <p style="color:black;"><span style="font-weight:bold; font-size:12px;">Overall:</span> {{dailyStats}} is most common start currency!</p>
+            <p style="color:black;"><span style="font-weight:bold; font-size:12px;">7 days:</span> {{intervalValue}} is most common start currency within last 7 days!</p>
+            <hr>
+        </div>
+    </div>
+    <div  id="currencyChart">
+      <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType">
+      </canvas>
+    </div>
+</div><a name="weather"></a>
+<br><hr><br>
+
+<div class="container">
+  <h1>&weather</h1>
+  <div class="row" style="margin-bottom: 10px;">
+
+    <div class="col-sm-12">
+      <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>City:</mat-label>
+            <input matInput placeholder="npr. London" name="grad" #cityWeather
+                  (change)='weatherCity(cityWeather.value)'>
+          </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <div class="row" id="weatherRow">
+
+        <div class="col-md-12 col-lg-7 col-xl-4" id="weatherFirst">
+          <h2>{{queryWeather}}</h2>
+          <div class="imageDiv">
+            <img [src]="base64Image" class="baseImage"/>
+          </div>
+            <div class="weatherDescription">
+              <p style="color: darkgray; font-weight: bold;">{{descriptionWeather}}</p>
+            </div>
+          <div class="line">
+              <hr>
+          </div>
+          <div class="temperature">
+            <h1 style="font-size: 50px; color: black; font-weight: normal; padding-top: 15px; padding-left: 10px;">{{temperatureWeather}}&#8451;</h1>
+          </div>
+          <div class="weatherDescription">
+            <p>Feels like</p>
+            <p style="color: darkgray; font-weight: bold; font-size: 22px;">{{feelslikeWeather}}&#8451;</p>
+          </div>
+        </div>
+
+        <div class="col-md-12 col-lg-7 col-xl-4" id="weatherFirst">
+          <div class="temperature">
+              <p>Wind direction</p>
+              <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 40px;">{{wind_directionWeather}}</h1>
+          </div>
+            <div class="temperature">
+              <p>Wind speed</p>
+              <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{wind_speedWeather}}<span>km/h</span></h1>
+            </div>
+
+          <div class="line">
+              <hr>
+          </div>
+          <div class="temperature">
+            <p>UV&nbsp;index</p>
+            <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{uvWeather}}</h1>
+          </div>
+          <div class="temperature">
+            <p>Humidity</p>
+            <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{humidityWeather}}<span>%</span></h1>
+          </div>
+          <div class="line">
+              <hr>
+          </div>
+          <div class="temperature">
+            <p>Pressure</p>
+            <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 30px;">{{pressureWeather}}<span>hPa</span></h1>
+          </div>
+          <div class="temperature">
+            <p>Cloudcover</p>
+            <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{cloudcoverWeather}}<span>%</span></h1>
+          </div>
+        </div>
+
+
+                <div class="col-md-12 col-lg-7 col-xl-4" id="weatherImage">
+
+                </div>
+
+  </div>
+  <br><br><br><br>
+</div><a name="contact"></a>
+<hr><br>
+
+<div class="container">
+  <h1>&contact</h1>
+  <div class="row">
+    <div class="col-sm-12" id="call"></div>
+  </div>
+</div>
+
+<div class="container">
+  <form action="/action_page.php">
+    <div class="form-group">
+      <label for="text" style="width:100px;">Name:</label>
+      <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
+    </div>
+    <div class="form-group">
+      <label for="text" style="width:100px;">Surname:</label>
+      <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
+    </div>
+    <div class="form-group">
+      <label for="email" style="width:100px;">Email:</label>
+      <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
+    </div>
+    <div class="form-group">
+      <label for="message" style="width:100px;">Message:</label>
+      <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
+    </div>
+    <button type="submit" style="font-weight:bold; background-color: grey; color: white; padding-bottom: 35px;" class="form-control" id="select" name="push" value="Send" (click)="push(name.value, surname.value, contact.value, message.value)">Send</button>
+  </form>
+</div><a name="admin" ></a><br>
+<footer>
+      <a href="#text" style="font-weight: bold;"><span style="color: grey; font-size: 14px;">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
+</footer>

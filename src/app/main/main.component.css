@@ -1,0 +1,369 @@
+@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+
+.navbar {
+  padding-left: 12%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
+}
+span{
+  font-size:9px;
+  color: blue;
+}
+
+
+ul li{
+  font-weight: bold;
+  text-align: center;
+  margin-left:15px;
+}
+ul li a{
+  color: white;
+}
+navbar-header a{
+  texl-align: center;
+}
+
+#home1 {
+  background-image: url("springboot.PNG");
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+#home2 {
+  background-image: url("typescript.PNG");
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+#home3 {
+  background-image: url("controller.PNG");
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+#bio {
+  background-color: #F8F8F8;
+}
+
+#psw {
+  width:200px;
+}
+
+#sesame {
+  height: 300px;
+  background-image: url("opensesame.PNG");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+h1{
+    font-weight: bold;
+
+}
+h6{
+  text-align: left;
+  font-size: 18px;
+  font-weight: bold;
+}
+p{
+  text-align: left;
+  padding-left: 40px;
+  font-weight: 500;
+  padding-right: 200px;
+}
+
+#call{
+  background-image: url("contactme.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
+  border-radius: 4px;
+}
+
+.weather{
+  margin: 0 auto;
+  height: 30px;
+  color: black;
+  border: solid black 1px;
+  border-radius: 20px;
+  background-color: grey;
+}
+
+.example-form {
+  min-width: 120px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+.baseImage {
+  height: 100px;
+  width: 100px;
+  border-radius: 15px;
+}
+.imageDiv {
+  margin: 25px auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 15px;
+  float: left;
+}
+.weatherDescription {
+  margin: 25px auto;
+  height: 100px;
+  width: 190px;
+  border-radius: 15px;
+  float: left;
+}
+.line{
+  height: 10px;
+  width: 90%;
+  float: left;
+  border-bottom: 1px solid #bfbbbb;
+}
+.temperature {
+  height: 90px;
+  width: 140px;
+  border-radius: 15px;
+  float: left;
+  margin-top: 10px;
+}
+
+.citySelect{
+  border-radius: 5px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #8a8aff;
+  height: 25px;
+}
+#weatherImage {
+  background-image: url("weatherImage.PNG");
+  background-size: cover;
+  border-radius: 15px;
+}
+
+#weatherRow{
+  color: #5e5e5e;
+  border-radius: 5px;
+}
+#textarea{
+  width: 50%;
+}
+
+#temp{
+  font-weight: bold;
+}
+
+#select{
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+#slc{
+  margin-left:150px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+
+#li{
+  margin-top: 20px;
+  text-align: left;
+  width: 95%;
+  background-color: yellow;
+  height: auto;
+  min-height: 80px;
+  list-style-type: none;
+  border-radius: 15px;
+  padding: 8px;
+}
+
+.open{
+  height: 50px;
+  width: 200px;
+  margin-left: 15px;
+  font-size: 18px;
+  -webkit-border-radius: 10px;
+}
+
+input[type=text], input[type=password] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+#conv{
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+}
+#weatherFirst {
+  border-right: dashed 1px black;
+  height: 350px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 200px;
+  border-radius: 15px;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.cancelbtn {
+  width: auto;
+  padding: 10px 18px;
+  background-color: #f44336;
+}
+.container {
+  padding: 16px;
+  width: 100%;
+}
+
+span.psw {
+  float: right;
+  padding-top: 16px;
+}
+
+footer{
+  height: 80px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #25272b;
+  text-align: center;
+}
+
+#p{
+  padding-left: 150px;
+}
+#clickable{
+  height: 50px;
+  width: 10%;
+  border-radius: 20%;
+  background-color: #25272b;
+  margin: 10px;
+  color: white;
+  font-weight: bold;
+}
+#currencyChart{
+  display: block;
+  width: 60%;
+  margin: 0 auto;
+}
+
+#rooow{
+  width: 50%;
+}
+@media screen and (max-width: 576px) {
+  #textarea{
+    width: 100%;
+  }
+  #clickable{
+
+    margin: 0px;
+  }
+  #rooow{
+    width: 90%;
+  }
+  #currencyChart{
+    width: 95%;
+  }
+  #weatherFirst{
+    border: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  #sesame{
+    width: 100%;
+    height: 150px;
+  }
+  #call{
+    width: 100%;
+    height: 150px;
+  }
+  #rooow{
+    width:90%;
+  }
+  #textarea{
+    width: 100%;
+  }
+  #weatherImage{
+    width: 100%;
+    height: 150px;
+  }
+  #weatherFirst{
+    border: none;
+  }
+  #currencyChart{
+    width: 95%;
+  }
+    #home1, #home2, #home3{
+      height: 150px;
+      margin-bottom: 3px;
+    }
+    p{
+      padding-left: 0;
+      font-weight: normal;
+      padding-right: 0;
+      font-size: 10px;
+    }
+    .navbar{
+      padding-left: 10px;
+    }
+    ul li{
+      color: white;
+      font-size: 24px;
+      padding-left: 0px;
+      margin: 0;
+    }
+    #conv{
+      width: 100%;
+    }
+    #select{
+      width: 100%;
+    }
+    #slc{
+      margin-left: 0px;
+    }
+
+    #p{
+      padding-left:0px;
+    }
+    button{
+      width: 80%;
+    }
+    .obrazac{
+      width: 100%;
+    }
+    .center{
+      width: 90%;
+    }
+    #li{
+      font-size: 10px;
+    }
+
+  }
