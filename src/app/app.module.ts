@@ -11,6 +11,10 @@ import {MatInputModule} from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
+import { AgmCoreModule } from '@agm/core';
+
+
+
 
 @NgModule({
   declarations: [
@@ -28,7 +32,10 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
     MatInputModule,
     BrowserAnimationsModule,
     MatButtonModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyAGABiW7HlasRXWUt2ywiUfvvGrwmp8yII'
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
