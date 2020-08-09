@@ -56,4 +56,33 @@ export class JsonServiceService {
     .subscribe((item: any) => alert(item));
   }
 
+  public authenticateUser(id: any, psw: any): Observable<any> {
+    return this.http.get('http://localhost:8080/authenticateUser/' + id +'/'+psw) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
+  public addBook(title: any, writerLast:any, writerFirst:any, genre: any): Observable<any> {
+    return this.http.get('http://localhost:8080/addNewBook/' + title +'/'+ writerLast +'/'+ writerFirst +'/'+ genre)//, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
+  public addUser( newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any) {
+    return this.http.get('http://localhost:8080/addNewUser/' + newUserAdmin +'/'+ newUserUsername +'/'+ newUserPassword +'/'+ newUserFirstname +'/'+ newUserLastName +'/'+ newUserTelephone +'/'+ newUserAddress, { responseType: 'text'})
+    .pipe(map((response: any) => response));
+  }
+
+  public getBooks(): Observable<any> {
+    return this.http.get('http://localhost:8080/books')
+      .pipe(map((books: any) => books));
+  }
+
+  public getLoanBooks(userID: any): Observable<any> {
+    return this.http.get('http://localhost:8080/userLoan/' + userID)
+      .pipe(map((books: any) => books));
+  }
+
+  public verifyUser(userID: any): Observable<any> {
+    return this.http.get('http://localhost:8080/user/' + userID)
+      .pipe(map((user: any) => user));
+  }
 }
