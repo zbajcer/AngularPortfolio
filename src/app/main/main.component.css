@@ -252,6 +252,18 @@ i {
   padding: 8px;
   color: #ed5f5f;
 }
+#liDebtors {
+  margin-top: 2px;
+  text-align: left;
+  width: 100%;
+  background-color: #343a40;
+  height: 30px;
+  list-style-type: none;
+  border-radius: 5px;
+  padding-left: 25px;
+  color: #ed5f5f;
+}
+
 #lili {
   min-height: 160px;
   overflow: auto;
@@ -414,7 +426,7 @@ footer {
   height: 100%;
   width: 100%;
 }
-.addNewUser .addNewBook .deleteUser{
+.addNewUser .addNewBook .deleteUser .debtors{
   width: 100%;
   min-height: 50px;
   height: auto;

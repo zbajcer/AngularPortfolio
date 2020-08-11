@@ -95,4 +95,10 @@ export class JsonServiceService {
     return this.http.get('http://localhost:8080/return/' + book) //, { responseType: 'text' })
     .pipe(map((response: any) => response));
   }
+
+  public deleteUserFromDB(user: any): Observable<any> {
+    return this.http.get('http://localhost:8080/delete/' + user) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
 }

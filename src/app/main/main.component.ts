@@ -74,8 +74,7 @@ export class MainComponent implements OnInit {
       crControl: [1],
       crEndControl: [1]
     });
-    this.bookshelfAuth('rambo', 'rambo');
-    this.getUserData();
+    this.bookshelfAuth('zbajcer', 'opensesame');
   }
 
   dt = new Date().toISOString().slice(0, 10);
@@ -395,6 +394,12 @@ export class MainComponent implements OnInit {
   userPassword: any;
   bookshelfAuth(uname: any, psw: any) {
     this.userNotFound = '';
+    this.searchTitle = '';
+    this.returnBookButton = 'INACTIVE';
+    this.newBookButton = 'INACTIVE';
+    this.newUserButton = 'INACTIVE';
+    this.deleteUserButton = 'INACTIVE';
+    this.debtorButton = 'INACTIVE';
     this.data.authenticateUser(uname, psw).subscribe((data: any) => {
       try {
         this.authenticationMessage = JSON.parse(JSON.stringify(data));
@@ -410,6 +415,7 @@ export class MainComponent implements OnInit {
           this.bsApproval = 'OK';
           this.getUserData();
           this.getLoanBooks(this.authenticationUser)
+          this.userMessage = '';
         }
         else {
           this.userMessage = '*username or password are incorecct'
@@ -464,42 +470,43 @@ export class MainComponent implements OnInit {
     }
   }
 
-  bookshelfUserRespond: any;
-  newUserArray: any = [];
-  newUsersAdmin: any;
-  newUsername: any;
-  newUserpassword: any;
-  newUserfirstName: any;
-  newUserlastName: any;  // adding new user to Autorisation
-  newUsertelephone: any;
-  newUseraddress: any;
+  addNewUserMessage: any;
+  risponz: any;
   bookshelfAddUser(newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any) {
     if (newUserAdmin == '' || newUserUsername == '' || newUserPassword == '' || newUserFirstname == '' || newUserLastName == '' || newUserTelephone == '') {
       alert("All fields except address are required!");
     } else {
       this.data.addUser(newUserAdmin, newUserUsername, newUserPassword, newUserFirstname, newUserLastName, newUserTelephone, newUserAddress).subscribe((data: any) => {
-        this.bookshelfUserRespond = JSON.parse(JSON.stringify(data));
-        this.newUserArray.push(this.bookshelfUserRespond);
-        this.newUsersAdmin = newUserAdmin;
-        this.newUsername = newUserUsername;
-        this.newUserpassword = newUserPassword;
-        this.newUserfirstName = newUserFirstname;
-        this.newUserlastName = newUserLastName;
-        this.newUsertelephone = newUserTelephone;
-        this.newUseraddress = newUserAddress;
+          this.risponz = JSON.parse(JSON.stringify(data));
+          if(this.risponz == 'OK'){
+          this.addNewUserMessage = '*New user has been added';
+        } else{
+          this.addNewUserMessage = '*Existing user / error';
+        }
       })
     }
+  }
+  deleteUserMessage: any;
+  deleteUserFunc(user: any){
+    this.data.deleteUserFromDB(user).subscribe((item:any) => {
+      this.deleteUserMessage = '*The user has been removed';
+      console.log(item)
+    })
   }
 
   parseUserData: any;
   filterBooks: any = [];
+  debtorsList: any = [];
   getUserData() { //all books from Bookshelf
     this.filterBooks.splice(0, this.filterBooks.length);
+    this.debtorsList.splice(0, this.debtorsList.length);
     this.data.getBooks().subscribe((data: any) => {
       this.parseUserData = JSON.parse(JSON.stringify(data));
-      console.log(this.parseUserData)
       this.parseUserData.map((item:any) => {
         this.filterBooks.push(item.bookTitle+",          "+item.authorLastName+" "+item.authorFirstName+"          "+item.bid + ", "+item.issuedDate);
+        if(item.fine != '0' && item.fine != null){
+          this.debtorsList.push("UID:"+item.uid+"  BID:"+item.bid+"      "+item.fine +"kn   ("+item.period+" days)");
+        }
       })
       this.parseUserData.sort(function(a, b) {
         return a.authorLastName.toLowerCase() > b.authorLastName.toLowerCase();
@@ -519,8 +526,9 @@ export class MainComponent implements OnInit {
       this.verifyUserNotification = '';
       this.data.getLoanBooks(userID).subscribe((data: any) => {
         this.parseLoanBooks = JSON.parse(JSON.stringify(data));
+        console.log(this.parseLoanBooks)
         this.parseLoanBooks.map((item: any) => {
-          this.userDebit += item.fine;
+        this.userDebit += item.fine;
           this.pipeList.push(item.book)
         })
       })
@@ -544,6 +552,7 @@ export class MainComponent implements OnInit {
   addNewUserOpenForm() {
     if (this.newUserButton == 'INACTIVE') {
       this.newUserButton = 'ACTIVE';
+      this.addNewUserMessage = '';
     } else {
       this.newUserButton = 'INACTIVE';
     }
@@ -552,6 +561,7 @@ export class MainComponent implements OnInit {
   addNewBookOpenForm() {
     if (this.newBookButton == 'INACTIVE') {
       this.newBookButton = 'ACTIVE';
+      this.bookAddedNotification = '';
     } else {
       this.newBookButton = 'INACTIVE';
     }
@@ -566,10 +576,22 @@ export class MainComponent implements OnInit {
     }
   }
 
+  debtorButton = 'INACTIVE';
+  debtorsOpenForm() {
+    if (this.debtorButton == 'INACTIVE') {
+      this.getUserData();
+      this.debtorButton = 'ACTIVE';
+    } else {
+      this.debtorButton = 'INACTIVE';
+      this.debtorsList.splice(0, this.debtorsList.length)
+    }
+  }
+
   deleteUserButton = 'INACTIVE';
   deleteUserOpenForm() {
     if (this.deleteUserButton == 'INACTIVE') {
       this.deleteUserButton = 'ACTIVE';
+      this.deleteUserMessage = '';
     } else {
       this.deleteUserButton = 'INACTIVE';
     }
