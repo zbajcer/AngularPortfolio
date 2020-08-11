@@ -365,7 +365,6 @@ footer {
 }
 
 #book2 {
-  background-image: url("bookshelf3.PNG");
   height: 300px;
   min-width: 300px;
   background-repeat: no-repeat;
@@ -415,12 +414,12 @@ footer {
   height: 100%;
   width: 100%;
 }
-.addNewUser .addNewBook {
+.addNewUser .addNewBook .deleteUser{
   width: 100%;
   min-height: 50px;
   height: auto;
 }
-.ngfor, .ngforlili {
+.ngfor, .ngforlili, .ngForLoan {
   min-height:80px;
   max-height: 81px;
   width:100px;
@@ -431,6 +430,9 @@ footer {
 }
 .ngforlili{
   margin-top: 30px;
+}
+.ngForLoan{
+  background-image: url('nookNgForO.png');
 }
 .ngforUser{
     min-height:80px;

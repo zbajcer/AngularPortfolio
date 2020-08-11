@@ -85,4 +85,14 @@ export class JsonServiceService {
     return this.http.get('http://localhost:8080/user/' + userID)
       .pipe(map((user: any) => user));
   }
+
+  public loanBook(uid: any, bid: any): Observable<any> {
+    return this.http.get('http://localhost:8080/loan/' + uid +'/'+bid) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
+  public returnBook(book: any): Observable<any> {
+    return this.http.get('http://localhost:8080/return/' + book) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
 }

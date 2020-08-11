@@ -23,14 +23,19 @@ import VectorSource from 'ol/source/Vector';
 import CircleStyle from 'ol/style/Circle';
 import Stroke from 'ol/style/Stroke';
 import Fill from 'ol/style/Fill';
-
+import { Pipe, PipeTransform } from '@angular/core';
 
 @Component({
   selector: 'app-main',
   templateUrl: './main.component.html',
   styleUrls: ['./main.component.css']
 })
+
 export class MainComponent implements OnInit {
+
+  searchTitle: string = null;
+  datab: any[] = [["Chrocin","paracetamal","combination name",200,10,18,"tablet",22,1],["Phar","chw","combination name",200,6,18,"tablet",3,2]];
+
 
   map;
   base64Image: any;
@@ -69,6 +74,7 @@ export class MainComponent implements OnInit {
       crControl: [1],
       crEndControl: [1]
     });
+    this.bookshelfAuth('rambo', 'rambo');
     this.getUserData();
   }
 
@@ -375,8 +381,8 @@ export class MainComponent implements OnInit {
   }
   //============================================================================== C O N T A C T  F O R M
   //============================================================================== B O O K S H E L F
-  bsApproval: String = 'OK';
-  bsAdmin: String = 'true';
+  bsApproval: String = 'false';
+  bsAdmin: String = 'false';
   authenticationMessage: any;
   authenticationUser: any = '';
   authUID: any;
@@ -388,6 +394,7 @@ export class MainComponent implements OnInit {
   userUsername: any;
   userPassword: any;
   bookshelfAuth(uname: any, psw: any) {
+    this.userNotFound = '';
     this.data.authenticateUser(uname, psw).subscribe((data: any) => {
       try {
         this.authenticationMessage = JSON.parse(JSON.stringify(data));
@@ -417,7 +424,7 @@ export class MainComponent implements OnInit {
   existingBooks: any = [];
   existingTitle: any = [];
   existingWriterName: any = [];
-  existingWriterSurname: any = [];
+  existingWriterSurname: any = [];      // adding new book to Bookshelf table
   existingIssuedDate: any = [];
   bookAddedNotification: any = '';
   bookshelfAddBook(book: any, writerLastName: any, writerFirstName: any, genre: any) {
@@ -463,7 +470,7 @@ export class MainComponent implements OnInit {
   newUsername: any;
   newUserpassword: any;
   newUserfirstName: any;
-  newUserlastName: any;
+  newUserlastName: any;  // adding new user to Autorisation
   newUsertelephone: any;
   newUseraddress: any;
   bookshelfAddUser(newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any) {
@@ -483,6 +490,56 @@ export class MainComponent implements OnInit {
       })
     }
   }
+
+  parseUserData: any;
+  filterBooks: any = [];
+  getUserData() { //all books from Bookshelf
+    this.filterBooks.splice(0, this.filterBooks.length);
+    this.data.getBooks().subscribe((data: any) => {
+      this.parseUserData = JSON.parse(JSON.stringify(data));
+      console.log(this.parseUserData)
+      this.parseUserData.map((item:any) => {
+        this.filterBooks.push(item.bookTitle+",          "+item.authorLastName+" "+item.authorFirstName+"          "+item.bid + ", "+item.issuedDate);
+      })
+      this.parseUserData.sort(function(a, b) {
+        return a.authorLastName.toLowerCase() > b.authorLastName.toLowerCase();
+      })
+    })
+  }
+
+  parseLoanBooks: any;
+  verifyUserNotification: any;
+  userDebit: number = 0;
+  pipeList: any = [];
+  getLoanBooks(userID: any) { //just books loaned by user
+    this.userDebit = 0;
+    if (userID == '') {
+      this.verifyUserNotification = '*This field if required';
+    } else {
+      this.verifyUserNotification = '';
+      this.data.getLoanBooks(userID).subscribe((data: any) => {
+        this.parseLoanBooks = JSON.parse(JSON.stringify(data));
+        this.parseLoanBooks.map((item: any) => {
+          this.userDebit += item.fine;
+          this.pipeList.push(item.book)
+        })
+      })
+    }
+  }
+
+  postLoanBook(user: any, book: any){
+    this.data.loanBook(user, book).subscribe((data: any) => {
+      this.getLoanBooks(user);
+      console.log(data)
+    })
+  }
+
+  returnBook(book: any){
+    this.data.returnBook(book).subscribe((data: any) => {
+      console.log(data)
+    })
+  }
+
   newUserButton = 'INACTIVE';
   addNewUserOpenForm() {
     if (this.newUserButton == 'INACTIVE') {
@@ -500,49 +557,46 @@ export class MainComponent implements OnInit {
     }
   }
 
-  parseUserData: any;
-  getUserData() {
-    this.data.getBooks().subscribe((data: any) => {
-      this.parseUserData = JSON.parse(JSON.stringify(data));
-      this.parseUserData.sort(function(a, b) {
-        return a.authorLastName.toLowerCase() > b.authorLastName.toLowerCase();
-      })
-    })
-  }
-
-  parseLoanBooks: any;
-  verifyUserNotification: any;
-  getLoanBooks(userID: any) {
-    if (userID == '') {
-      this.verifyUserNotification = '*This field if required';
+  returnBookButton = 'INACTIVE';
+  returnBookOpenForm() {
+    if (this.returnBookButton == 'INACTIVE') {
+      this.returnBookButton = 'ACTIVE';
     } else {
-      this.verifyUserNotification = '';
-      this.data.getLoanBooks(userID).subscribe((data: any) => {
-        this.parseLoanBooks = JSON.parse(JSON.stringify(data));
-      })
-      this.verifyUser(userID);
+      this.returnBookButton = 'INACTIVE';
     }
   }
 
-  userNotFound: any;
+  deleteUserButton = 'INACTIVE';
+  deleteUserOpenForm() {
+    if (this.deleteUserButton == 'INACTIVE') {
+      this.deleteUserButton = 'ACTIVE';
+    } else {
+      this.deleteUserButton = 'INACTIVE';
+    }
+  }
+
+  userNotFound: any = '';
   parseUNF: any;
-  verifiedName: any;
+  verifiedName: any = '';
   verifiedSurname: any;
-  verifyUser(uid: any){
-    if(uid != ''){
-    this.data.verifyUser(uid).subscribe((data: any) => {
-      this.parseUNF = JSON.parse(JSON.stringify(data));
-      this.parseUNF.map((item: any) => {
-        this.verifiedName = item.name;
-        this.verifiedSurname = item.surname;
-      });
-      if (this.parseUNF.length != 0) {
-        this.userNotFound = 'User with UID ' + uid + ' verified';
-      } else {
-        this.userNotFound = 'User with UID ' + uid + ' does not exist';
-      }
-    })
-  }}
+  verifyUser(uid: any) {  //verify that user is in the Autorisation table
+    if (uid != '') {
+      this.data.verifyUser(uid).subscribe((data: any) => {
+        this.parseUNF = JSON.parse(JSON.stringify(data));
+        this.parseUNF.map((item: any) => {
+          this.verifiedName = item.name;
+          this.verifiedSurname = item.surname;
+        });
+        if (this.parseUNF.length != 0) {
+          this.userNotFound = 'User with UID ' + uid + ' verified';
+        } else {
+          this.verifiedName = '';
+          this.verifiedSurname = '';
+          this.userNotFound = 'User with UID ' + uid + ' does not exist';
+        }
+      })
+    }
+  }
   //============================================================================== B O O K S H E L F
   //============================================================================== N A V B A R
 

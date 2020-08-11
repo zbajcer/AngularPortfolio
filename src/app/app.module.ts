@@ -14,12 +14,15 @@ import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { AgmCoreModule } from '@agm/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
+import { Pipefilter } from './pipefilter';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    MainComponent
-  ],
+    MainComponent,
+    Pipefilter
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,

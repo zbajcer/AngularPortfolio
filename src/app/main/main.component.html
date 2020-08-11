@@ -21,8 +21,8 @@
         <li class="nav-item"><a href="#converter" (click)="collapseAll()">*converter</a></li>
         <li class="nav-item"><a href="#weather" (click)="collapseAll()">*weather</a></li>
         <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
-        <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
         <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
+        <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
         <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github" style="font-size: 18px;"></i></a></li>
       </ul>
     </div>
@@ -271,60 +271,10 @@
         <div id="hotel_map"></div>
       </div>
     </div>
-  </div><a name="contact"></a>
-  <hr><br>
-  <div class="container">
-    <h1>&contact</h1>
-    <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-6">
-        <form action="/action_page.php">
-          <div class="form-group">
-            <label for="text" style="width: 100px;">Name:</label>
-            <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="text" style="width: 100px;">Surname:</label>
-            <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="email" style="width: 100px;">Email:</label>
-            <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="message" style="width: 100px;">Message:</label>
-            <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
-          </div>
-          <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
-        </form>
-      </div><br>
-      <div class="col-md-12 col-lg-6 col-xl-6" id="call"></div>
-    </div>
   </div>
-  <a name="bookshelf"></a><hr><br><br>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<hr>
+  <a name="bookshelf"></a><br><br>
+  <br>
 
 
 
@@ -338,21 +288,22 @@
 
   <div class="container">
     <h1>&bookshelf</h1><br>
-
-
-
-
     <div class="row">
-      <div class="d-none d-md-block col-md-4" id="book1"></div>
-      <div class="col-sm-12 col-md-4" id="book2">
+      <div class="col-sm-12 col-md-6" id="book2">
         <div class="adminAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
             <h2>admin: {{authenticationUser}}</h2>
+            <hr style="border-top: 1px dashed black">
             <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
+            <hr style="border-top: 1px dashed black">
             <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"'>
         </div>
         <div class="userAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
             <h2>User: {{authenticationUser}}</h2>
+            <hr style="border-top: 1px dashed black">
             <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
+            <hr style="border-top: 1px dashed black">
+            <h6>Overall debit is {{userDebit}} kn</h6>
+            <hr style="border-top: 1px dashed black">
             <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"'>
         </div>
         <form [hidden]="(bsApproval == 'OK')" action="/action_page.php" method="post">
@@ -384,7 +335,7 @@
         </form>
 
       </div>
-      <div class="d-none d-lg-block col-md-4" id="book3"></div>
+      <div class="d-none d-lg-block col-md-6" id="book3"></div>
     </div>
 
 
@@ -393,7 +344,21 @@
 
 
 <div class="row" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
+  <div class="col-sm-12 col-md-4" id="admin3" >
+<h4>Look for the book </h4>    <ul class="lista">
+  <input type="text" placeholder="npr. Germinal" #lookTheBook [(ngModel)]="searchTitle">
+    <ng-container *ngIf="(lookTheBook.value != '')">
+      <li id="li" *ngFor="let loans of filterBooks | category: searchTitle;">
+        <div class="ngfor"></div>
+        <div class="bookDescription">
+          <h6 style="color: white; font-size:15px;">{{loans}}</h6>
+        </div>
+      </li>
+      </ng-container>
+    </ul>
+  </div>
   <div class="col-sm-12 col-md-4" id="admin1">
+    <h4>Library asortiman</h4>
     <ul class="lista">
       <li id="lili" *ngFor="let book of parseUserData;">
           <div class="ngforlili"></div>
@@ -408,8 +373,8 @@
       </li>
     </ul>
   </div>
-  <div class="col-sm-12 col-md-4" id="admin2"></div>
   <div class="col-sm-12 col-md-4" id="admin3" >
+    <h4>Borrowed by {{userFirstName}}&nbsp;{{userLastName}}</h4>
     <ul class="lista">
       <li id="li" *ngFor="let loan of parseLoanBooks">
         <div class="ngfor"></div>
@@ -421,7 +386,8 @@
         </div>
       </li>
     </ul>
-  </div></div>
+  </div>
+</div>
 
 
 <!-- ========================      R O W    of    A D M I N             -->
@@ -433,122 +399,134 @@
     <div class="row" style="margin-top: 10px;" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
       <div class="col-sm-12 col-md-4" id="admin1">
         <hr style="border-top: 1px dashed black">
+        <input type="submit" class="form-control" id="select"  value="Return the book" (click)="returnBookOpenForm()">
+              <div class="addNewBook" [hidden]="(returnBookButton == 'INACTIVE')">
+                <h4>Return the book:</h4>
+                <mat-form-field class="example-full-width"><br>
+                  <mat-label>Book ID</mat-label>
+                  <input matInput placeholder="npr. 47856214587" #returnedBook required>
+                </mat-form-field>
+                <input type="submit" class="form-control" id="select" value="Return" (click)="returnBook(returnedBook.value)">
+              </div>
+              <hr style="border-top: 1px dashed black">
+              <input type="submit" class="form-control" id="select"  value="Add new book" (click)="addNewBookOpenForm()" >
+                          <div class="addNewBook" [hidden]="(newBookButton == 'INACTIVE')">
+                          <h4>Add new book:</h4>
+                          <form class="example-form">
+                            <ul class="lista">
+                              <li id="li" *ngFor="let book of existingTitle; let i = index">
+                                  <div class="ngfor"></div>
+                                  <div class="bookDescription">
+                                     <span style="font-size:10px; color: white; font-weight: bold;">{{existingBooks[i]}}</span>                 <span style="font-size:10px; color: white; font-weight: bold; display: inline;">&nbsp;{{existingIssuedDate[i]}}</span>
+
+                                    <h6>{{book}}</h6>
+                                    <h5>{{existingWriterSurname[i]}}</h5>
+                                  </div>
+                              </li>
+                            </ul>
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Book title</mat-label>
+                              <input matInput placeholder="npr. Little prince" #bookTitle required>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Writer last name</mat-label>
+                              <input matInput placeholder="npr. Dostojevski" #bookWriterLastName required>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Writer first name</mat-label>
+                              <input matInput placeholder="npr. Fjodor Mihajlović" #bookWriterFirstName required>
+                            </mat-form-field>
+                            <mat-form-field class="example-full-width">
+                              <mat-label>Book genre</mat-label>
+                              <input matInput placeholder="npr. selfhelp" #bookGenre required>
+                            </mat-form-field>
+                            <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
+                            <span>{{bookAddedNotification}}</span>
+                          </form>
+                        </div>
+        <hr style="border-top: 1px dashed black">
         <input type="submit" class="form-control" id="select"  value="Add new user" (click)="addNewUserOpenForm()" >
-        <div class="addNewUser" [hidden]="(newUserButton == 'INACTIVE')">
-        <h4>Add new user:</h4>
-        <form class="example-form">
-          <mat-form-field class="example-full-width">
-            <mat-label>Administrator (true/false)</mat-label>
-            <input matInput placeholder="npr. false" #newUserAdmin required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Username</mat-label>
-            <input matInput placeholder="npr. chiwaba" #newUserUsername required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>New password</mat-label>
-            <input matInput placeholder="npr. *******" #newUserPassword required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>First name</mat-label>
-            <input matInput placeholder="npr. Vladimir" #newUserFirstname required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Last name</mat-label>
-            <input matInput placeholder="npr. Putin" #newUserLastName required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Telephone</mat-label>
-            <input matInput placeholder="npr. 10460340513" #newUserTelephone required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Address</mat-label>
-            <input matInput placeholder="npr. Russia, Krasnodar" #newUserAddress>
-          </mat-form-field>
-          <ul class="lista">
-            <li id="li" *ngFor="let user of newUserArray;">
-                <div class="ngforUser"></div>
-                <div class="bookDescription">
-                  {{newUserFirstname}} {{newUserLastName}}
-                   {{newUsername}}
-                </div>
-            </li>
-          </ul>
-          <input type="submit" class="form-control" id="select" value="Add user" (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value)">
-        </form>
+                  <div class="addNewUser" [hidden]="(newUserButton == 'INACTIVE')">
+                  <h4>Add new user:</h4>
+                  <form class="example-form">
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Administrator (true/false)</mat-label>
+                      <input matInput placeholder="npr. false" #newUserAdmin required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Username</mat-label>
+                      <input matInput placeholder="npr. chiwaba" #newUserUsername required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>New password</mat-label>
+                      <input matInput placeholder="npr. *******" #newUserPassword required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>First name</mat-label>
+                      <input matInput placeholder="npr. Vladimir" #newUserFirstname required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Last name</mat-label>
+                      <input matInput placeholder="npr. Putin" #newUserLastName required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Telephone</mat-label>
+                      <input matInput placeholder="npr. 10460340513" #newUserTelephone required>
+                    </mat-form-field>
+                    <mat-form-field class="example-full-width">
+                      <mat-label>Address</mat-label>
+                      <input matInput placeholder="npr. Russia, Krasnodar" #newUserAddress>
+                    </mat-form-field>
+                    <ul class="lista">
+                      <li id="li" *ngFor="let user of newUserArray;">
+                          <div class="ngforUser"></div>
+                          <div class="bookDescription">
+                            {{newUserFirstname}} {{newUserLastName}}
+                             {{newUsername}}
+                          </div>
+                      </li>
+                    </ul>
+                    <input type="submit" class="form-control" id="select" value="Add user" (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value)">
+                  </form>
         </div>
         <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select"  value="Add new book" (click)="addNewBookOpenForm()" >
-        <div class="addNewBook" [hidden]="(newBookButton == 'INACTIVE')">
-        <h4>Add new book:</h4>
-        <form class="example-form">
-          <ul class="lista">
-            <li id="li" *ngFor="let book of existingTitle; let i = index">
-                <div class="ngfor"></div>
-                <div class="bookDescription">
-                   <span style="font-size:10px; color: white; font-weight: bold;">{{existingBooks[i]}}</span>                 <span style="font-size:10px; color: white; font-weight: bold; display: inline;">&nbsp;{{existingIssuedDate[i]}}</span>
-
-                  <h6>{{book}}</h6>
-                  <h5>{{existingWriterSurname[i]}}</h5>
-                </div>
-            </li>
-          </ul>
-          <mat-form-field class="example-full-width">
-            <mat-label>Book title</mat-label>
-            <input matInput placeholder="npr. Little prince" #bookTitle required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Writer last name</mat-label>
-            <input matInput placeholder="npr. Dostojevski" #bookWriterLastName required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Writer first name</mat-label>
-            <input matInput placeholder="npr. Fjodor Mihajlović" #bookWriterFirstName required>
-          </mat-form-field>
-          <mat-form-field class="example-full-width">
-            <mat-label>Book genre</mat-label>
-            <input matInput placeholder="npr. selfhelp" #bookGenre required>
-          </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
-          <span>{{bookAddedNotification}}</span>
-        </form>
-      </div>
-
-        <hr style="border-top: 1px dashed black">
+        <input type="submit" class="form-control" id="select"  value="Delete user" (click)="deleteUserOpenForm()">
+              <div class="deleteUser" [hidden]="(deleteUserButton == 'INACTIVE')">
+                <h4>Delete user <i class="fa fa-exclamation-triangle"></i></h4>
+                <mat-form-field class="example-full-width"><br>
+                  <mat-label>User ID</mat-label>
+                  <input matInput placeholder="npr. 47856214587" #deleteUser required>
+                </mat-form-field>
+                <input type="submit" class="form-control" id="select" value="Delete">
+              </div>
+              <hr style="border-top: 1px dashed black">
       </div>
       <div class="col-sm-12 col-md-4" id="admin2">
         <hr style="border-top: 1px dashed black">
         <h4>User loan status</h4>
+        <hr style="border-top: 1px dashed black">
         <form class="example-form">
-          <ul class="lista">
-            <li id="li" *ngFor="let book of existingTitle; let i = index">
-                <div class="ngfor"></div>
-                <div class="bookDescription">
-                   <span style="font-size:10px; color: white; font-weight: bold;">{{existingBooks[i]}}</span>                 <span style="font-size:10px; color: white; font-weight: bold; display: inline;">&nbsp;{{existingIssuedDate[i]}}</span>
-
-                  <h6>{{book}}</h6>
-                  <h5>{{existingWriterSurname[i]}}</h5>
-                </div>
-            </li>
+          <ul class = "lista" [hidden]="(userNotFound == '')">
+            <li id="li" style="min-height: 50px; margin-bottom: 10px;">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
           </ul>
           <mat-form-field class="example-full-width">
             <mat-label>User ID</mat-label>
             <input matInput placeholder="npr. 4578457874" #userLoan required>
             <span>{{verifyUserNotification}}</span>
           </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Verify user" (click)='getLoanBooks(userLoan.value)'>
+          <input type="submit" class="form-control" id="select" value="Verify user" (click)='getLoanBooks(userLoan.value)' (click)='verifyUser(userLoan.value)'>
+          <hr style="border-top: 1px dashed black">
           <mat-form-field class="example-full-width">
             <mat-label>Book ID</mat-label>
-            <input matInput placeholder="npr. 47856214587" #bookWriterLastName required>
+            <input matInput placeholder="npr. 47856214587" #bookLoan required>
           </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Loan book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
-          <span>{{bookAddedNotification}}</span>
+          <input type="submit" class="form-control" id="select" value="Loan book"  (click)="postLoanBook(userLoan.value, bookLoan.value)" (click)='getLoanBooks(userLoan.value)'>
+          <hr style="border-top: 1px dashed black">
         </form>
 
       </div>
       <div class="col-sm-12 col-md-4" id="admin3" >
         <ul class="lista">
-          <li id="li">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
           <li id="li" *ngFor="let loan of parseLoanBooks">
             <div class="ngfor"></div>
             <div class="bookDescription">
@@ -561,17 +539,35 @@
         </ul>
       </div>
     </div>
-
-
-
-
-
-
-
-
-
-
-
+  </div>
+  <a name="contact"></a>
+  <hr><br>
+  <div class="container">
+    <h1>&contact</h1>
+    <div class="row">
+      <div class="col-md-12 col-lg-6 col-xl-6">
+        <form action="/action_page.php">
+          <div class="form-group">
+            <label for="text" style="width: 100px;">Name:</label>
+            <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
+          </div>
+          <div class="form-group">
+            <label for="text" style="width: 100px;">Surname:</label>
+            <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
+          </div>
+          <div class="form-group">
+            <label for="email" style="width: 100px;">Email:</label>
+            <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
+          </div>
+          <div class="form-group">
+            <label for="message" style="width: 100px;">Message:</label>
+            <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
+          </div>
+          <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
+        </form>
+      </div><br>
+      <div class="col-md-12 col-lg-6 col-xl-6" id="call"></div>
+    </div>
   </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
