@@ -81,13 +81,13 @@ export class MainComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   @ViewChild('TableBorrowedPaginator', {static: true}) tableBorrowedPaginator: MatPaginator;
-    @ViewChild('TableBorrowedSort', {static: true}) tableBorrowedSort: MatSort;
+  @ViewChild('TableBorrowedSort', {static: true}) tableBorrowedSort: MatSort;
 
   @ViewChild('TableLookBookPaginator', {static: true}) tableLookBookPaginator: MatPaginator;
-    @ViewChild('TableLookBookSort', {static: true}) tableLookBookSort: MatSort;
+  @ViewChild('TableLookBookSort', {static: true}) tableLookBookSort: MatSort;
 
   @ViewChild('TableDebtorsPaginator', {static: true}) tableDebtorsPaginator: MatPaginator;
-    @ViewChild('TableDebtorsSort', {static: true}) tableDebtorsSort: MatSort;
+  @ViewChild('TableDebtorsSort', {static: true}) tableDebtorsSort: MatSort;
 
 
 
@@ -431,40 +431,52 @@ export class MainComponent implements OnInit {
     this.loading = true;
     this.userNotFound = '';
     this.searchTitle = '';
+    this.loanBookMessage = '';
     this.returnBookButton = 'INACTIVE';
     this.newBookButton = 'INACTIVE';
     this.newUserButton = 'INACTIVE';
     this.deleteUserButton = 'INACTIVE';
     this.debtorButton = 'INACTIVE';
-    this.data.authenticateUser(uname, psw).subscribe((data: any) => {
-      try {
-        this.authenticationMessage = JSON.parse(JSON.stringify(data));
-        this.authenticationMessage.map((item: any) => {
-          this.authenticationUser = item.uid;
-          this.bsAdmin = item.administrator;
-          this.userFirstName = item.firstName;
-          this.userLastName = item.lastName;
-          this.userUsername = item.username;
-          this.userPassword = item.passwords;
-        })
-        if (this.userUsername == uname && this.userPassword == psw) {
-          this.bsApproval = 'OK';
-          this.getAllBooksFromDatabase();
-          if (this.bsAdmin != 'true') {
-            this.getLoanBooks(this.authenticationUser)
-            this.updateBorrowedTable(this.authenticationUser)
+    this.userMessage = '';
+    if(uname == ''){
+      this.loading = false;
+      this.userMessage = '*Please enter your username'
+    }
+    else if(psw == ''){
+      this.loading = false;
+      this.userMessage = '*Please enter your password'
+    }
+    else {
+          this.data.authenticateUser(uname, psw).subscribe((data: any) => {
+            try {
+              this.authenticationMessage = JSON.parse(JSON.stringify(data));
+              this.authenticationMessage.map((item: any) => {
+                this.authenticationUser = item.uid;
+                this.bsAdmin = item.administrator;
+                this.userFirstName = item.firstName;
+                this.userLastName = item.lastName;
+                this.userUsername = item.username;
+                this.userPassword = item.passwords;
+              })
+              if (this.userUsername == uname && this.userPassword == psw) {
+                this.bsApproval = 'OK';
+                this.getAllBooksFromDatabase();
+                if (this.bsAdmin != 'true') {
+                  this.getLoanBooks(this.authenticationUser)
+                  this.updateBorrowedTable(this.authenticationUser)
+                }
+                this.userMessage = '';
+              }
+              else {
+                this.userMessage = '*username or password are incorecct'
+                this.loading = false;
+              }
+            } catch (parseError) {
+              this.loading = false;
+              alert("User not found!")
+            }
+          })
           }
-          this.userMessage = '';
-        }
-        else {
-          this.userMessage = '*username or password are incorecct'
-          this.loading = false;
-        }
-      } catch (parseError) {
-        this.loading = false;
-        alert("User not found!")
-      }
-    })
     this.updateBookTable();
     this.updateDebtorTable();
   }
@@ -509,7 +521,7 @@ export class MainComponent implements OnInit {
     return this.returnValue;
   }
 
-  parseLoanBooks: any;
+  parseLoanBooks: any = '';
   verifyUserNotification: any;
   userDebit: number = 0;
   pipeList: any = [];
@@ -517,6 +529,9 @@ export class MainComponent implements OnInit {
     this.userDebit = 0;
     if (userID == '') {
       this.verifyUserNotification = '*This field if required';
+    } else if (userID == '000000000'){
+      this.verifyUserNotification = '';
+      this.parseLoanBooks = '';
     } else {
       this.verifyUserNotification = '';
       this.data.getLoanBooks(userID).subscribe((data: any) => {
@@ -559,6 +574,7 @@ export class MainComponent implements OnInit {
 
   bookshelfResponse: any;
   bookAddedNotification: any = '';// adding new book to Bookshelf table
+  newBookID:any;
   bookshelfAddBook(book: any, writerLastName: any, writerFirstName: any, genre: any) {
     this.bookAddedNotification = '';
     if (book == '' || genre == '' || writerLastName == '' || writerFirstName == '') {
@@ -567,8 +583,13 @@ export class MainComponent implements OnInit {
       this.data.addBook(book, writerLastName, writerFirstName, genre).subscribe((data: any) => {
         try {
           this.bookshelfResponse = JSON.parse(JSON.stringify(data));
-          if (this.bookshelfResponse != null) {
-            this.bookAddedNotification = '*The book has been added to library';
+          this.newBookID = this.bookshelfResponse.id;
+          if (this.newBookID != null) {
+              if(this.newBookID == '0') {
+                this.bookAddedNotification = 'Something went wrong!';
+              } else {
+                this.bookAddedNotification = 'Added by BID: ' + this.newBookID;
+              }
           }
         } catch (error) {
           this.bookAddedNotification = '*Ooops. something went wrong!';
@@ -608,7 +629,11 @@ export class MainComponent implements OnInit {
   userLoanInput: any = '';
   postLoanBook(user: any, book: any) {
     this.data.loanBook(user, book).subscribe((data: any) => {
-      if (data.return == 'exist') {
+      if(data.return == 'maximumThreeBorrowedBooks'){
+        this.loanBookMessage = 'Maximum of three books are borrowed'
+        this.bookLoanInput = '';
+      }
+      else if (data.return == 'exist') {
         this.loanBookMessage = 'The book is already borowed!';
         this.bookLoanInput = '';
       } else {

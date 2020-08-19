@@ -380,19 +380,40 @@ footer {
 #rooow {
   width: 50%;
 }
-
 #quake {
   height: 300px;
   border-radius: 4px;
 }
-
-#book1 {
-  background-image: url("bookshelf1.PNG");
-  height: 300px;
-  min-width: 300px;
+#contactDrawing {
+  background-image: url('contactDrawing.jpeg');
+  background-size: contain;
   background-repeat: no-repeat;
-  background-size: cover;
+}
+#formBackground {
+  background-image: url('authDrawing.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.mat-row:nth-child(even){
+    background-color: white;
+}
+
+.mat-row:nth-child(odd){
+    background-color: #eff5e1;
+}
+mat-cell.red {
+    background-color: #edada8;
+    align-self: stretch;
+    line-height: 48px;
+    color: green;
+}
+
+#quakeDiv {
+  height: 300px;
   border-radius: 4px;
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 #book2 {
@@ -470,7 +491,7 @@ footer {
   min-height: 50px;
   height: auto;
 }
-.ngfor, .ngForLoan {
+.ngfor {
   min-height:80px;
   max-height: 81px;
   width:100px;
@@ -479,19 +500,22 @@ footer {
   display: inline;
   float: left;
 }
-
-.ngForLoan{
-  background-image: url('nookNgForO.png');
-}
-.ngforUser{
-    min-height:80px;
-    max-height: 81px;
-    width:100px;
-    background-image: url('bookForUser.png');
+#biographyDiv {
+    background-image: url('bioDrawing.jpeg');
     background-size: cover;
-    display: inline;
-    float: left;
+    background-repeat: no-repeat;
 }
+
+.content {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+#weatherRow {
+  background-image: url('weatherDrawing.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
 .bookDescription {
   min-height: 80px;
   width:70%;
