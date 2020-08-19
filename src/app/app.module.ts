@@ -15,14 +15,17 @@ import { AgmCoreModule } from '@agm/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatRadioModule} from '@angular/material/radio';
 import { Pipefilter } from './pipefilter';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import {MatSortModule} from '@angular/material/sort';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    Pipefilter
-    ],
+    Pipefilter    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -33,6 +36,9 @@ import { Pipefilter } from './pipefilter';
     ChartsModule,
     MatInputModule,
     MatIconModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatRadioModule,

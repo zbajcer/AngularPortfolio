@@ -3,318 +3,556 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-<body>
-  <nav class="navbar navbar-expand-md bg-dark navbar-dark">
-    <a class="navbar-brand" href="#">zoran bajcer &nbsp;&nbsp;&nbsp;<i class="fa fa-spinner"></i></a>
-    <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div [ngbCollapse]="!isNavbarCollapsed" class="navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav">
-        <li class="nav-item"><a href="#home" (click)="collapseAll()">*home</a></li>
-        <li class="nav-item"><a href="#biography" (click)="collapseAll()">*biography</a></li>
-        <li class="nav-item"><a href="#converter" (click)="collapseAll()">*converter</a></li>
-        <li class="nav-item"><a href="#weather" (click)="collapseAll()">*weather</a></li>
-        <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
-        <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
-        <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
-        <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github" style="font-size: 18px;"></i></a></li>
+<nav class="navbar navbar-expand-md bg-dark navbar-dark">
+  <a class="navbar-brand" href="#">zoran bajcer &nbsp;&nbsp;&nbsp;<i class="fa fa-spinner"></i></a>
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div [ngbCollapse]="!isNavbarCollapsed" class="navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav">
+      <li class="nav-item"><a href="#home" (click)="collapseAll()">*home</a></li>
+      <li class="nav-item"><a href="#biography" (click)="collapseAll()">*biography</a></li>
+      <li class="nav-item"><a href="#converter" (click)="collapseAll()">*converter</a></li>
+      <li class="nav-item"><a href="#weather" (click)="collapseAll()">*weather</a></li>
+      <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
+      <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
+      <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
+      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github" style="font-size: 18px;"></i></a></li>
+    </ul>
+  </div>
+</nav><a name="home"></a>
+<br><br><br>
+<div class="container">
+  <h1>&home</h1>
+  <div class="row">
+    <div class="col-sm-12 col-md-4" id="home1"></div>
+    <div class="col-sm-12 col-md-4" id="home2"></div>
+    <div class="col-sm-12 col-md-4" id="home3"></div>
+  </div>
+</div><a name="biography"></a>
+<hr><br>
+<div class="container">
+  <h1>&biography</h1>
+  <div class="row">
+    <div class="col-sm-12 col-lg-6">
+      <label for="autorithy">Please enter a password to unlock biography:</label>
+      <br><input type="password" class="form-control" id="psw" #bioPsw><br>
+      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval == 'OK')" class="form-control" (click)="PasswordAutorisation(bioPsw.value)" value="Submit">
+      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval != 'OK')" class="form-control" (click)="(approval = 'false')" value="Hide">
+    </div>
+    <div class="col-sm-12 col-lg-6" id="sesame">
+    </div>
+  </div>
+</div>
+<div class="container" id="bio" [hidden]="(approval != 'OK')">
+  <hr><br>
+  <h6>Education:</h6>
+  <p>Osnovna škola Augusta Cesarca u Krapini – 8 years <br>
+    Srednja škola Zlatar - from 2006. to 2010. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : Post and telecommunicatios
+    technician <br>
+    Tehničko veleučilište u Zagrebu - from 2018. <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : e-Business, IT <br>
+    Additional knowledge: - English - 9/10 <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-German language – 3/10 <br>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Programming - Java,
+    SpringBoot, Angular, Typescript, HTML, CSS, SQL <br>
+  </p> <br>
+  <hr> <br>
+  <h6>Work experience:</h6>
+  <p>
+    Jari d.o.o. (shift manager ) -2011-2016 <br>
+    Prostoria d.o.o. (CNC operator) - 2017 <br>
+    Stražaplastika d.d. (shift manager) - 2017-2018 <br>
+    Generali Osiguranje d.d. (Web developer) since December, 2018. <br>
+  </p> <br>
+  <hr> <br>
+  <h6>Web development:</h6>
+  <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing insurence application. Programming is also my favourite hobby. In free time I developed this great application in Angular framework.
+    It is great because of backend
+    which is developed in Java SpringBoot. It is also connected to MySQL database. In the section "Currency converter" you can choose currency list by date and my app is dinamicaly checking if the choosen currency by date exists in database. If
+    doesnt exist, it connects to HNB web api, downloads currency in JSON, store values in database and proceeds with serving those currencyes to frontend, Angular. I have also implemented statistics. On every click it updates counter of each
+    chosen start value.
+  </p>
+  <p>I have also developed some simple apps which you can find on my <a href="https://github.com/zbajcer?tab=repositories" target="_blank">GitHub</a> account.</p>
+  <br>
+  <br>
+  <hr><br>
+</div><a name="converter"></a>
+<br>
+<hr><br>
+<div class="container">
+  <h1>&currency converter</h1>
+  <div class="row">
+    <div class="col-md-12 col-lg-6">
+      <div class="content" role="main">
+        <p style="padding-left: 0px;" id="boldP">Choose rate date:</p>
+        <input class="form-control" id="conv" type="date" [(ngModel)]="dt" (change)='sendDateToService(dt)' (change)='getConverterData()'>
+        <p id="p">Start value:</p>
+        <form [formGroup]="crForm">
+          <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl">
+            <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,30,a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
+          </select>
+          <p id="p">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter" style="cursor: pointer;" (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrows-v"></i></a></p>
+          <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
+            <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="secondSelectValues(a.Jedinica, a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
+          </select>
+        </form>
+        <p style="padding-left: 0px;" id="boldP">Conversion amount:</p>
+        <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
+        <input type="submit" name="btn" class="form-control" id="select" value="Calculate" (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value, 'false')">
+        <p style=" margin: 0; padding: 0;" id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: bolder; font-size: 20px; color: red;">{{rezultat}} {{valutaEndView}}</span></p>
+      </div>
+    </div>
+    <div class="col-md-12 col-lg-6">
+      <div style="display: block">
+        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
+        </canvas>
+      </div>
+      <hr>
+      <p><span style="font-weight: bold; font-size: 12px;">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
+      <p><span style="font-weight: bold; font-size: 12px;">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
+      <hr>
+    </div>
+  </div>
+</div><a name="weather"></a>
+<br>
+<hr><br>
+<div class="container">
+  <h1>&weather</h1>
+  <div class="row" style="margin-bottom: 10px;">
+    <div class="col-sm-12">
+      <form class="example-form">
+        <mat-form-field class="example-full-width">
+          <mat-label>City:</mat-label>
+          <input matInput placeholder="npr. London" name="grad" #cityWeather (change)='weatherCity(cityWeather.value)'>
+        </mat-form-field>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
+      <h2>{{queryWeather}}</h2>
+      <div class="imageDiv">
+        <img [src]="base64Image" class="baseImage" />
+        <span style="font-weight: normal; font-size: 9px; color: grey;">&nbsp;&nbsp;{{observationWeather}}</span>
+      </div>
+      <div class="temperature">
+        <h1 style="font-size: 50px; color: black; font-weight: normal; padding-top: 15px; padding-left: 10px;">{{temperatureWeather}}&#8451;</h1>
+      </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst">
+      <div class="weatherDescription" style="overflow: hidden;">
+        <p style="color: darkgray; font-weight: bold;">{{descriptionWeather}}</p>
+      </div>
+      <div class="weatherDescription">
+        <p>Feels like</p>
+        <p style="color: darkgray; font-weight: bold; font-size: 22px;">{{feelslikeWeather}}&#8451;</p>
+      </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
+      <div class="temperature">
+        <p>Wind direction</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 40px;">{{wind_directionWeather}}</h1>
+      </div>
+      <div class="temperature">
+        <p>UV&nbsp;index</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{uvWeather}}</h1>
+      </div>
+      <div class="temperature">
+        <p>Pressure</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 30px;">{{pressureWeather}}<span>mb</span></h1>
+      </div>
+    </div>
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
+      <div class="temperature">
+        <p>Wind speed</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{wind_speedWeather}}<span>km/h</span></h1>
+      </div>
+      <div class="temperature">
+        <p>Humidity</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{humidityWeather}}<span>%</span></h1>
+      </div>
+      <div class="temperature">
+        <p>Cloudcover</p>
+        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{cloudcoverWeather}}<span>%</span></h1>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-4" id="weatherImage">
+    </div>
+  </div>
+  <br>
+  <br>
+</div><br>
+<a name="earthquake"></a>
+<hr><br>
+<div class="container">
+  <h1>&earthquake</h1>
+  <div class="row">
+    <div class="col-sm-12 col-lg-6" id="quake" style="overflow: auto; margin-bottom: 10px;">
+      <ul class="lista">
+        <li id="li" *ngFor="let place of quakePlace">
+          <a href="#earthquake" (click)='myEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
+            <span style="color: #f03f32; font-size: 24px;">{{place.magnitude}}</span><span style="color: white;">&nbsp;richter</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span style="color: white;">&nbsp;km of depth&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;">alert: </span>{{place.alert}}</span></a>
+        </li>
       </ul>
     </div>
-  </nav><a name="home"></a>
-  <br><br><br>
-  <div class="container">
-    <h1>&home</h1>
-    <div class="row">
-      <div class="col-sm-12 col-md-4" id="home1"></div>
-      <div class="col-sm-12 col-md-4" id="home2"></div>
-      <div class="col-sm-12 col-md-4" id="home3"></div>
+    <div class="col-sm-12 col-lg-6" id="quake">
+      <div id="hotel_map"></div>
     </div>
-  </div><a name="biography"></a>
-  <hr><br>
-  <div class="container">
-    <h1>&biography</h1>
-    <div class="row">
-      <div class="col-sm-12 col-lg-6">
-        <label for="autorithy">Please enter a password to unlock biography:</label>
-        <br><input type="password" class="form-control" id="psw" #bioPsw><br>
-        <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval == 'OK')" class="form-control" (click)="PasswordAutorisation(bioPsw.value)" value="Submit">
-        <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval != 'OK')" class="form-control" (click)="(approval = 'false')" value="Hide">
+  </div>
+</div>
+<hr>
+<a name="bookshelf"></a><br><br>
+<br>
+<div class="container">
+  <h1>&bookshelf</h1><br>
+
+
+
+
+  <div class="row">
+
+
+    <div class="col-sm-12 col-md-4" id="book2">
+      <div class="adminAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
+        <h2>admin: {{authenticationUser}}</h2>
+        <hr style="border-top: 1px dashed black">
+        <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
+        <hr style="border-top: 1px dashed black">
+        <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"' (click)='loading = false' (click)="getLoanBooks('000000000')">
       </div>
-      <div class="col-sm-12 col-lg-6" id="sesame">
+      <div class="userAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
+        <h2>User: {{authenticationUser}}</h2>
+        <hr style="border-top: 1px dashed black">
+        <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
+        <hr style="border-top: 1px dashed black">
+        <h6>Overall debit is {{userDebit}} kn</h6>
+        <hr style="border-top: 1px dashed black">
+        <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"' (click)='loading = false' (click)="getLoanBooks('000000000')">
+      </div>
+      <form [hidden]="(bsApproval == 'OK')" action="/action_page.php" method="post">
+        <div class="container">
+          <div class="col-sm-12" id="uid">
+            <form class="example-form">
+              <mat-form-field class="example-full-width">
+                <mat-label>Username:</mat-label>
+                <input matInput placeholder="npr. Chuwaba Chuwaba" #username>
+              </mat-form-field>
+              <span>{{userMessage}}</span>
+            </form>
+          </div>
+          <div class="col-sm-12" id="uid">
+            <form [formGroup]="signin" class="example-form">
+              <mat-form-field class="example-full-width">
+                <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" #bookshelfPassword required>
+                <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                <mat-hint *ngIf="!passwordInput.value">Enter your password</mat-hint>
+              </mat-form-field>
+            </form>
+          </div>
+          <div class="col-sm-12" id="temp">
+            <button type="submit" class="form-control" id="select" style="display: inline-flex; align-items: center; padding-left: 50px;;" value="Sign In" (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
+              Sign in&nbsp;&nbsp;&nbsp;&nbsp;
+              <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
+            </button>
+          </div>
+
+        </div>
+      </form>
+    </div>
+
+
+    <div class="col-sm-12 col-md-8" id="book3" [hidden]="(bsAdmin != 'true')"></div>
+
+    <div class="col-sm-12 col-md-8" id="bookSearch" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
+      <h4>Borrowed by {{userFirstName}}&nbsp;{{userLastName}}</h4>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceBorrowed" matSort     #TableBorrowedSort="matSort">
+          <ng-container matColumnDef="bid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorLastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Author </th>
+            <td mat-cell *matCellDef="let row"> {{row.authorLastName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bookTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let row"> {{row.bookTitle}} </td>
+          </ng-container>
+          <ng-container matColumnDef="issuedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Issued date </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.issuedDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="period">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Period </th>
+            <td mat-cell *matCellDef="let row"> {{row.period}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> FINE (kn) </th>
+            <td mat-cell *matCellDef="let row"> {{row.fine}} </td>
+          </ng-container>
+          <ng-container matColumnDef="warning">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Warning </th>
+            <td mat-cell *matCellDef="let row"> {{row.warning}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedBorrowedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedBorrowedColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator #TableBorrowedPaginator="matPaginator" [pageSizeOptions]="[3 , 2 , 1]"></mat-paginator>
       </div>
     </div>
   </div>
-  <div class="container" id="bio" [hidden]="(approval != 'OK')">
-    <hr><br>
-    <h6>Education:</h6>
-    <p>Područna škola Podgora – 4 years <br>
-      Osnovna škola Augusta Cesarca u Krapini – 4 years <br>
-      Srednja škola Zlatar - from 2006. to 2010. <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : Post and telecommunicatios
-      technician <br>
-      Tehničko veleučilište u Zagrebu - from 2018. to 2021. <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : e-Business, IT <br>
-      Additional knowledge: - English - 9/10 <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-German language – 3/10 <br>
-      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Programming - Java,
-      SpringBoot, Angular, Typescript, HTML, CSS, SQL <br>
-    </p> <br>
-    <hr> <br>
-    <h6>Work experience:</h6>
-    <p>
-      Jari d.o.o. (shift manager ) -2011-2016 <br>
-      Prostoria d.o.o. (CNC operator) - 2017 <br>
-      Stražaplastika d.d. (shift manager) - 2017-2018 <br>
-      Generali Osiguranje d.d. (Web developer) since December, 2018. <br>
-    </p> <br>
-    <hr> <br>
-    <h6>Web development:</h6>
-    <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing insurence application. Programming is also my favourite hobby. In free time I developed this great application in Angular framework.
-      It is great because of backend
-      which is developed in Java SpringBoot. It is also connected to MySQL database. In the section "Currency converter" you can choose currency list by date and my app is dinamicaly checking if the choosen currency by date exists in database. If
-      doesnt exist, it connects to HNB web api, downloads currency in JSON, store values in database and proceeds with serving those currencyes to frontend, Angular. I have also implemented statistics. On every click it updates counter of each
-      chosen start value.
-    </p>
-    <p>I have also developed some simple apps which you can find on my <a href="https://github.com/zbajcer?tab=repositories" target="_blank">GitHub</a> account.</p>
-    <br>
-    <h6>Machine work:</h6>
-    <p>In 2012, I was on the training exam for Engel victory 120, which I successfully passed. Since then, I have been perfectly familiar with the machine and all its features and options.</p> <br>
-    <p>On presentation of the machine in production by Neofyton d.o.o. I learned to work on a modern machine that uses a touch screen and a modern management interface. I also learned which key parts to maintain, such as sliding rails for the movable
-      side of the pick-up plate and sliding extruder guides, as well as all safety devices for protecting worker working on the machine. </p>
-    <p>I am also qualified to perform the following safe and efficient:</p>
-    <p style="padding-left: 80px;">
-      Setting moulds on the machine
-      <br>
-      -Connecting safety electronic devices from mould to machine with connectors
-      <br>
-      -Use the setup mode to determine the opening and closing speeds for automatic production
-      <br>
-      -Use the teach mode to build a branch with the sequence of functions that this mould requires, including all delays and other terms for each function at any given time
-      <br>
-      -Adjust the force of closing according to the weight of the mould and the weight of the article
-      <br>
-      -Adjust the values for the pressures and the speed of the injection, and to fine-tune the value for the finish pressures and the swiching position to it
-      <br>
-      -Set the values for the dosing speed and the return pressure force to make each cycle equal to the previous one
-      <br>
-      -Set the cooling time and the flow rate of the coolant so that the production cycle is faster and the article quality remains high
-      <br>
-      -During automatic production, change settings for fine tuning to get the most perfect item in a short time
-    </p>
-    <br>
-    <p>In 2013, as member of the production team I visited the German company Arburg Gmbh & Co KG. There I attended lecture and training for the work on the Arburg Allrounder for two-component injection using the rotating unit on the movable panel.
-    </p>
 
-    <br>
-    <p>In this lecture, I learned to successfully manage the machine using the Selogica interface, all the details about maintaining the machine, running a simple tool and running the tool that uses the rotary unit and the other extruder.
-      While working on the machine, I have learned in detail all its options and capabilities, as well as the requirements that must be fulfilled so that the machine can safely and normally work. I also have a lot of experience in adjusting the tools
-      that uses hot runners and running the same with cycles less than ten seconds.
-    </p>
-    <br>
-    <p>In the year of 2014. I participated in the installation of the new machine of Krauss Maffei in the company. The installation and preparation of the machine was led by a team of experts from the company KMS from Slovenia. Participating in this
-      process, I learned all that is needed to get the machine ready for operation, from tipping a certain quantity of hydraulic oil into the tank, venting the system on all blocks, turning on the machine, setting the mould, adjusting all the
-      parameters and starting the automatic production.
 
-    <p>In 2017, I was employed as a production manager in a company employing 120 people and engaged in plastic injection. In this workplace I manage daily with a team of 15 people and with 10 to 15 machines, and the accompanying mechanization. The
-      main tasks at work are the organization of the workforce, the management of the production of articles by means of work orders, the start-up of machines, the solution of programming and minor mechanical problems on machines and moulds, the
-      replacement of moulds as needed, and the completion of accompanying documentation.
-    </p><br>
-    <hr><br>
-  </div><a name="converter"></a>
-  <br>
-  <hr><br>
-  <div class="container">
-    <h1>&currency converter</h1>
-    <div class="row">
-      <div class="col-md-12 col-lg-6">
-        <div class="content" role="main">
-          <p style="padding-left: 0px;" id="boldP">Choose rate date:</p>
-          <input class="form-control" id="conv" type="date" [(ngModel)]="dt" (change)='sendDateToService(dt)' (change)='getConverterData()'>
-          <p id="p">Start value:</p>
-          <form [formGroup]="crForm">
-            <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl">
-              <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,30,a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
-            </select>
-            <p id="p">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter" style="cursor: pointer;" (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrows-v"></i></a></p>
-            <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
-              <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="secondSelectValues(a.Jedinica, a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
-            </select>
-          </form>
-          <p style="padding-left: 0px;" id="boldP">Conversion amount:</p>
-          <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
-          <input type="submit" name="btn" class="form-control" id="select" value="Calculate" (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value, 'false')">
-          <p style=" margin: 0; padding: 0;" id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: bolder; font-size: 20px; color: red;">{{rezultat}} {{valutaEndView}}</span></p>
-        </div>
+
+
+  <!-- ========================      R O W    of    U S E R             -->
+
+
+  <!-- ========================      R O W    of    A D M I N             -->
+  <div class="row" style="margin-top: 10px; margin-bottom: 20px; border-bottom: solid black 1px;" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
+    <div class="col-sm-12 col-md-4" id="admin1">
+      <hr style="border-top: 1px dashed black">
+      <input type="submit" class="form-control" id="select" value="Return the book" (click)="openFormAdmin('returnBook')">
+      <div class="addNewBook" [hidden]="(returnBookButton == 'INACTIVE')">
+        <h4>Return the book:</h4>
+        <mat-form-field class="example-full-width"><br>
+          <mat-label>Book ID</mat-label>
+          <input matInput placeholder="npr. 47856214587" #returnedBook [(ngModel)]="bookReturnInput" name="inputReturnBookID">
+        </mat-form-field>
+        <input type="submit" class="form-control" id="select" value="Return" (click)="returnBook(returnedBook.value)">
+        <span>{{returnBookNotification}}</span>
       </div>
-      <div class="col-md-12 col-lg-6">
-        <div style="display: block">
-          <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
-          </canvas>
-        </div>
-        <hr>
-        <p><span style="font-weight: bold; font-size: 12px;">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
-        <p><span style="font-weight: bold; font-size: 12px;">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
-        <hr>
-      </div>
-    </div>
-  </div><a name="weather"></a>
-  <br>
-  <hr><br>
-  <div class="container">
-    <h1>&weather</h1>
-    <div class="row" style="margin-bottom: 10px;">
-      <div class="col-sm-12">
+      <hr style="border-top: 1px dashed black">
+      <input type="submit" class="form-control" id="select" value="Add new book" (click)="openFormAdmin('addBook')">
+      <div class="addNewBook" [hidden]="(newBookButton == 'INACTIVE')">
+        <h4>Add new book:</h4>
         <form class="example-form">
           <mat-form-field class="example-full-width">
-            <mat-label>City:</mat-label>
-            <input matInput placeholder="npr. London" name="grad" #cityWeather (change)='weatherCity(cityWeather.value)'>
+            <mat-label>Book title</mat-label>
+            <input matInput placeholder="npr. Little prince" #bookTitle required>
           </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Writer last name</mat-label>
+            <input matInput placeholder="npr. Dostojevski" #bookWriterLastName required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Writer first name</mat-label>
+            <input matInput placeholder="npr. Fjodor Mihajlović" #bookWriterFirstName required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Book genre</mat-label>
+            <input matInput placeholder="npr. selfhelp" #bookGenre required>
+          </mat-form-field>
+          <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
+          <span>{{bookAddedNotification}}</span>
         </form>
       </div>
+      <hr style="border-top: 1px dashed black">
+      <input type="submit" class="form-control" id="select" value="Add new user" (click)="openFormAdmin('newUser')">
+      <div class="addNewUser" [hidden]="(newUserButton == 'INACTIVE')">
+        <h4>Add new user:</h4>
+        <form class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>Administrator (true/false)</mat-label>
+            <input matInput placeholder="npr. false" #newUserAdmin required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Username</mat-label>
+            <input matInput placeholder="npr. chiwaba" #newUserUsername required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>New password</mat-label>
+            <input matInput placeholder="npr. *******" #newUserPassword required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>First name</mat-label>
+            <input matInput placeholder="npr. Vladimir" #newUserFirstname required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Last name</mat-label>
+            <input matInput placeholder="npr. Putin" #newUserLastName required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Telephone</mat-label>
+            <input matInput placeholder="npr. 10460340513" #newUserTelephone required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="npr. Russia, Krasnodar" #newUserAddress>
+          </mat-form-field>
+          <input type="submit" class="form-control" id="select" value="Add user"
+            (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value)">
+          <span>{{addNewUserMessage}}</span>
+        </form>
+      </div>
+      <hr style="border-top: 1px dashed black">
+      <input type="submit" class="form-control" id="select" value="Delete user" (click)="openFormAdmin('deleteUser')">
+      <div class="deleteUser" [hidden]="(deleteUserButton == 'INACTIVE')">
+        <br>
+        <h4>Delete user <i class="fa fa-exclamation-triangle"></i></h4>
+        <form class="example-form">
+          <mat-form-field class="example-full-width"><br>
+            <mat-label>User ID</mat-label>
+            <input matInput placeholder="npr. 47856214587" #deleteUser required>
+          </mat-form-field>
+          <input type="submit" class="form-control" id="select" value="Delete" (click)="deleteUserFunc(deleteUser.value)">
+          <span>{{deleteUserMessage}}</span>
+        </form>
+      </div>
+      <hr style="border-top: 1px dashed black">
+      <input type="submit" class="form-control" id="select" value="See all debtors" (click)="openFormAdmin('debtors')" [hidden]="(debtorButton == 'ACTIVE')">
+      <input type="submit" class="form-control" id="select" value="Hide debtors table" (click)="openFormAdmin('debtors')" [hidden]="(debtorButton == 'INACTIVE')">
+      <hr style="border-top: 1px dashed black">
     </div>
-    <div class="row">
-      <div class="col-sm-12 col-md-12 col-lg-4" id="weatherFirst">
-        <h2>{{queryWeather}}</h2>
-        <div class="imageDiv">
-          <img [src]="base64Image" class="baseImage" />
-          <span style="font-weight: normal; font-size: 9px; color: grey;">&nbsp;&nbsp;{{observationWeather}}</span>
-        </div>
-        <div class="weatherDescription" style="overflow: hidden;">
-          <p style="color: darkgray; font-weight: bold;">{{descriptionWeather}}</p>
-        </div>
-        <div class="line">
-          <hr>
-        </div>
-        <div class="temperature">
-          <h1 style="font-size: 50px; color: black; font-weight: normal; padding-top: 15px; padding-left: 10px;">{{temperatureWeather}}&#8451;</h1>
-        </div>
-        <div class="weatherDescription">
-          <p>Feels like</p>
-          <p style="color: darkgray; font-weight: bold; font-size: 22px;">{{feelslikeWeather}}&#8451;</p>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-12 col-lg-4" id="weatherFirst" style="border-right: none;">
-        <div class="temperature">
-          <p>Wind direction</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 40px;">{{wind_directionWeather}}</h1>
-        </div>
-        <div class="temperature">
-          <p>Wind speed</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{wind_speedWeather}}<span>km/h</span></h1>
-        </div>
-        <div class="line">
-          <hr>
-        </div>
-        <div class="temperature">
-          <p>UV&nbsp;index</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{uvWeather}}</h1>
-        </div>
-        <div class="temperature">
-          <p>Humidity</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{humidityWeather}}<span>%</span></h1>
-        </div>
-        <div class="line">
-          <hr>
-        </div>
-        <div class="temperature">
-          <p>Pressure</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 30px;">{{pressureWeather}}<span>mb</span></h1>
-        </div>
-        <div class="temperature">
-          <p>Cloudcover</p>
-          <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{cloudcoverWeather}}<span>%</span></h1>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-12 col-lg-4" id="weatherImage">
-      </div>
-    </div>
-    <br>
-    <br>
-  </div><a name="earthquake"></a><br>
-  <hr><br>
-  <div class="container">
-    <h1>&earthquake</h1>
-    <div class="row">
-      <div class="col-sm-12 col-lg-6" id="home1" style="background: none; overflow: auto; margin-bottom: 10px;">
-        <ul class="lista">
-          <li id="li" *ngFor="let place of quakePlace">
-            <a href="#earthquake" (click)='myEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
-              <span style="color: #f03f32; font-size: 24px;">{{place.magnitude}}</span><span style="color: white;">&nbsp;richter</span>
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span style="color: white;">&nbsp;km of depth&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;">alert: </span>{{place.alert}}</span></a>
-          </li>
+    <div class="col-sm-12 col-md-4" id="admin2" >
+      <hr style="border-top: 1px dashed black">
+      <h4>User loan status</h4>
+      <hr style="border-top: 1px dashed black">
+      <form class="example-form">
+        <ul class="lista" [hidden]="(userNotFound == '')">
+          <li id="li" style="min-height: 50px; margin-bottom: 10px;">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
         </ul>
-      </div>
-      <div class="col-sm-12 col-lg-6" id="home1" style="background: none;">
-        <div id="hotel_map"></div>
-      </div>
+        <mat-form-field class="example-full-width" name="userLoanBook">
+          <mat-label>User ID</mat-label>
+          <input matInput placeholder="npr. 4578457874" name="inputUserID" #userLoan [(ngModel)]="userLoanInput">
+          <span>{{verifyUserNotification}}</span>
+        </mat-form-field>
+        <input type="submit" class="form-control" id="select" value="Verify user" (click)='getLoanBooks(userLoanInput)' (click)='verifyUser(userLoanInput)'>
+        <hr style="border-top: 1px dashed black">
+        <mat-form-field class="example-full-width">
+          <mat-label>Book ID</mat-label>
+          <input matInput placeholder="npr. 47856214587" #bookLoan name="inputBookID" [(ngModel)]="bookLoanInput">
+        </mat-form-field>
+        <input type="submit" class="form-control" id="select" value="Loan book" (click)="postLoanBook(userLoanInput, bookLoan.value)">
+        <span>{{loanBookMessage}}</span>
+        <hr style="border-top: 1px dashed black">
+      </form>
+
+    </div>
+    <div class="col-sm-12 col-md-4" id="admin3">
+      <ul class="lista">
+        <li id="li" *ngFor="let loan of parseLoanBooks">
+          <div class="ngfor"></div>
+          <div class="bookDescription">
+            <span style="font-size:10px; color: white; font-weight: bold;">{{loan.bid}}</span><br>
+            {{loan.book}}<br>
+            {{loan.issuedDate}}<br>
+            {{loan.period}} <span style="font-size:10px; color: white; font-weight: bold;">days</span>&nbsp;{{loan.fine}}&nbsp;<span style="font-size:10px; color: white; font-weight: bold;">kn</span>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
-  <hr>
-  <a name="bookshelf"></a><br><br>
-  <br>
-  <div class="container">
-    <h1>&bookshelf</h1><br>
-    <div class="row">
-      <div class="col-sm-12 col-md-6" id="book2">
-        <div class="adminAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
-          <h2>admin: {{authenticationUser}}</h2>
-          <hr style="border-top: 1px dashed black">
-          <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
-          <hr style="border-top: 1px dashed black">
-          <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"'>
-        </div>
-        <div class="userAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
-          <h2>User: {{authenticationUser}}</h2>
-          <hr style="border-top: 1px dashed black">
-          <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
-          <hr style="border-top: 1px dashed black">
-          <h6>Overall debit is {{userDebit}} kn</h6>
-          <hr style="border-top: 1px dashed black">
-          <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"'>
-        </div>
-        <form [hidden]="(bsApproval == 'OK')" action="/action_page.php" method="post">
-          <div class="container">
-            <div class="col-sm-12" id="uid">
-              <form class="example-form">
-                <mat-form-field class="example-full-width">
-                  <mat-label>Username:</mat-label>
-                  <input matInput placeholder="npr. Chuwaba Chuwaba" #username>
-                </mat-form-field>
-                <span>{{userMessage}}</span>
-              </form>
-            </div>
-            <div class="col-sm-12" id="uid">
-              <form [formGroup]="signin" class="example-form">
-                <mat-form-field class="example-full-width">
-                  <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" #bookshelfPassword required>
-                  <mat-icon matSuffix (click)="hide = !hide">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-                  <mat-hint *ngIf="!passwordInput.value">Enter your password</mat-hint>
-                </mat-form-field>
-              </form>
-            </div>
-            <div class="col-sm-12" id="temp">
-              <input type="submit" class="form-control" id="select" value="Sign In" (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
-            </div>
-            <div class="col-sm-12" id="temp">
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="d-none d-lg-block col-md-6" id="book3"></div>
+  <!-- ========================********************************      R O W    of    D E P T O R S   *****************-->
+  <div class="row" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true' || debtorButton != 'ACTIVE')" style="margin-top: 10px; margin-bottom: 20px; ">
+    <div class="col-md-12">
+    <h6>Table of debtors</h6>
+    <mat-form-field>
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Kule u zraku" #input id="event">
+    </mat-form-field>
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSourceBook" matSort #TableDebtorsSort="matSort">
+        <ng-container matColumnDef="bid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
+        </ng-container>
+        <ng-container matColumnDef="uid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
+          <td mat-cell *matCellDef="let row"> {{row.uid}} </td>
+        </ng-container>
+        <ng-container matColumnDef="authorFirstName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.authorFirstName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="authorLastName">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
+          <td mat-cell *matCellDef="let row"> {{row.authorLastName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="bookTitle">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+          <td mat-cell *matCellDef="let row"> {{row.bookTitle}} </td>
+        </ng-container>
+        <ng-container matColumnDef="period">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Period </th>
+          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.period}} </td>
+        </ng-container>
+        <ng-container matColumnDef="issuedDate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Issued date </th>
+          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.issuedDate}} </td>
+        </ng-container>
+        <ng-container matColumnDef="fine">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Fine </th>
+          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.fine}} </td>
+        </ng-container>
+        <ng-container matColumnDef="warning">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Warning </th>
+          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.warning}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedBookColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedBookColumns;"></tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+      <mat-paginator #TableDebtorsSort="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     </div>
-    <!-- ========================      R O W    of    U S E R             -->
-    <div class="row" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
-      <div class="col-sm-12 col-md-4" id="admin3">
-        <h4>Look for the book </h4>
-        <ul class="lista">
+  </div>
+
+  </div>
+<!-- ============================================ r     o     w =============================== L  O O K    F O R    T H E     B O O K-->
+  <div class="row" [hidden]="(bsApproval != 'OK')">
+    <div class="col-md-12">
+      <h6>Look for the book </h6>
+      <mat-form-field>
+        <mat-label>Search</mat-label>
+        <input matInput (keyup)="applyLookBookFilter($event)" placeholder="Ex. Umijeće ratovanja" #input id="event">
+      </mat-form-field>
+      <div class="mat-elevation-z8" style="width: 100%;">
+        <table mat-table [dataSource]="dataSourceLookBook" matSort #TableLookBookSort="matSort">
+          <ng-container matColumnDef="bid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorFirstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.authorFirstName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorLastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
+            <td mat-cell *matCellDef="let row"> {{row.authorLastName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bookTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let row"> {{row.bookTitle}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bookGenre">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Genre </th>
+            <td mat-cell *matCellDef="let row"> {{row.bookGenre}} </td>
+          </ng-container>
+          <ng-container matColumnDef="issuedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Issued date </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.issuedDate}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedLookBookColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedLookBookColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator #TableLookBookPaginator="matPaginator" [pageSizeOptions]="[5,10,15,25,50,100]"></mat-paginator>
+      </div>
+    </div>
+    <!--ul class="lista">
           <input type="text" placeholder="npr. Germinal" #lookTheBook [(ngModel)]="searchTitle">
           <ng-container *ngIf="(lookTheBook.value != '')">
             <li id="li" *ngFor="let loans of filterBooks | category: searchTitle;">
@@ -324,229 +562,48 @@
               </div>
             </li>
           </ng-container>
-        </ul>
-      </div>
-      <div class="col-sm-12 col-md-4" id="admin1">
-        <h4>Library asortiman</h4>
-        <ul class="lista">
-          <li id="lili" *ngFor="let book of parseUserData;">
-            <div class="ngforlili"></div>
-            <div class="bookDescription">
-              <span style="color: white;">{{book.bid}}</span><br>
-              <span style="font-size:16px; color: white;">{{book.bookTitle}}</span><br>
-              {{book.authorLastName}}
-              <span style="font-size: 12px; color: #ed5f5f">{{book.authorFirstName}}</span><br>
-              <span style="color: white;"> {{book.bookGenre}} <br>the book is {{book.issuedDate}}</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <div class="col-sm-12 col-md-4" id="admin3">
-        <h4>Borrowed by {{userFirstName}}&nbsp;{{userLastName}}</h4>
-        <ul class="lista">
-          <li id="li" *ngFor="let loan of parseLoanBooks">
-            <div class="ngfor"></div>
-            <div class="bookDescription">
-              <span style="font-size:10px; color: white; font-weight: bold;">{{loan.bid}}</span><br>
-              {{loan.book}}<br>
-              {{loan.issuedDate}}<br>
-              {{loan.period}} <span style="font-size:10px; color: white; font-weight: bold;">days</span>&nbsp;{{loan.fine}}&nbsp;<span style="font-size:10px; color: white; font-weight: bold;">kn</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-    <!-- ========================      R O W    of    A D M I N             -->
-    <div class="row" style="margin-top: 10px;" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
-      <div class="col-sm-12 col-md-4" id="admin1">
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="Return the book" (click)="returnBookOpenForm()">
-        <div class="addNewBook" [hidden]="(returnBookButton == 'INACTIVE')">
-          <h4>Return the book:</h4>
-          <mat-form-field class="example-full-width"><br>
-            <mat-label>Book ID</mat-label>
-            <input matInput placeholder="npr. 47856214587" #returnedBook required>
-          </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Return" (click)="returnBook(returnedBook.value)">
-        </div>
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="Add new book" (click)="addNewBookOpenForm()">
-        <div class="addNewBook" [hidden]="(newBookButton == 'INACTIVE')">
-          <h4>Add new book:</h4>
-          <form class="example-form">
-            <ul class="lista">
-              <li id="li" *ngFor="let book of existingTitle; let i = index">
-                <div class="ngfor"></div>
-                <div class="bookDescription">
-                  <span style="font-size:10px; color: white; font-weight: bold;">{{existingBooks[i]}}</span> <span style="font-size:10px; color: white; font-weight: bold; display: inline;">&nbsp;{{existingIssuedDate[i]}}</span>
-
-                  <h6>{{book}}</h6>
-                  <h5>{{existingWriterSurname[i]}}</h5>
-                </div>
-              </li>
-            </ul>
-            <mat-form-field class="example-full-width">
-              <mat-label>Book title</mat-label>
-              <input matInput placeholder="npr. Little prince" #bookTitle required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Writer last name</mat-label>
-              <input matInput placeholder="npr. Dostojevski" #bookWriterLastName required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Writer first name</mat-label>
-              <input matInput placeholder="npr. Fjodor Mihajlović" #bookWriterFirstName required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Book genre</mat-label>
-              <input matInput placeholder="npr. selfhelp" #bookGenre required>
-            </mat-form-field>
-            <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
-            <span>{{bookAddedNotification}}</span>
-          </form>
-        </div>
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="Add new user" (click)="addNewUserOpenForm()">
-        <div class="addNewUser" [hidden]="(newUserButton == 'INACTIVE')">
-          <h4>Add new user:</h4>
-          <form class="example-form">
-            <mat-form-field class="example-full-width">
-              <mat-label>Administrator (true/false)</mat-label>
-              <input matInput placeholder="npr. false" #newUserAdmin required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Username</mat-label>
-              <input matInput placeholder="npr. chiwaba" #newUserUsername required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>New password</mat-label>
-              <input matInput placeholder="npr. *******" #newUserPassword required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>First name</mat-label>
-              <input matInput placeholder="npr. Vladimir" #newUserFirstname required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Last name</mat-label>
-              <input matInput placeholder="npr. Putin" #newUserLastName required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Telephone</mat-label>
-              <input matInput placeholder="npr. 10460340513" #newUserTelephone required>
-            </mat-form-field>
-            <mat-form-field class="example-full-width">
-              <mat-label>Address</mat-label>
-              <input matInput placeholder="npr. Russia, Krasnodar" #newUserAddress>
-            </mat-form-field>
-            <input type="submit" class="form-control" id="select" value="Add user"
-              (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value)">
-            <span>{{addNewUserMessage}}</span>
-          </form>
-        </div>
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="Delete user" (click)="deleteUserOpenForm()">
-        <div class="deleteUser" [hidden]="(deleteUserButton == 'INACTIVE')">
-          <br>
-          <h4>Delete user <i class="fa fa-exclamation-triangle" style="color: red;"></i></h4>
-          <form class="example-form">
-            <mat-form-field class="example-full-width"><br>
-              <mat-label>User ID</mat-label>
-              <input matInput placeholder="npr. 47856214587" #deleteUser required>
-            </mat-form-field>
-            <input type="submit" class="form-control" id="select" value="Delete" (click)="deleteUserFunc(deleteUser.value)">
-            <span>{{deleteUserMessage}}</span>
-          </form>
-        </div>
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="See all debtors" (click)="debtorsOpenForm()">
-        <div class="debtors" [hidden]="(debtorButton == 'INACTIVE')">
-          <br>
-          <ul class="lista">
-            <li id="liDebtors" *ngFor="let debt of debtorsList">
-              <span style="font-size:10px; color: white; font-weight: bold;">{{debt}} </span><br>
-            </li>
-          </ul>
-        </div>
-        <hr style="border-top: 1px dashed black">
-      </div>
-      <div class="col-sm-12 col-md-4" id="admin2">
-        <hr style="border-top: 1px dashed black">
-        <h4>User loan status</h4>
-        <hr style="border-top: 1px dashed black">
-        <form class="example-form">
-          <ul class="lista" [hidden]="(userNotFound == '')">
-            <li id="li" style="min-height: 50px; margin-bottom: 10px;">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
-          </ul>
-          <mat-form-field class="example-full-width">
-            <mat-label>User ID</mat-label>
-            <input matInput placeholder="npr. 4578457874" #userLoan required>
-            <span>{{verifyUserNotification}}</span>
-          </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Verify user" (click)='getLoanBooks(userLoan.value)' (click)='verifyUser(userLoan.value)'>
-          <hr style="border-top: 1px dashed black">
-          <mat-form-field class="example-full-width">
-            <mat-label>Book ID</mat-label>
-            <input matInput placeholder="npr. 47856214587" #bookLoan required>
-          </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Loan book" (click)="postLoanBook(userLoan.value, bookLoan.value)" (click)='getLoanBooks(userLoan.value)'>
-          <hr style="border-top: 1px dashed black">
-        </form>
-
-      </div>
-      <div class="col-sm-12 col-md-4" id="admin3">
-        <ul class="lista">
-          <li id="li" *ngFor="let loan of parseLoanBooks">
-            <div class="ngfor"></div>
-            <div class="bookDescription">
-              <span style="font-size:10px; color: white; font-weight: bold;">{{loan.bid}}</span><br>
-              {{loan.book}}<br>
-              {{loan.issuedDate}}<br>
-              {{loan.period}} <span style="font-size:10px; color: white; font-weight: bold;">days</span>&nbsp;{{loan.fine}}&nbsp;<span style="font-size:10px; color: white; font-weight: bold;">kn</span>
-            </div>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div>
-  <a name="contact"></a>
-  <hr><br>
-  <div class="container">
-    <h1>&contact</h1>
-    <div class="row">
-      <div class="col-md-12 col-lg-6 col-xl-6">
-        <form action="/action_page.php">
-          <div class="form-group">
-            <label for="text" style="width: 100px;">Name:</label>
-            <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="text" style="width: 100px;">Surname:</label>
-            <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="email" style="width: 100px;">Email:</label>
-            <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
-          </div>
-          <div class="form-group">
-            <label for="message" style="width: 100px;">Message:</label>
-            <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
-          </div>
-          <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
-        </form>
-      </div><br>
-      <div class="col-md-12 col-lg-6 col-xl-6" id="call"></div>
-    </div>
+        </ul -->
   </div>
 
-  <!-- The core Firebase JS SDK is always required and must be listed first -->
-  <script src="/__/firebase/7.17.2/firebase-app.js"></script>
-  <!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-  <script src="/__/firebase/7.17.2/firebase-analytics.js"></script>
-  <!-- Initialize Firebase -->
-  <script src="/__/firebase/init.js"></script>
+</div>
+<a name="contact"></a>
+<hr><br>
+<div class="container">
+  <h1>&contact</h1>
+  <div class="row">
+    <div class="col-md-12 col-lg-6 col-xl-6">
+      <form action="/action_page.php">
+        <div class="form-group">
+          <label for="text" style="width: 100px;">Name:</label>
+          <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
+        </div>
+        <div class="form-group">
+          <label for="text" style="width: 100px;">Surname:</label>
+          <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
+        </div>
+        <div class="form-group">
+          <label for="email" style="width: 100px;">Email:</label>
+          <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
+        </div>
+        <div class="form-group">
+          <label for="message" style="width: 100px;">Message:</label>
+          <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
+        </div>
+        <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
+      </form>
+    </div><br>
+    <div class="col-md-12 col-lg-6 col-xl-6" id="call"></div>
+  </div>
+</div>
 
-</body>
+<!-- div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <app-user-table></app-user-table>
+
+    </div>
+  </div>
+</div -->
 
 <footer>
   <a href="#text" style="font-weight: bold;"><span style="color: grey; font-size: 14px;">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>

@@ -115,6 +115,24 @@ p {
   background-color: grey;
 }
 
+#formField {
+  font-size: 14px;
+  width: 25%;
+}
+.mat-elevation-z8{
+  width: 100%;
+}
+td, th {
+  width: 5%;
+  font-size: 10px;
+}
+
+#event {}
+
+table {
+  width: 100%;
+}
+
 .example-form {
   min-width: 120px;
   max-width: 300px;
@@ -240,13 +258,14 @@ i {
   padding: 0;
 }
 
-#li, #lili {
+#li {
   margin-top: 20px;
   text-align: left;
   width: 100%;
   background-color: #343a40;
   height: auto;
   min-height: 100px;
+  min-width: 350px;
   list-style-type: none;
   border-radius: 5px;
   padding: 8px;
@@ -262,11 +281,6 @@ i {
   border-radius: 5px;
   padding-left: 25px;
   color: #ed5f5f;
-}
-
-#lili {
-  min-height: 160px;
-  overflow: auto;
 }
 
 #hotel_map{
@@ -367,6 +381,11 @@ footer {
   width: 50%;
 }
 
+#quake {
+  height: 300px;
+  border-radius: 4px;
+}
+
 #book1 {
   background-image: url("bookshelf1.PNG");
   height: 300px;
@@ -402,6 +421,7 @@ footer {
 }
 
 #admin2 {
+  background-image: url('resultsDraving.jpeg');
   overflow: auto;
   height: 500px;
   min-width: 300px;
@@ -411,6 +431,7 @@ footer {
 }
 
 #admin3 {
+  background-image: url('libraryDrawing.jpeg');
   overflow: auto;
   height: 500px;
   background-repeat: no-repeat;
@@ -418,11 +439,29 @@ footer {
   border-radius: 4px;
 }
 
+#bookSearch {
+  overflow: auto;
+  height: 350px;
+}
+
+#bookAsortiman {
+  overflow: auto;
+  height: 500px;
+  min-width: 300px;
+  border-radius: 4px;
+}
+
 .userAutorised {
+  background-image: url('userDrawing.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
   height: 100%;
   width: 100%;
 }
 .adminAutorised {
+  background-image: url('reader.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
   height: 100%;
   width: 100%;
 }
@@ -431,7 +470,7 @@ footer {
   min-height: 50px;
   height: auto;
 }
-.ngfor, .ngforlili, .ngForLoan {
+.ngfor, .ngForLoan {
   min-height:80px;
   max-height: 81px;
   width:100px;
@@ -440,9 +479,7 @@ footer {
   display: inline;
   float: left;
 }
-.ngforlili{
-  margin-top: 30px;
-}
+
 .ngForLoan{
   background-image: url('nookNgForO.png');
 }
@@ -457,12 +494,12 @@ footer {
 }
 .bookDescription {
   min-height: 80px;
-  max-height: 81px;
-  width:180px;
+  width:70%;
+  text-align: center;
   padding-left: 10px;
-  float:left;
-  display: inline;
+  display: inline-block
 }
+
 @media screen and (max-width: 576px) {
   #textarea {
     width: 100%;
@@ -483,8 +520,18 @@ footer {
   #weatherFirst {
     border: none;
   }
-}
 
+  #bookSearch {
+    height: 300px;
+  }
+
+}
+@media screen and (max-width: 992px) {
+  #weatherImage {
+    width: 100%;
+    height: 150px;
+  }
+}
 @media screen and (max-width: 768px) {
   #sesame {
     width: 100%;
@@ -495,6 +542,7 @@ footer {
   #call {
     width: 100%;
     height: 150px;
+    margin-top: 10px;
     background-size: cover;
   }
 
