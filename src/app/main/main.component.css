@@ -1,82 +1,3 @@
-.navbar {
-  padding-left: 12%;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1;
-}
-
-span {
-  font-size: 9px;
-  color: blue;
-}
-
-ul li {
-  font-weight: bold;
-  text-align: center;
-}
-
-ul li a {
-  color: white;
-  padding-left: 10px;
-}
-
-navbar-header a {
-  text-align: center;
-}
-
-.nabvar-brand {
-  font-size: 28px;
-  color: grey;
-}
-
-.navbar-toggler {
-  width: 50px;
-  border-radius: 50%;
-  border: grey 3px solid;
-  background-color: black;
-}
-
-#home1 {
-  background-image: url("springboot.PNG");
-  height: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-}
-
-#home2 {
-  background-image: url("typescript.PNG");
-  height: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-}
-
-#home3 {
-  background-image: url("controller.PNG");
-  height: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-}
-
-#bio {
-  background-color: #F8F8F8;
-}
-
-#psw {
-  width: 200px;
-}
-
-#sesame {
-  height: 300px;
-  background-image: url("opensesame.PNG");
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-}
-
 h1 {
   font-weight: bold;
 }
@@ -93,206 +14,8 @@ p {
   padding-right: 200px;
 }
 
-#boldP {
-  font-weight: bold;
-}
-
-#call {
-  background-image: url("contactme.png");
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 300px;
-  width: 250px;
-  border-radius: 4px;
-}
-
-.weather {
-  margin: 0 auto;
-  height: 30px;
-  color: black;
-  border: solid black 1px;
-  border-radius: 20px;
-  background-color: grey;
-}
-
-#formField {
-  font-size: 14px;
-  width: 25%;
-}
-.mat-elevation-z8{
-  width: 100%;
-}
-td, th {
-  width: 5%;
-  font-size: 10px;
-}
-
-#event {}
-
-table {
-  width: 100%;
-}
-
-.example-form {
-  min-width: 120px;
-  max-width: 300px;
-  width: 100%;
-}
-
-.example-full-width {
-  width: 100%;
-}
-
-.baseImage {
-  height: 100px;
-  width: 100px;
-  border-radius: 15px;
-}
-
-.imageDiv {
-  margin: 25px auto;
-  height: 100px;
-  width: 100px;
-  border-radius: 15px;
-  float: left;
-}
-
-agm-map {
-  height: 300px;
-}
-
-.weatherDescription {
-  margin: 25px auto;
-  height: 100px;
-  width: 200px;
-  border-radius: 15px;
-  float: left;
-}
-
-.line {
-  height: 10px;
-  width: 90%;
-  float: left;
-  border-bottom: 1px solid #bfbbbb;
-}
-
-.temperature {
-  height: 90px;
-  width: 140px;
-  border-radius: 15px;
-  float: left;
-  margin-top: 10px;
-}
-
-.citySelect {
-  border-radius: 5px;
-  font-size: 12px;
-  font-weight: bold;
-  background-color: #8a8aff;
-  height: 25px;
-}
-
-#weatherImage {
-  background-image: url("weatherImage.PNG");
-  background-size: cover;
-  border-radius: 15px;
-  background-color: red;
-}
-
-#textarea {
-  width: 60%;
-}
-
-#temp {
-  font-weight: bold;
-}
-
-#uid {
-  margin-top: 20px;
-}
-
-#select {
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-sizing: border-box;
-  font-weight: bold;
-  background-color: grey;
-  color: white;
-}
-
-
-#amountInput {
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-sizing: border-box;
-  font-weight: bold;
-}
-
-#selectBio {
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-sizing: border-box;
-  font-weight: bold;
-  background-color: grey;
-  color: white;
-}
-
-#slc {
-  margin-left: 150px;
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-sizing: border-box;
-  font-weight: bold;
-}
-
 i {
   font-size: 24px;
-}
-
-.lista {
-  margin: 0;
-  padding: 0;
-}
-
-#li {
-  margin-top: 20px;
-  text-align: left;
-  width: 100%;
-  background-color: #343a40;
-  height: auto;
-  min-height: 100px;
-  min-width: 350px;
-  list-style-type: none;
-  border-radius: 5px;
-  padding: 8px;
-  color: #ed5f5f;
-}
-#liDebtors {
-  margin-top: 2px;
-  text-align: left;
-  width: 100%;
-  background-color: #343a40;
-  height: 30px;
-  list-style-type: none;
-  border-radius: 5px;
-  padding-left: 25px;
-  color: #ed5f5f;
-}
-
-#hotel_map{
-  height: 100%;
-  width: 100%;
-}
-.open {
-  height: 50px;
-  width: 200px;
-  margin-left: 15px;
-  font-size: 18px;
-  -webkit-border-radius: 10px;
 }
 
 input[type=text], input[type=password] {
@@ -305,17 +28,7 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 
-#conv {
-  width: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  box-sizing: border-box;
-}
 
-#weatherFirst {
-  border-right: dashed 1px black;
-  height: 350px;
-}
 
 button {
   background-color: #4CAF50;
@@ -331,16 +44,76 @@ button {
 button:hover {
   opacity: 0.8;
 }
+/*   ********************************************* N A V B A R *********************************/
 
-.cancelbtn {
-  width: auto;
-  padding: 10px 18px;
-  background-color: #f44336;
+.navbar {
+  padding-left: 12%;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1;
 }
 
-.container {
-  padding: 16px;
-  width: 100%;
+.navbar-toggler {
+  width: 50px;
+  background-color: grey;
+  color: black;
+}
+
+ul li {
+  font-weight: bold;
+  text-align: center;
+}
+
+ul li a {
+  color: white;
+  padding-left: 10px;
+}
+
+/*   ********************************************* N A V B A R *********************************/
+
+span {
+  font-size: 9px;
+  color: black;
+}
+
+.fa-github{
+  font-size: 18px;
+}
+/*   ********************************************* S P A N  *********************************/
+/*   ********************************************* H O M E  *********************************/
+
+
+#home1, #home2, #home3 {
+  height: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+#home1 {
+  background-image: url("springboot.PNG");
+}
+
+#home2 {
+  background-image: url("typescript.PNG");
+}
+
+#home3 {
+  background-image: url("controller.PNG");
+}
+
+/*   ********************************************* H O M E  *********************************/
+/*   ********************************************* B I O G R A P H Y  *********************************/
+
+#biographyDiv {
+  background-image: url('bioDrawing.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#psw {
+  width: 200px;
 }
 
 span.psw {
@@ -348,12 +121,49 @@ span.psw {
   padding-top: 16px;
 }
 
-footer {
-  height: 80px;
-  width: 100%;
-  margin: 0 auto;
-  background-color: #25272b;
-  text-align: center;
+#selectBio {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
+}
+
+
+#sesame {
+  height: 300px;
+  background-image: url("opensesame.PNG");
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+#bio {
+  background-color: #F8F8F8;
+}
+
+
+/*   ********************************************* B I O G R A P H Y  *********************************/
+/*   ********************************************* C O N V E R T E R  *********************************/
+
+.content {
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+#boldP {
+  font-weight: bold;
+  padding-left: 0px;
+  margin: 0;
+}
+
+#conv {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
 }
 
 #p {
@@ -361,62 +171,211 @@ footer {
   font-weight: bold;
 }
 
-#clickable {
-  height: 50px;
-  width: 10%;
-  border-radius: 20%;
-  background-color: #25272b;
-  margin: 10px;
-  color: white;
+#pSwapIcon {
+  cursor: pointer;
+}
+
+#slc {
+  margin-left: 150px;
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
   font-weight: bold;
 }
 
-#currencyChart {
-  display: block;
-  width: 60%;
-  margin: 0 auto;
+#amountInput {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
 }
 
-#rooow {
-  width: 50%;
+#submitConverter {
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
 }
-#quake {
-  height: 300px;
-  border-radius: 4px;
+
+#spanConversionResult {
+  font-weight: bolder;
+  font-size: 20px;
+  color: red;
 }
-#contactDrawing {
-  background-image: url('contactDrawing.jpeg');
+#spanStatistics {
+  font-weight: bold;
+  font-size: 14px;
+  color: grey;
+}
+/*   ********************************************* C O N V E R T E R  *********************************/
+
+/*   ********************************************* W E A T H E R  *********************************/
+
+#weatherInputRow {
+  margin-bottom: 10px;
+}
+
+.example-form {
+  min-width: 120px;
+  max-width: 300px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+#weatherRow {
+  background-image: url('weatherDrawing.jpeg');
   background-size: contain;
   background-repeat: no-repeat;
 }
-#formBackground {
-  background-image: url('authDrawing.jpeg');
-  background-size: contain;
-  background-repeat: no-repeat;
+
+#weatherSecond {
+  border-right: dashed 1px black;
 }
 
-.mat-row:nth-child(even){
-    background-color: white;
+.imageDiv {
+  margin: 25px auto;
+  height: 100px;
+  width: 100px;
+  border-radius: 15px;
+  float: left;
 }
 
-.mat-row:nth-child(odd){
-    background-color: #eff5e1;
+.baseImage {
+  height: 100px;
+  width: 100px;
+  border-radius: 15px;
 }
-mat-cell.red {
-    background-color: #edada8;
-    align-self: stretch;
-    line-height: 48px;
-    color: green;
+
+#spanObservationWeather {
+  font-weight: normal;
+  font-size: 9px;
+  color: grey;
 }
+
+.forecast {
+  height: 90px;
+  width: 140px;
+  border-radius: 15px;
+  float: left;
+  margin-top: 10px;
+}
+
+#h1Temperature {
+  font-size: 50px;
+  color: black;
+  font-weight: normal;
+  padding-top: 15px;
+  padding-left: 10px;
+}
+
+.weatherDescription, .feelsLike {
+  margin: 25px auto;
+  height: 100px;
+  width: 200px;
+  border-radius: 15px;
+  float: left;
+  overflow: hidden;
+}
+
+.feelsLike {
+  height: 100%;
+  padding-top: 50px;
+}
+
+#pWeatherDescription {
+  color: darkgray;
+  font-weight: bold;
+}
+
+#pFeelsLike {
+  color: darkgray;
+  font-weight: bold;
+  font-size: 22px;
+}
+
+#h1Weather {
+  font-size: 30px;
+  color: black;
+  font-weight: normal;
+  padding-left: 40px;
+}
+
+#weatherImage {
+  background-image: url("weatherImage.PNG");
+  background-size: cover;
+  border-radius: 15px;
+  background-color: red;
+}
+
+
+/*   ********************************************* W E A T H E R  *********************************/
+
+/*   ********************************************* E A R T H Q U A K E  *********************************/
 
 #quakeDiv {
   height: 300px;
   border-radius: 4px;
   background-size: contain;
   background-repeat: no-repeat;
+  overflow: auto;
+  margin-bottom: 10px;
 }
 
-#book2 {
+.lista {
+  margin: 0;
+  padding: 0;
+}
+
+#spanMagnitude {
+  color: #f03f32;
+  font-size: 24px;
+}
+
+.lista span {
+  color: white;
+}
+
+#liQuake {
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+  background-color: #343a40;
+  height: auto;
+  min-height: 100px;
+  min-width: 350px;
+  list-style-type: none;
+  border-radius: 5px;
+  padding: 8px;
+  color: #ed5f5f;
+}
+
+#quake {
+  height: 300px;
+  border-radius: 4px;
+}
+
+#hotel_map{
+  height: 100%;
+  width: 100%;
+}
+
+agm-map {
+  height: 300px;
+}
+
+/*   ********************************************* E A R T H Q U A K E  *********************************/
+
+/*   ********************************************* B O O K S H E L F  *********************************/
+
+#signInBookshelf {
   height: 300px;
   min-width: 300px;
   background-repeat: no-repeat;
@@ -424,12 +383,77 @@ mat-cell.red {
   border-radius: 4px;
 }
 
-#book3 {
+#signInBookshelf {
+  height: 300px;
+  min-width: 300px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 4px;
+}
+
+#databaseImage {
   background-image: url("bookshelf2.PNG");
   height: 300px;
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 4px;
+}
+
+.adminAutorised {
+  background-image: url('reader.jpeg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+}
+
+.userAutorised {
+  background-image: url('userDrawing.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
+  height: 100%;
+  width: 100%;
+}
+
+#borderLibrary {
+  border-top: 1px dashed black;
+}
+
+#select, #selectSignIn{
+  width: 200px;
+  border: 1px solid #ccc;
+  border-radius: 15px;
+  box-sizing: border-box;
+  font-weight: bold;
+  background-color: grey;
+  color: white;
+}
+
+#formBackground {
+  background-image: url('authDrawing.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#signInButton {
+  font-weight: bold;
+}
+
+#selectSignIn {
+  display: inline-flex;
+  align-items: center;
+  padding-left: 70px;
+}
+
+#borrowedTable {
+  overflow: auto;
+  height: 350px;
+}
+
+#bookshelfAdminRow {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  border-bottom: solid black 1px;
 }
 
 #admin1 {
@@ -460,37 +484,31 @@ mat-cell.red {
   border-radius: 4px;
 }
 
-#bookSearch {
-  overflow: auto;
-  height: 350px;
-}
-
-#bookAsortiman {
-  overflow: auto;
-  height: 500px;
-  min-width: 300px;
-  border-radius: 4px;
-}
-
-.userAutorised {
-  background-image: url('userDrawing.jpeg');
-  background-repeat: no-repeat;
-  background-size: contain;
-  height: 100%;
-  width: 100%;
-}
-.adminAutorised {
-  background-image: url('reader.jpeg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  height: 100%;
-  width: 100%;
-}
-.addNewUser .addNewBook .deleteUser .debtors{
+.addNewUser .addNewBook .deleteUser .debtors .returnTheBook{
   width: 100%;
   min-height: 50px;
   height: auto;
 }
+
+#li, #liLoanStatus {
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+  background-color: #343a40;
+  height: auto;
+  min-height: 100px;
+  min-width: 350px;
+  list-style-type: none;
+  border-radius: 5px;
+  padding: 8px;
+  color: #ed5f5f;
+}
+
+#liLoanStatus {
+  min-height: 50px;
+  margin-bottom: 10px;
+}
+
 .ngfor {
   min-height:80px;
   max-height: 81px;
@@ -499,21 +517,6 @@ mat-cell.red {
   background-size: cover;
   display: inline;
   float: left;
-}
-#biographyDiv {
-    background-image: url('bioDrawing.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-}
-
-.content {
-  background-size: cover;
-  background-repeat: no-repeat;
-}
-#weatherRow {
-  background-image: url('weatherDrawing.jpeg');
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .bookDescription {
@@ -524,38 +527,113 @@ mat-cell.red {
   display: inline-block
 }
 
-@media screen and (max-width: 576px) {
-  #textarea {
+.bookDescription span {
+  font-size:10px;
+  color: white;
+  font-weight: bold;
+}
+
+#debtorRow {
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+
+#thNarrow {
+  width: 5%;
+}
+
+.mat-row:nth-child(even){
+  background-color: white;
+}
+
+.mat-row:nth-child(odd){
+  background-color: #eff5e1;
+}
+
+mat-cell.red {
+  background-color: #edada8;
+  align-self: stretch;
+  line-height: 48px;
+  color: green;
+}
+
+.mat-elevation-z8{
+  width: 100%;
+}
+
+td, th {
+  width: 5%;
+  font-size: 10px;
+}
+
+table {
     width: 100%;
-  }
+}
 
-  #clickable {
-    margin: 0px;
-  }
+/*   ********************************************* B O O K S H E L F  *********************************/
 
-  #rooow {
-    width: 90%;
-  }
+/*   ********************************************* C O N T A C T  *********************************/
 
-  #currencyChart {
-    width: 95%;
-  }
+#contactDrawing {
+  background-image: url('contactDrawing.jpeg');
+  background-size: contain;
+  background-repeat: no-repeat;
+}
 
-  #weatherFirst {
-    border: none;
-  }
+#contactLabel {
+  width: 100px;
+}
 
-  #bookSearch {
+#contactInput {
+  width: 200px;
+}
+
+#textarea {
+  width: 60%;
+}
+
+#contactImage {
+  background-image: url("contactme.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 300px;
+  width: 250px;
+  border-radius: 4px;
+}
+
+
+/*   ********************************************* C O N T A C T  *********************************/
+
+/*   ********************************************* F O O T E R  *********************************/
+
+#footerA {
+  font-weight: bold;
+}
+#footerSpan {
+  color: grey;
+  font-size: 14px;
+}
+
+/*   ********************************************* F O O T E R  *********************************/
+
+footer {
+  height: 80px;
+  width: 100%;
+  margin: 0 auto;
+  background-color: #25272b;
+  text-align: center;
+}
+
+/*   ********************************************* F O O T E R  *********************************/
+/*   ********************************************* M E D I A    Q U E R Y  *********************************/
+
+@media screen and (max-width: 576px) {
+  #borrowedTable {
     height: 300px;
   }
+}
 
-}
-@media screen and (max-width: 992px) {
-  #weatherImage {
-    width: 100%;
-    height: 150px;
-  }
-}
+
 @media screen and (max-width: 768px) {
   #sesame {
     width: 100%;
@@ -563,15 +641,11 @@ mat-cell.red {
     margin-top: 10px;
   }
 
-  #call {
+  #contactImage {
     width: 100%;
     height: 150px;
     margin-top: 10px;
     background-size: cover;
-  }
-
-  #rooow {
-    width: 90%;
   }
 
   #textarea {
@@ -581,14 +655,6 @@ mat-cell.red {
   #weatherImage {
     width: 100%;
     height: 150px;
-  }
-
-  #weatherFirst {
-    border: none;
-  }
-
-  #currencyChart {
-    width: 95%;
   }
 
   #home1, #home2, #home3 {
@@ -634,15 +700,69 @@ mat-cell.red {
     width: 80%;
   }
 
-  .obrazac {
-    width: 100%;
-  }
-
-  .center {
-    width: 90%;
-  }
-
   #li {
     font-size: 10px;
   }
+
+  #liQuake {
+    font-size: 10px;
+  }
 }
+
+@media screen and (max-width: 992px) {
+  #weatherImage {
+    width: 100%;
+    height: 150px;
+  }
+}
+
+/*
+.checkmark__circle {
+  stroke-dasharray: 66;
+  stroke-dashoffset: 66;
+  stroke-width: 1;
+  stroke-miterlimit: 10;
+  stroke: #7ac142;
+  fill: none;
+  animation: stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  display: block;
+  stroke-width: 6;
+  stroke: #fff;
+  stroke-miterlimit: 10;
+  margin: 10% auto;
+  box-shadow: inset 0px 0px 0px #7ac142;
+  animation: fill .4s ease-in-out .4s forwards, scale .3s ease-in-out .9s both;
+}
+
+.checkmark__check {
+  transform-origin: 50% 50%;
+  stroke-dasharray: 48;
+  stroke-dashoffset: 48;
+  animation: stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+}
+
+@keyframes stroke {
+  100% {
+    stroke-dashoffset: 0;
+  }
+}
+@keyframes scale {
+  0%, 100% {
+    transform: none;
+  }
+  50% {
+    transform: scale3d(1.1, 1.1, 1);
+  }
+}
+@keyframes fill {
+  100% {
+    box-shadow: inset 0px 0px 0px 30px #7ac142;
+  }
+}
+*/

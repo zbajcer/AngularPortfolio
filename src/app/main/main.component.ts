@@ -137,7 +137,7 @@ export class MainComponent implements OnInit {
       crControl: [1],
       crEndControl: [1]
     });
-    this.bookshelfAuth('zbajcer', 'opensesame');
+    //this.bookshelfAuth('zbajcer', 'opensesame');
 
   }
 
@@ -188,8 +188,6 @@ export class MainComponent implements OnInit {
 
   startSwap: any;
   endSwap: any;
-  valutaEndView: any = 'HRK';
-  valutaSwapView: any = 'HRK';
   swapOptions(firstOption: any, secondOption: any, amount: any) {
     for (let i = 0; i < this.parsedJson.length; i++) {
       if (firstOption == this.parsedJson[i].Srednji) {
@@ -207,7 +205,7 @@ export class MainComponent implements OnInit {
       crControl: [this.startSwap],
       crEndControl: [this.endSwap]
     })
-    this.calculation(this.startSwap, this.endSwap, amount, 'true');
+    this.calculation(this.startSwap, this.endSwap, amount);
     this.firstSelectValues(this.jedinicaFirst, this.valutaStart);
     this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
   }
@@ -226,8 +224,14 @@ export class MainComponent implements OnInit {
     this.jedinicaSecond = jedinica;
   }
 
+  valutaEndView: string = 'HRK';
   rezultat: any = 0;
-  calculation(srednjiTecajPrvi: number, srednjiTecajDrugi: number, vrijednost: number, swap: any) {
+  calculation(srednjiTecajPrvi: number, srednjiTecajDrugi: number, vrijednost: number) {
+    for (let i = 0; i < this.parsedJson.length; i++) {
+      if (srednjiTecajDrugi == this.parsedJson[i].Srednji) {
+        this.valutaEndView = this.parsedJson[i].Valuta;
+      }
+    }
     if (vrijednost == 0) {
       this.rezultat = 0.00;
     }
@@ -238,11 +242,17 @@ export class MainComponent implements OnInit {
         this.rezultat = 0;
       }
     }
-    if (swap != 'true') {
-      this.postRequest();
-    }
+    this.postRequest();
     this.getAllStatistics(7, 7, this.valutaStart);
   }
+
+
+  selectedCode: any;
+
+onChangeCode(code: any) {
+   this.selectedCode = code;
+   console.log(this.selectedCode)
+}
 
   startValueChart: any = [];
   parser: any;
@@ -318,32 +328,38 @@ export class MainComponent implements OnInit {
   humidityWeather: any;
   wind_speedWeather: any;
   queryWeather: any;
-
+  weatherFailMessage: string = '';
   weatherCity(city: any) {
     this.data.getWeatherResponse(city).subscribe((data: any) => {
-      this.parseWeather = JSON.parse(JSON.stringify(data));
-      this.parseWeather.map((item: any) => {
-        this.regionWeather = item.region;
-        this.queryWeather = item.query;
-        this.isDayWeather = item.isDay;
-        this.temperatureWeather = item.temperature;
-        this.wind_speedWeather = item.windSpeed;
-        this.wind_directionWeather = item.windDirection;
-        this.humidityWeather = item.humidity;
-        this.uvWeather = item.uvIndex;
-        this.visibilityWeather = item.visibility;
-        this.observationWeather = item.observationTime;
-        this.feelslikeWeather = item.feelsLike;
-        this.descriptionWeather = item.description;
-        this.pressureWeather = item.pressure;
-        this.precipWeather = item.precipitation;
-        this.cloudcoverWeather = item.cloudcover;
-        this.weatherIconWeather = item.weatherIcon;
-      });
-      let imageUrl = this.weatherIconWeather;
-      this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {
-        this.base64Image = 'data:image/jpg;base64,' + base64data;
-      });
+      if(data != null){
+        this.weatherFailMessage = '';
+        this.parseWeather = JSON.parse(JSON.stringify(data));
+        this.parseWeather.map((item: any) => {
+          this.regionWeather = item.region;
+          this.queryWeather = item.query;
+          this.isDayWeather = item.isDay;
+          this.temperatureWeather = item.temperature;
+          this.wind_speedWeather = item.windSpeed;
+          this.wind_directionWeather = item.windDirection;
+          this.humidityWeather = item.humidity;
+          this.uvWeather = item.uvIndex;
+          this.visibilityWeather = item.visibility;
+          this.observationWeather = item.observationTime;
+          this.feelslikeWeather = item.feelsLike;
+          this.descriptionWeather = item.description;
+          this.pressureWeather = item.pressure;
+          this.precipWeather = item.precipitation;
+          this.cloudcoverWeather = item.cloudcover;
+          this.weatherIconWeather = item.weatherIcon;
+        });
+        let imageUrl = this.weatherIconWeather;
+        this.getBase64ImageFromURL(imageUrl).subscribe(base64data => {
+          this.base64Image = 'data:image/jpg;base64,' + base64data;
+        });
+      }
+      else {
+        this.weatherFailMessage = '*City not found or bad spelling';
+      }
     })
   }
 
@@ -460,7 +476,6 @@ export class MainComponent implements OnInit {
               })
               if (this.userUsername == uname && this.userPassword == psw) {
                 this.bsApproval = 'OK';
-                this.getAllBooksFromDatabase();
                 if (this.bsAdmin != 'true') {
                   this.getLoanBooks(this.authenticationUser)
                   this.updateBorrowedTable(this.authenticationUser)
@@ -481,57 +496,14 @@ export class MainComponent implements OnInit {
     this.updateDebtorTable();
   }
 
-  parseUserData: any;
-  filterBooks: any = [];
-  debtorsList: any = [];
-  returnValue: any = [];
-  getAllBooksFromDatabase(): BooksData[] { //all books from Bookshelf
-    this.filterBooks.splice(0, this.filterBooks.length);
-    this.debtorsList.splice(0, this.debtorsList.length);
-    this.returnValue.splice(0, this.returnValue.length);
-    this.data.getBooks().subscribe((data: any) => {
-      this.parseUserData = JSON.parse(JSON.stringify(data));
-      this.parseUserData.map((item: any) => {
-        if (item.fine != 0) {
-          this.returnValue.push(
-            {
-              uid: item.uid,
-              bid: item.bid,
-              bookTitle: item.bookTitle,
-              authorLastName: item.authorLastName,
-              authorFirstName: item.authorFirstName,
-              issuedDate: item.issuedDate,
-              period: item.period,
-              fine: item.fine,
-              warning: item.warning
-            }
-          );
-        }
-        this.filterBooks.push(item.bookTitle + ",          " + item.authorLastName + " " + item.authorFirstName + "          " + item.bid + ", " + item.issuedDate);
-        if (item.fine != '0' && item.fine != null) {
-          this.debtorsList.push("UID:" + item.uid + "  BID:" + item.bid + "      " + item.fine + "kn   (" + item.period + " days)");
-        }
-      })
-      this.parseUserData.sort(function(a, b) {
-        return a.authorLastName.toLowerCase() > b.authorLastName.toLowerCase();
-      })
-    })
-    this.updateBookTable();
-    this.updateDebtorTable();
-    return this.returnValue;
-  }
-
-  parseLoanBooks: any = '';
+  parseLoanBooks: any;
   verifyUserNotification: any;
   userDebit: number = 0;
   pipeList: any = [];
   getLoanBooks(userID: any) { //just books loaned by user
     this.userDebit = 0;
     if (userID == '') {
-      this.verifyUserNotification = '*This field if required';
-    } else if (userID == '000000000'){
-      this.verifyUserNotification = '';
-      this.parseLoanBooks = '';
+      this.verifyUserNotification = '*This field is required';
     } else {
       this.verifyUserNotification = '';
       this.data.getLoanBooks(userID).subscribe((data: any) => {
@@ -597,7 +569,6 @@ export class MainComponent implements OnInit {
       });
     }
     this.updateBookTable();
-    this.updateDebtorTable();
   }
 
   addNewUserMessage: any;
@@ -640,11 +611,9 @@ export class MainComponent implements OnInit {
         this.loanBookMessage = '*Borowed to user!';
         this.bookLoanInput = '';
       }
-      this.getAllBooksFromDatabase();
       this.getLoanBooks(this.userLoanInput);
     })
     this.updateBookTable();
-    this.updateDebtorTable();
   }
 
   returnBookNotification: any = '';
@@ -691,11 +660,9 @@ export class MainComponent implements OnInit {
     }
     if (button == 'debtors') {
       if (this.debtorButton == 'INACTIVE') {
-        this.getAllBooksFromDatabase();
         this.debtorButton = 'ACTIVE';
       } else {
         this.debtorButton = 'INACTIVE';
-        this.debtorsList.splice(0, this.debtorsList.length)
       }
     }
     if (button == 'returnBook') {
@@ -844,4 +811,5 @@ export class MainComponent implements OnInit {
     }
   }
   //============================================================================== C O N T A C T  F O R M
+
 }

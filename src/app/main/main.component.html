@@ -5,7 +5,9 @@
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a class="navbar-brand" href="#">zoran bajcer &nbsp;&nbsp;&nbsp;<i class="fa fa-spinner"></i></a>
-  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
+          data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+          aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div [ngbCollapse]="!isNavbarCollapsed" class="navbar-collapse" id="navbarSupportedContent">
@@ -17,9 +19,15 @@
       <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
       <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
       <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
-      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github" style="font-size: 18px;"></i></a></li>
+      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank"
+                  (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github"></i></a></li>
     </ul>
   </div>
+
+<!--  /*   ********************************************* N A V B A R *********************************/-->
+
+<!--  /*   ********************************************* H O M E  *********************************/-->
+
 </nav><a name="home"></a>
 <br><br><br>
 <div class="container">
@@ -32,13 +40,19 @@
 </div><a name="biography"></a>
 <hr><br>
 <div class="container">
+<!--  /*   ********************************************* H O M E  *********************************/-->
+
+<!--  /*   ********************************************* B I O G R A P H Y  *********************************/-->
+
   <h1>&biography</h1>
   <div class="row">
     <div class="col-sm-12 col-lg-6" id="biographyDiv">
       <label for="autorithy">Please enter a password to unlock biography:</label>
       <br><input type="password" class="form-control" id="psw" #bioPsw><br>
-      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval == 'OK')" class="form-control" (click)="PasswordAutorisation(bioPsw.value)" value="Submit">
-      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval != 'OK')" class="form-control" (click)="(approval = 'false')" value="Hide">
+      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval == 'OK')" class="form-control"
+                          (click)="PasswordAutorisation(bioPsw.value)" value="Submit">
+      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval != 'OK')" class="form-control"
+                          (click)="(approval = 'false')" value="Hide">
     </div>
     <div class="col-sm-12 col-lg-6" id="sesame">
     </div>
@@ -78,6 +92,10 @@
   <br>
   <br>
   <hr><br>
+  <!--/*   ********************************************* B I O G R A P H Y  *********************************/-->
+
+<!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
+
 </div><a name="converter"></a>
 <br>
 <hr><br>
@@ -86,96 +104,114 @@
   <div class="row">
     <div class="col-md-12 col-lg-6">
       <div class="content" role="main">
-        <p style="padding-left: 0px;" id="boldP">Choose rate date:</p>
-        <input class="form-control" id="conv" type="date" [(ngModel)]="dt" (change)='sendDateToService(dt)' (change)='getConverterData()'>
-        <p id="p">Start value:</p>
+        <p id="boldP">Choose rate date:</p>
+        <input class="form-control" id="conv" type="date" [(ngModel)]="dt"
+                  (change)='sendDateToService(dt)'
+                  (change)='getConverterData()'>
         <form [formGroup]="crForm">
-          <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl">
-            <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,30,a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
+          <p id="p">Start value:</p>
+          <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl"
+                    (change)="onChangeCode($event.target.value)">
+            <option *ngFor="let a of parsedJson;" class="form-control"
+                    (click)="firstSelectValues(a.Jedinica, a.Valuta)"
+                    (click)="getAllStatistics(7,7,a.Valuta)"
+                    [(value)]="a.Srednji">{{a.SelectOption}}</option>
           </select>
-          <p id="p">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter" style="cursor: pointer;" (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrows-v"></i></a></p>
+          <p id="pSwapIcon">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter"
+                        (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrows-v"></i></a></p>
           <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
-            <option [ngValue]="a" *ngFor="let a of parsedJson;" class="form-control" (click)="secondSelectValues(a.Jedinica, a.Valuta)" [(value)]="a.Srednji">{{a.SelectOption}}</option>
+            <option *ngFor="let a of parsedJson;" class="form-control"
+                        (click)="secondSelectValues(a.Jedinica, a.Valuta)"
+                        [(value)]="a.Srednji">{{a.SelectOption}}</option>
           </select>
         </form>
-        <p style="padding-left: 0px;" id="boldP">Conversion amount:</p>
+        <p id="boldP">Conversion amount:</p>
         <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
-        <input type="submit" name="btn" class="form-control" id="select" value="Calculate" (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value, 'false')">
-        <p style=" margin: 0; padding: 0;" id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp; <span style="font-weight: bolder; font-size: 20px; color: red;">{{rezultat}} {{valutaEndView}}</span></p>
+        <input type="submit" name="btn" class="form-control" id="submitConverter" value="Calculate"
+                    (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value)">
+        <p id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp;
+                    <span id="spanConversionResult">{{rezultat}} {{valutaEndView}}</span></p>
       </div>
     </div>
     <div class="col-md-12 col-lg-6">
-      <div style="display: block">
-        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
+      <div>
+        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2"
+                          [options]="barChartOptions2" [colors]="barChartColors2"
+                          [legend]="barChartLegend2" [chartType]="barChartType2">
         </canvas>
       </div>
       <hr>
-      <p><span style="font-weight: bold; font-size: 12px;">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
-      <p><span style="font-weight: bold; font-size: 12px;">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
+      <p><span id="spanStatistics">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
+      <p><span id="spanStatistics">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
       <hr>
     </div>
   </div>
+<!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
+
+<!--  /*   ********************************************* W E A T H E R  *********************************/-->
+
 </div><a name="weather"></a>
 <br>
 <hr><br>
 <div class="container">
   <h1>&weather</h1>
-  <div class="row" style="margin-bottom: 10px;">
+  <div class="row" id="weatherInputRow">
     <div class="col-sm-12">
       <form class="example-form">
         <mat-form-field class="example-full-width">
           <mat-label>City:</mat-label>
           <input matInput placeholder="npr. London" name="grad" #cityWeather (change)='weatherCity(cityWeather.value)'>
         </mat-form-field>
+        <span>{{weatherFailMessage}}</span>
       </form>
     </div>
   </div>
   <div class="row" id="weatherRow">
-    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2">
       <h2>{{queryWeather}}</h2>
       <div class="imageDiv">
         <img [src]="base64Image" class="baseImage" />
-        <span style="font-weight: normal; font-size: 9px; color: grey;">&nbsp;&nbsp;{{observationWeather}}</span>
+        <span id="spanObservationWeather">&nbsp;&nbsp;{{observationWeather}}</span>
       </div>
-      <div class="temperature">
-        <h1 style="font-size: 50px; color: black; font-weight: normal; padding-top: 15px; padding-left: 10px;">{{temperatureWeather}}&#8451;</h1>
+      <div class="forecast">
+        <h1 id="h1Temperature">{{temperatureWeather}}&#8451;</h1>
       </div>
     </div>
-    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst">
-      <div class="weatherDescription" style="overflow: hidden;">
-        <p style="color: darkgray; font-weight: bold;">{{descriptionWeather}}</p>
-      </div>
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherSecond">
       <div class="weatherDescription">
+        <p id="pWeatherDescription">{{descriptionWeather}}</p>
+      </div>
+      <div class="feelsLike">
         <p>Feels like</p>
-        <p style="color: darkgray; font-weight: bold; font-size: 22px;">{{feelslikeWeather}}&#8451;</p>
+        <p id="pFeelsLike">{{feelslikeWeather}}&#8451;</p>
       </div>
     </div>
-    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
-      <div class="temperature">
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+      <div class="forecast">
         <p>Wind direction</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 40px;">{{wind_directionWeather}}</h1>
+        <h1 id="h1Weather">{{wind_directionWeather}}</h1>
       </div>
-      <div class="temperature">
+      <div class="forecast">
         <p>UV&nbsp;index</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{uvWeather}}</h1>
+        <h1 id="h1Weather">{{uvWeather}}</h1>
       </div>
-      <div class="temperature">
+      <div class="forecast">
         <p>Pressure</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 30px;">{{pressureWeather}}<span>mb</span></h1>
+        <h1 id="h1Weather">{{pressureWeather}}<span>mb</span></h1>
       </div>
     </div>
-    <div class="col-6 col-sm-6 col-md-3 col-lg-2" id="weatherFirst" style="border: none;">
-      <div class="temperature">
+    <div class="col-6 col-sm-6 col-md-3 col-lg-2">
+      <div class="forecast">
         <p>Wind speed</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{wind_speedWeather}}<span>km/h</span></h1>
+        <h1 id="h1Weather">{{wind_speedWeather}}<span>km/h</span></h1>
       </div>
-      <div class="temperature">
+      <div class="forecast">
         <p>Humidity</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{humidityWeather}}<span>%</span></h1>
+        <h1 id="h1Weather">{{humidityWeather}}<span>%</span></h1>
       </div>
-      <div class="temperature">
+      <div class="forecast">
         <p>Cloudcover</p>
-        <h1 style="font-size: 30px; color: black; font-weight: normal; padding-left: 50px;">{{cloudcoverWeather}}<span>%</span></h1>
+        <h1 id="h1Weather">{{cloudcoverWeather}}<span>%</span></h1>
       </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4" id="weatherImage">
@@ -184,19 +220,22 @@
   <br>
   <br>
 </div><br>
+<!--/*   ********************************************* W E A T H E R  *********************************/ -->
+
+<!-- /*   ********************************************* E A R T H Q U A K E  *********************************/-->
 <a name="earthquake"></a>
 <hr><br>
 <div class="container">
   <h1>&earthquake</h1>
   <div class="row">
-    <div class="col-sm-12 col-lg-6" id="quakeDiv" style="overflow: auto; margin-bottom: 10px;">
+    <div class="col-sm-12 col-lg-6" id="quakeDiv">
       <ul class="lista">
-        <li id="li" *ngFor="let place of quakePlace">
+        <li id="liQuake" *ngFor="let place of quakePlace">
           <a href="#earthquake" (click)='myEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
-            <span style="color: #f03f32; font-size: 24px;">{{place.magnitude}}</span><span style="color: white;">&nbsp;richter</span>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span style="color: white;">&nbsp;km of depth&nbsp;&nbsp;&nbsp;
+            <span id="spanMagnitude">{{place.magnitude}}</span><span>&nbsp;richter</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span>&nbsp;km of depth&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color: white;">alert: </span>{{place.alert}}</span></a>
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>alert: </span>{{place.alert}}</span></a>
         </li>
       </ul>
     </div>
@@ -208,47 +247,48 @@
 <hr>
 <a name="bookshelf"></a><br><br>
 <br>
+<!-- /*   ********************************************* E A R T H Q U A K E  *********************************/ -->
+
+<!-- /*   ********************************************* B O O K S H E L F  *********************************/ -->
+
 <div class="container">
   <h1>&bookshelf</h1><br>
-
-
-
-
   <div class="row">
-
-
-    <div class="col-sm-12 col-md-4" id="book2">
+    <div class="col-sm-12 col-md-4" id="signInBookshelf">
       <div class="adminAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
         <h2>admin: {{authenticationUser}}</h2>
-        <hr style="border-top: 1px dashed black">
+        <hr id="borderLibrary">
         <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
-        <hr style="border-top: 1px dashed black">
+        <hr id="borderLibrary">
         <input type="submit" class="form-control" id="select" value="Sign Out"
-              (click)='bsApproval = "false"'
-              (click)='loading = false'
-              (click)='userLoanInput = ""'
-              (click)="getLoanBooks('000000000')">
+                        (click)="(bsApproval = 'false')"
+                        (click)="(loading = false)"
+                        (click)="(userLoanInput = '')"
+                        (click)="getLoanBooks('123')">
       </div>
       <div class="userAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
         <h2>User: {{authenticationUser}}</h2>
-        <hr style="border-top: 1px dashed black">
+        <hr id="borderLibrary">
         <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
-        <hr style="border-top: 1px dashed black">
+        <hr id="borderLibrary">
         <h6>Overall debit is {{userDebit}} kn</h6>
-        <hr style="border-top: 1px dashed black">
-        <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"' (click)='loading = false' (click)="getLoanBooks('000000000')">
+        <hr id="borderLibrary">
+        <input type="submit" class="form-control" id="select" value="Sign Out"
+                        (click)='bsApproval = "false"'
+                        (click)='loading = false'
+                        (click)="getLoanBooks('123')">
       </div>
       <form [hidden]="(bsApproval == 'OK')" action="/action_page.php" method="post" id="formBackground">
         <div class="container">
-          <div class="col-sm-12" id="uid">
+          <div class="col-sm-12">
             <form class="example-form">
               <mat-form-field class="example-full-width">
                 <mat-label>Username:</mat-label>
-                <input matInput placeholder="npr. Chuwaba Chuwaba" #username required>
+                <input matInput placeholder="npr. James Carrey" #username>
               </mat-form-field>
             </form>
           </div>
-          <div class="col-sm-12" id="uid">
+          <div class="col-sm-12">
             <form [formGroup]="signin" class="example-form">
               <mat-form-field class="example-full-width">
                 <input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password" #bookshelfPassword required>
@@ -257,9 +297,10 @@
               </mat-form-field>
             </form>
           </div>
-          <div class="col-sm-12" id="temp">
+          <div class="col-sm-12" id="signInButton">
             <span>{{userMessage}}</span>
-            <button type="submit" class="form-control" id="select" style="display: inline-flex; align-items: center; padding-left: 50px;;" value="Sign In" (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
+            <button type="submit" class="form-control" id="selectSignIn" value="Sign In"
+                                      (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
               Sign in&nbsp;&nbsp;&nbsp;&nbsp;
               <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
             </button>
@@ -267,14 +308,16 @@
         </div>
       </form>
     </div>
-
-
-    <div class="col-sm-12 col-md-8" id="book3" [hidden]="(bsApproval == 'OK' && bsAdmin == 'false')"></div>
-
-    <div class="col-sm-12 col-md-8" id="bookSearch" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
+    <div class="col-sm-12 col-md-8" id="databaseImage" [hidden]="(bsApproval == 'OK' && bsAdmin == 'false')"></div>
+    <!-- ========================   ============================================================   R O W    of    U S E R             -->
+    <!-- ========================   ============================================================   R O W    of    U S E R             -->
+    <!-- ========================   ============================================================   R O W    of    U S E R             -->
+    <!-- ========================   ============================================================   R O W    of    U S E R             -->
+    <!-- ========================   ============================================================   T A B L E   OF  B O R R O W E D   B O O K S             -->
+    <div class="col-sm-12 col-md-8" id="borrowedTable" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
       <h4>Borrowed by {{userFirstName}}&nbsp;{{userLastName}}</h4>
       <div class="mat-elevation-z8">
-        <table mat-table [dataSource]="dataSourceBorrowed" matSort     #TableBorrowedSort="matSort">
+        <table mat-table [dataSource]="dataSourceBorrowed" matSort #TableBorrowedSort="matSort">
           <ng-container matColumnDef="bid">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
             <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
@@ -313,19 +356,16 @@
       </div>
     </div>
   </div>
-
-
-
-
-  <!-- ========================      R O W    of    U S E R             -->
-
-
-  <!-- ========================      R O W    of    A D M I N             -->
-  <div class="row" style="margin-top: 10px; margin-bottom: 20px; border-bottom: solid black 1px;" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
+  <!-- ========================   ========================     R O W    of    A D M I N             -->
+  <!-- ========================   ========================     R O W    of    A D M I N             -->
+  <!-- ========================   ========================     R O W    of    A D M I N             -->
+  <!-- ========================   ========================     R O W    of    A D M I N             -->
+  <!-- ========================    ========================    R O W    of    A D M I N             -->
+  <div class="row" id="bookshelfAdminRow" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true')">
     <div class="col-sm-12 col-md-4" id="admin1">
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <input type="submit" class="form-control" id="select" value="Return the book" (click)="openFormAdmin('returnBook')">
-      <div class="addNewBook" [hidden]="(returnBookButton == 'INACTIVE')">
+      <div class="returnTheBook" [hidden]="(returnBookButton == 'INACTIVE')">
         <h4>Return the book:</h4>
         <mat-form-field class="example-full-width"><br>
           <mat-label>Book ID</mat-label>
@@ -334,7 +374,7 @@
         <input type="submit" class="form-control" id="select" value="Return" (click)="returnBook(returnedBook.value)">
         <span>{{returnBookNotification}}</span>
       </div>
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <input type="submit" class="form-control" id="select" value="Add new book" (click)="openFormAdmin('addBook')">
       <div class="addNewBook" [hidden]="(newBookButton == 'INACTIVE')">
         <h4>Add new book:</h4>
@@ -355,11 +395,12 @@
             <mat-label>Book genre</mat-label>
             <input matInput placeholder="npr. selfhelp" #bookGenre required>
           </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
+          <input type="submit" class="form-control" id="select" value="Add book"
+                    (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
           <span>{{bookAddedNotification}}</span>
         </form>
       </div>
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <input type="submit" class="form-control" id="select" value="Add new user" (click)="openFormAdmin('newUser')">
       <div class="addNewUser" [hidden]="(newUserButton == 'INACTIVE')">
         <h4>Add new user:</h4>
@@ -397,7 +438,7 @@
           <span>{{addNewUserMessage}}</span>
         </form>
       </div>
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <input type="submit" class="form-control" id="select" value="Delete user" (click)="openFormAdmin('deleteUser')">
       <div class="deleteUser" [hidden]="(deleteUserButton == 'INACTIVE')">
         <br>
@@ -411,18 +452,20 @@
           <span>{{deleteUserMessage}}</span>
         </form>
       </div>
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <input type="submit" class="form-control" id="select" value="See all debtors" (click)="openFormAdmin('debtors')" [hidden]="(debtorButton == 'ACTIVE')">
       <input type="submit" class="form-control" id="select" value="Hide debtors table" (click)="openFormAdmin('debtors')" [hidden]="(debtorButton == 'INACTIVE')">
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
     </div>
-    <div class="col-sm-12 col-md-4" id="admin2" >
-      <hr style="border-top: 1px dashed black">
+
+
+    <div class="col-sm-12 col-md-4" id="admin2">
+      <hr id="borderLibrary">
       <h4>User loan status</h4>
-      <hr style="border-top: 1px dashed black">
+      <hr id="borderLibrary">
       <form class="example-form">
         <ul class="lista" [hidden]="(userNotFound == '')">
-          <li id="li" style="min-height: 50px; margin-bottom: 10px;">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
+          <li id="liLoanStatus">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
         </ul>
         <mat-form-field class="example-full-width" name="userLoanBook">
           <mat-label>User ID</mat-label>
@@ -430,98 +473,109 @@
           <span>{{verifyUserNotification}}</span>
         </mat-form-field>
         <input type="submit" class="form-control" id="select" value="Verify user"
-                  (click)='getLoanBooks(userLoanInput)' (click)='verifyUser(userLoanInput)'>
-        <hr style="border-top: 1px dashed black">
+                (click)='getLoanBooks(userLoanInput)'
+                (click)='verifyUser(userLoanInput)'>
+        <hr id="borderLibrary">
         <mat-form-field class="example-full-width">
           <mat-label>Book ID</mat-label>
           <input matInput placeholder="npr. 47856214587" #bookLoan name="inputBookID" [(ngModel)]="bookLoanInput">
         </mat-form-field>
         <input type="submit" class="form-control" id="select" value="Loan book" (click)="postLoanBook(userLoanInput, bookLoan.value)">
         <span>{{loanBookMessage}}</span>
-        <hr style="border-top: 1px dashed black">
+        <hr id="borderLibrary">
       </form>
 
     </div>
     <div class="col-sm-12 col-md-4" id="admin3">
       <ul class="lista">
         <li id="li" *ngFor="let loan of parseLoanBooks">
-          <div class="ngfor"></div>
+          <div class="ngfor">
+          </div>
           <div class="bookDescription">
-            <span style="font-size:10px; color: white; font-weight: bold;">{{loan.bid}}</span><br>
+            <span>{{loan.bid}}</span><br>
             {{loan.book}}<br>
             {{loan.issuedDate}}<br>
-            {{loan.period}} <span style="font-size:10px; color: white; font-weight: bold;">days</span>&nbsp;{{loan.fine}}&nbsp;<span style="font-size:10px; color: white; font-weight: bold;">kn</span>
+            {{loan.period}} <span>days</span>&nbsp;{{loan.fine}}&nbsp;<span>kn</span>
           </div>
         </li>
       </ul>
     </div>
   </div>
-  <!-- ========================********************************      R O W    of    D E P T O R S   *****************-->
-  <div class="row" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true' || debtorButton != 'ACTIVE')" style="margin-top: 10px; margin-bottom: 20px; ">
+  <!-- ========================********************************      R O W    of    D E P T O R S    T A B L E *****************-->
+  <!-- ========================********************************      R O W    of    D E P T O R S    T A B L E *****************-->
+  <!-- ========================********************************      R O W    of    D E P T O R S    T A B L E *****************-->
+  <!-- ========================********************************      R O W    of    D E P T O R S    T A B L E *****************-->
+  <!-- ========================********************************      R O W    of    D E P T O R S    T A B L E *****************-->
+  <div class="row" [hidden]="(bsApproval != 'OK' || bsAdmin != 'true' || debtorButton != 'ACTIVE')" id="debtorRow">
     <div class="col-md-12">
-    <h6>Table of debtors</h6>
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Kule u zraku" #input id="event">
-    </mat-form-field>
-    <div class="mat-elevation-z8">
-      <table mat-table [dataSource]="dataSourceBook" matSort #TableDebtorsSort="matSort">
-        <ng-container matColumnDef="bid">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
-        </ng-container>
-        <ng-container matColumnDef="uid">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
-          <td mat-cell *matCellDef="let row"> {{row.uid}} </td>
-        </ng-container>
-        <ng-container matColumnDef="authorFirstName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
-          <td mat-cell *matCellDef="let row"> {{row.authorFirstName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="authorLastName">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
-          <td mat-cell *matCellDef="let row"> {{row.authorLastName}} </td>
-        </ng-container>
-        <ng-container matColumnDef="bookTitle">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-          <td mat-cell *matCellDef="let row"> {{row.bookTitle}} </td>
-        </ng-container>
-        <ng-container matColumnDef="period">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Period </th>
-          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.period}} </td>
-        </ng-container>
-        <ng-container matColumnDef="issuedDate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Issued date </th>
-          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.issuedDate}} </td>
-        </ng-container>
-        <ng-container matColumnDef="fine">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Fine </th>
-          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.fine}} </td>
-        </ng-container>
-        <ng-container matColumnDef="warning">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Warning </th>
-          <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.warning}} </td>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedBookColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedBookColumns;"></tr>
-        <tr class="mat-row" *matNoDataRow>
-          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-        </tr>
-      </table>
-      <mat-paginator #TableDebtorsSort="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      <h6>Table of debtors</h6>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Kule u zraku" #input id="event">
+      </mat-form-field>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceBook" matSort #TableDebtorsSort="matSort">
+          <ng-container matColumnDef="bid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.bid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="uid">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> User ID </th>
+            <td mat-cell *matCellDef="let row"> {{row.uid}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorFirstName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let row"> {{row.authorFirstName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="authorLastName">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Surname </th>
+            <td mat-cell *matCellDef="let row"> {{row.authorLastName}} </td>
+          </ng-container>
+          <ng-container matColumnDef="bookTitle">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
+            <td mat-cell *matCellDef="let row"> {{row.bookTitle}} </td>
+          </ng-container>
+          <ng-container matColumnDef="period">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="thNarrow"> Period </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.period}} </td>
+          </ng-container>
+          <ng-container matColumnDef="issuedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="thNarrow"> Issued date </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.issuedDate}} </td>
+          </ng-container>
+          <ng-container matColumnDef="fine">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="thNarrow"> Fine </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.fine}} </td>
+          </ng-container>
+          <ng-container matColumnDef="warning">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="thNarrow"> Warning </th>
+            <td mat-cell *matCellDef="let row" id="thNarrow"> {{row.warning}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedBookColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedBookColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator #TableDebtorsSort="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
     </div>
-  </div>
 
   </div>
-<!-- ============================================ r     o     w =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
+  <!-- ============================================ T A B L E =============================== L  O O K    F O R    T H E     B O O K-->
   <div class="row" [hidden]="(bsApproval != 'OK')">
     <div class="col-md-12">
       <h6>Look for the book </h6>
       <mat-form-field>
         <mat-label>Search</mat-label>
-        <input matInput (keyup)="applyLookBookFilter($event)" placeholder="Ex. Umijeće ratovanja" #input id="event">
+        <input matInput (keyup)="applyLookBookFilter($event)" placeholder="Ex. Umijeće ratovanja" #input>
       </mat-form-field>
-      <div class="mat-elevation-z8" style="width: 100%;">
+      <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSourceLookBook" matSort #TableLookBookSort="matSort">
           <ng-container matColumnDef="bid">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Book ID </th>
@@ -544,8 +598,8 @@
             <td mat-cell *matCellDef="let row"> {{row.bookGenre}} </td>
           </ng-container>
           <ng-container matColumnDef="issuedDate">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Issued date </th>
-            <td mat-cell *matCellDef="let row" [ngStyle]="{'background-color':row.issuedDate == 'borrowed' ? '#edada8' : 'none' }" style="width: 5%;"> {{row.issuedDate}} </td>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header id="thNarrow"> Issued date </th>
+            <td mat-cell *matCellDef="let row" [ngStyle]="{'background-color':row.issuedDate == 'borrowed' ? '#edada8' : 'none' }" id="thNarrow"> {{row.issuedDate}} </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedLookBookColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedLookBookColumns;"></tr>
@@ -556,18 +610,10 @@
         <mat-paginator #TableLookBookPaginator="matPaginator" [pageSizeOptions]="[5,10,15,25,50,100]"></mat-paginator>
       </div>
     </div>
-    <!--ul class="lista">
-          <input type="text" placeholder="npr. Germinal" #lookTheBook [(ngModel)]="searchTitle">
-          <ng-container *ngIf="(lookTheBook.value != '')">
-            <li id="li" *ngFor="let loans of filterBooks | category: searchTitle;">
-              <div class="ngfor"></div>
-              <div class="bookDescription">
-                <h6 style="color: white; font-size:15px;">{{loans}}</h6>
-              </div>
-            </li>
-          </ng-container>
-        </ul -->
   </div>
+  <!-- /*   ********************************************* B O O K S H E L F  *********************************/ -->
+
+  <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
 
 </div>
 <a name="contact"></a>
@@ -578,28 +624,30 @@
     <div class="col-md-12 col-lg-6 col-xl-6" id="contactDrawing">
       <form action="/action_page.php">
         <div class="form-group">
-          <label for="text" style="width: 100px;">Name:</label>
-          <input type="text" name="name" class="form-control" style="width: 200px;" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
+          <label for="text" id="contactLabel">Name:</label>
+          <input type="text" name="name" class="form-control" id="contactInput" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
         </div>
         <div class="form-group">
-          <label for="text" style="width: 100px;">Surname:</label>
-          <input type="text" class="form-control" name="surname" style="width: 200px;" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
+          <label for="text" id="contactLabel">Surname:</label>
+          <input type="text" class="form-control" name="surname" id="contactInput" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
         </div>
         <div class="form-group">
-          <label for="email" style="width: 100px;">Email:</label>
-          <input type="text" class="form-control" style="width: 200px;" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
+          <label for="email" id="contactLabel">Email:</label>
+          <input type="text" class="form-control" id="contactInput" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
         </div>
         <div class="form-group">
-          <label for="message" style="width: 100px;">Message:</label>
+          <label for="message" id="contactLabel">Message:</label>
           <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
         </div>
         <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
       </form>
     </div><br>
-    <div class="col-md-12 col-lg-6 col-xl-6" id="call"></div>
+    <div class="col-md-12 col-lg-6 col-xl-6" id="contactImage"></div>
   </div>
 </div>
+<!-- /*   ********************************************* C O N T A C T  *********************************/ -->
 
+<br><hr><br><br><br>
 <!-- div class="container">
   <div class="row">
     <div class="col-lg-12">
@@ -608,7 +656,12 @@
     </div>
   </div>
 </div -->
-
+<!--
+<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+-->
 <footer>
-  <a href="#text" style="font-weight: bold;"><span style="color: grey; font-size: 14px;">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
+  <a href="#text" id="footerA"><span id="footerSpan">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
 </footer>
