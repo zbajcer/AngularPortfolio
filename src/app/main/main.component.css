@@ -28,8 +28,6 @@ input[type=text], input[type=password] {
   box-sizing: border-box;
 }
 
-
-
 button {
   background-color: #4CAF50;
   color: white;
@@ -44,8 +42,8 @@ button {
 button:hover {
   opacity: 0.8;
 }
-/*   ********************************************* N A V B A R *********************************/
 
+/*   ********************************************* N A V B A R *********************************/
 .navbar {
   padding-left: 12%;
   position: fixed;
@@ -71,19 +69,17 @@ ul li a {
 }
 
 /*   ********************************************* N A V B A R *********************************/
-
 span {
   font-size: 9px;
   color: black;
 }
 
-.fa-github{
+.fa-github {
   font-size: 18px;
 }
+
 /*   ********************************************* S P A N  *********************************/
 /*   ********************************************* H O M E  *********************************/
-
-
 #home1, #home2, #home3 {
   height: 300px;
   background-repeat: no-repeat;
@@ -105,7 +101,6 @@ span {
 
 /*   ********************************************* H O M E  *********************************/
 /*   ********************************************* B I O G R A P H Y  *********************************/
-
 #biographyDiv {
   background-image: url('bioDrawing.jpeg');
   background-size: cover;
@@ -131,7 +126,6 @@ span.psw {
   color: white;
 }
 
-
 #sesame {
   height: 300px;
   background-image: url("opensesame.PNG");
@@ -144,10 +138,8 @@ span.psw {
   background-color: #F8F8F8;
 }
 
-
 /*   ********************************************* B I O G R A P H Y  *********************************/
 /*   ********************************************* C O N V E R T E R  *********************************/
-
 .content {
   background-size: cover;
   background-repeat: no-repeat;
@@ -207,15 +199,15 @@ span.psw {
   font-size: 20px;
   color: red;
 }
+
 #spanStatistics {
   font-weight: bold;
   font-size: 14px;
   color: grey;
 }
+
 /*   ********************************************* C O N V E R T E R  *********************************/
-
 /*   ********************************************* W E A T H E R  *********************************/
-
 #weatherInputRow {
   margin-bottom: 10px;
 }
@@ -315,11 +307,8 @@ span.psw {
   background-color: red;
 }
 
-
 /*   ********************************************* W E A T H E R  *********************************/
-
 /*   ********************************************* E A R T H Q U A K E  *********************************/
-
 #quakeDiv {
   height: 300px;
   border-radius: 4px;
@@ -362,7 +351,7 @@ span.psw {
   border-radius: 4px;
 }
 
-#hotel_map{
+#hotel_map {
   height: 100%;
   width: 100%;
 }
@@ -372,9 +361,7 @@ agm-map {
 }
 
 /*   ********************************************* E A R T H Q U A K E  *********************************/
-
 /*   ********************************************* B O O K S H E L F  *********************************/
-
 #signInBookshelf {
   height: 300px;
   min-width: 300px;
@@ -419,7 +406,7 @@ agm-map {
   border-top: 1px dashed black;
 }
 
-#select, #selectSignIn{
+#select, #selectSignIn {
   width: 200px;
   border: 1px solid #ccc;
   border-radius: 15px;
@@ -484,7 +471,7 @@ agm-map {
   border-radius: 4px;
 }
 
-.addNewUser .addNewBook .deleteUser .debtors .returnTheBook{
+.addNewUser .addNewBook .deleteUser .debtors .returnTheBook {
   width: 100%;
   min-height: 50px;
   height: auto;
@@ -510,9 +497,9 @@ agm-map {
 }
 
 .ngfor {
-  min-height:80px;
+  min-height: 80px;
   max-height: 81px;
-  width:100px;
+  width: 100px;
   background-image: url('bookNgFor.png');
   background-size: cover;
   display: inline;
@@ -521,14 +508,14 @@ agm-map {
 
 .bookDescription {
   min-height: 80px;
-  width:70%;
+  width: 70%;
   text-align: center;
   padding-left: 10px;
   display: inline-block
 }
 
 .bookDescription span {
-  font-size:10px;
+  font-size: 10px;
   color: white;
   font-weight: bold;
 }
@@ -542,11 +529,11 @@ agm-map {
   width: 5%;
 }
 
-.mat-row:nth-child(even){
+.mat-row:nth-child(even) {
   background-color: white;
 }
 
-.mat-row:nth-child(odd){
+.mat-row:nth-child(odd) {
   background-color: #eff5e1;
 }
 
@@ -557,7 +544,7 @@ mat-cell.red {
   color: green;
 }
 
-.mat-elevation-z8{
+.mat-elevation-z8 {
   width: 100%;
 }
 
@@ -567,13 +554,11 @@ td, th {
 }
 
 table {
-    width: 100%;
+  width: 100%;
 }
 
 /*   ********************************************* B O O K S H E L F  *********************************/
-
 /*   ********************************************* C O N T A C T  *********************************/
-
 #contactDrawing {
   background-image: url('contactDrawing.jpeg');
   background-size: contain;
@@ -601,21 +586,18 @@ table {
   border-radius: 4px;
 }
 
-
 /*   ********************************************* C O N T A C T  *********************************/
-
 /*   ********************************************* F O O T E R  *********************************/
-
 #footerA {
   font-weight: bold;
 }
+
 #footerSpan {
   color: grey;
   font-size: 14px;
 }
 
 /*   ********************************************* F O O T E R  *********************************/
-
 footer {
   height: 80px;
   width: 100%;
@@ -626,13 +608,11 @@ footer {
 
 /*   ********************************************* F O O T E R  *********************************/
 /*   ********************************************* M E D I A    Q U E R Y  *********************************/
-
 @media screen and (max-width: 576px) {
   #borrowedTable {
     height: 300px;
   }
 }
-
 
 @media screen and (max-width: 768px) {
   #sesame {
