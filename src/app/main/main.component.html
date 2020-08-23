@@ -23,12 +23,11 @@
                   (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github"></i></a></li>
     </ul>
   </div>
+</nav><a name="home"></a>
 
 <!--  /*   ********************************************* N A V B A R *********************************/-->
 
 <!--  /*   ********************************************* H O M E  *********************************/-->
-
-</nav><a name="home"></a>
 <br><br><br>
 <div class="container">
   <h1>&home</h1>
@@ -39,11 +38,11 @@
   </div>
 </div><a name="biography"></a>
 <hr><br>
-<div class="container">
 <!--  /*   ********************************************* H O M E  *********************************/-->
 
 <!--  /*   ********************************************* B I O G R A P H Y  *********************************/-->
 
+<div class="container">
   <h1>&biography</h1>
   <div class="row">
     <div class="col-sm-12 col-lg-6" id="biographyDiv">
@@ -61,42 +60,42 @@
 <div class="container" id="bio" [hidden]="(approval != 'OK')">
   <hr><br>
   <h6>Education:</h6>
-  <p>Osnovna škola Augusta Cesarca u Krapini – 8 years <br>
-    Srednja škola Zlatar - from 2006. to 2010. <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : Post and telecommunicatios
-    technician <br>
-    Tehničko veleučilište u Zagrebu - from 2018. <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; - Occupation : e-Business, IT <br>
-    Additional knowledge: - English - 9/10 <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-German language – 3/10 <br>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-Programming - Java,
-    SpringBoot, Angular, Typescript, HTML, CSS, SQL <br>
-  </p> <br>
-  <hr> <br>
+  <p>
+  Osnovna škola Augusta Cesarca u Krapini – 8 years <br>
+  Srednja škola Zlatar - from 2006. to 2010. <br>
+  <span>&#9867;</span>Occupation : Post and telecommunicatios technician <br>
+  Tehničko veleučilište u Zagrebu - from 2018. <br>
+  <span>&#9867;</span>Occupation : e-Business, IT <br>
+  Additional knowledge: <br>
+  <span>&#9867;</span>English - 9/10 <br>
+  <span>&#9867;</span>German language – 3/10 <br>
+  <span>&#9867;</span>Programming - Java, SpringBoot, Angular, Typescript, HTML, CSS, SQL
+  </p><br><br><hr><br>
   <h6>Work experience:</h6>
   <p>
-    Jari d.o.o. (shift manager ) -2011-2016 <br>
+    Jari d.o.o. (shift manager ) -2011-2017 <br>
     Prostoria d.o.o. (CNC operator) - 2017 <br>
     Stražaplastika d.d. (shift manager) - 2017-2018 <br>
-    Generali Osiguranje d.d. (Web developer) since December, 2018. <br>
-  </p> <br>
-  <hr> <br>
+    Generali Osiguranje d.d. (Web developer) - 2018-2019 <br>
+  </p><br><hr><br>
   <h6>Web development:</h6>
-  <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing insurence application. Programming is also my favourite hobby. In free time I developed this great application in Angular framework.
-    It is great because of backend
-    which is developed in Java SpringBoot. It is also connected to MySQL database. In the section "Currency converter" you can choose currency list by date and my app is dinamicaly checking if the choosen currency by date exists in database. If
-    doesnt exist, it connects to HNB web api, downloads currency in JSON, store values in database and proceeds with serving those currencyes to frontend, Angular. I have also implemented statistics. On every click it updates counter of each
-    chosen start value.
+  <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing
+    insurence application. Programming is also my favourite hobby. In free time I developed this great application
+    in Angular framework. It is great because of backend which is developed in Java SpringBoot. It is also connected
+    to MySQL database. In the section "Currency converter" you can choose currency list by date and my app is dinamicaly
+    checking if the choosen currency by date exists in database. If doesnt exist, it connects to HNB web api, downloads
+    currency in JSON, store values in database and proceeds with serving those currencyes to frontend, Angular. I have
+    also implemented statistics. On every click it updates counter of each chosen start value.
   </p>
   <p>I have also developed some simple apps which you can find on my <a href="https://github.com/zbajcer?tab=repositories" target="_blank">GitHub</a> account.</p>
   <br>
   <br>
   <hr><br>
+</div><a name="converter"></a>
   <!--/*   ********************************************* B I O G R A P H Y  *********************************/-->
 
 <!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
 
-</div><a name="converter"></a>
 <br>
 <hr><br>
 <div class="container">
@@ -118,7 +117,7 @@
                     [(value)]="a.Srednji">{{a.SelectOption}}</option>
           </select>
           <p id="pSwapIcon">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter"
-                        (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrows-v"></i></a></p>
+                        (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrow-down"></i></a></p>
           <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
             <option *ngFor="let a of parsedJson;" class="form-control"
                         (click)="secondSelectValues(a.Jedinica, a.Valuta)"
@@ -231,7 +230,7 @@
     <div class="col-sm-12 col-lg-6" id="quakeDiv">
       <ul class="lista">
         <li id="liQuake" *ngFor="let place of quakePlace">
-          <a href="#earthquake" (click)='myEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
+          <a href="#earthquake" (click)='showEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
             <span id="spanMagnitude">{{place.magnitude}}</span><span>&nbsp;richter</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span>&nbsp;km of depth&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -240,7 +239,7 @@
       </ul>
     </div>
     <div class="col-sm-12 col-lg-6" id="quake">
-      <div id="hotel_map"></div>
+      <div id="hotel_map" (click)="getZoom()"></div>
     </div>
   </div>
 </div>
@@ -259,6 +258,8 @@
         <h2>admin: {{authenticationUser}}</h2>
         <hr id="borderLibrary">
         <h4>{{userFirstName}}&nbsp;{{userLastName}}</h4>
+        <hr id="borderLibrary">
+        <h4>no. of debtors: {{numberOfDebtors}}</h4>
         <hr id="borderLibrary">
         <input type="submit" class="form-control" id="select" value="Sign Out"
                         (click)="(bsApproval = 'false')"
@@ -345,6 +346,14 @@
           <ng-container matColumnDef="warning">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Warning </th>
             <td mat-cell *matCellDef="let row" [ngStyle]="{'background-color':row.warning == 'THIRD' ? '#edada8' : 'none' }"> {{row.warning}} </td>
+          </ng-container>
+          <ng-container matColumnDef="extend">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Extend request </th>
+            <td mat-cell *matCellDef="let row">
+              <input type="submit" name="button" class="FormControl" [hidden]="row.extend == 'SENT' || row.extend == 'EXTENDED' || row.fine != '0'" id="userExtendLoanButton" value="+30 days"
+                        (click)="extendLoanUserRequest(authenticationUser,row.bid)"/>
+              <p id="pLoanRequest" [hidden]="row.extend != 'SENT' && row.extend != 'EXTENDED'">{{row.extend}}</p>
+             </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedBorrowedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedBorrowedColumns;"></tr>
@@ -465,7 +474,11 @@
       <hr id="borderLibrary">
       <form class="example-form">
         <ul class="lista" [hidden]="(userNotFound == '')">
-          <li id="liLoanStatus">{{userNotFound}}<br>{{verifiedName}}&nbsp;{{verifiedSurname}}</li>
+          <li id="liLoanStatus">{{userNotFound}}<br>
+            <br>{{verifiedName}}&nbsp;{{verifiedSurname}}&nbsp;&nbsp;
+            <br><span>{{verifiedAddress}}</span>
+            <br><span>tel:&nbsp;&nbsp;{{verifiedTelephone}}
+            <br> e-mail:&nbsp;&nbsp;{{verifiedEmail}} </span></li>
         </ul>
         <mat-form-field class="example-full-width" name="userLoanBook">
           <mat-label>User ID</mat-label>
@@ -495,6 +508,8 @@
             <span>{{loan.bid}}</span><br>
             {{loan.book}}<br>
             {{loan.issuedDate}}<br>
+            <input type="submit" name="button" class="FormControl" id="extendLoanButton" value="+30 days"
+                      (click)="extendLoan(userLoanInput, loan.bid)"/>
             {{loan.period}} <span>days</span>&nbsp;{{loan.fine}}&nbsp;<span>kn</span>
           </div>
         </li>

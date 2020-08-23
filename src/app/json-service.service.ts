@@ -101,4 +101,9 @@ export class JsonServiceService {
     .pipe(map((response: any) => response));
   }
 
+  public extendBookLoan(user: any, book:any, admin: any): Observable<any> {
+    return this.http.get('http://localhost:8080/extendLoan/' + user + '/' + book +'/'+ admin) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
 }

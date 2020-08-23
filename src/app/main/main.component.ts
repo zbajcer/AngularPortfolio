@@ -4,6 +4,8 @@ import { Observable, of } from 'rxjs';
 import { toArray, take } from 'rxjs/operators';
 import { map, debounceTime, delay } from 'rxjs/operators';
 import { formatDate } from '@angular/common';
+import { interval } from 'rxjs';
+import { timer } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
@@ -59,7 +61,11 @@ export interface BorrowedBooksData {
   period: string;
   fine: string;
   warning: string;
+  extend: string;
 }
+
+const numbersInterval = interval(1000);
+const countToFour = numbersInterval.pipe(take(4));
 
 @Component({
   selector: 'app-main',
@@ -67,29 +73,29 @@ export interface BorrowedBooksData {
   styleUrls: ['./main.component.css']
 })
 
+
 export class MainComponent implements OnInit {
+
   displayedBookColumns: string[] = ['bid', 'uid', 'bookTitle', 'authorLastName', 'authorFirstName', 'issuedDate', 'period', 'fine', 'warning'];
   dataSourceBook: MatTableDataSource<BooksData>;
 
   displayedLookBookColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'authorFirstName', 'bookGenre', 'issuedDate'];
   dataSourceLookBook: MatTableDataSource<LookBookData>;
 
-  displayedBorrowedColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'issuedDate', 'period', 'fine', 'warning'];
+  displayedBorrowedColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'issuedDate', 'period', 'fine', 'warning','extend'];
   dataSourceBorrowed: MatTableDataSource<BorrowedBooksData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  @ViewChild('TableBorrowedPaginator', {static: true}) tableBorrowedPaginator: MatPaginator;
-  @ViewChild('TableBorrowedSort', {static: true}) tableBorrowedSort: MatSort;
+  @ViewChild('TableBorrowedPaginator', { static: true }) tableBorrowedPaginator: MatPaginator;
+  @ViewChild('TableBorrowedSort', { static: true }) tableBorrowedSort: MatSort;
 
-  @ViewChild('TableLookBookPaginator', {static: true}) tableLookBookPaginator: MatPaginator;
-  @ViewChild('TableLookBookSort', {static: true}) tableLookBookSort: MatSort;
+  @ViewChild('TableLookBookPaginator', { static: true }) tableLookBookPaginator: MatPaginator;
+  @ViewChild('TableLookBookSort', { static: true }) tableLookBookSort: MatSort;
 
-  @ViewChild('TableDebtorsPaginator', {static: true}) tableDebtorsPaginator: MatPaginator;
-  @ViewChild('TableDebtorsSort', {static: true}) tableDebtorsSort: MatSort;
-
-
+  @ViewChild('TableDebtorsPaginator', { static: true }) tableDebtorsPaginator: MatPaginator;
+  @ViewChild('TableDebtorsSort', { static: true }) tableDebtorsSort: MatSort;
 
   searchTitle: string = null;
   dt = new Date().toISOString().slice(0, 10);
@@ -116,29 +122,13 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.updateDebtorTable();
-    this.updateBookTable();
     this.sendDateToService(this.dt);
     this.getConverterData();
     this.weatherCity("Zagreb");
     this.getEarthquakeData();
     this.getAllStatistics(7, 7, 'HRK');
-    this.map = new Map({
-      target: 'hotel_map',
-      layers: [new TileLayer({
-        source: new OSM()
-      })],
-      view: new View({
-        center: olProj.fromLonLat([this.lng, this.lat]),
-        zoom: 7
-      })
-    });
-    this.crForm = this.fb.group({
-      crControl: [1],
-      crEndControl: [1]
-    });
-    //this.bookshelfAuth('zbajcer', 'opensesame');
-
+    this.createOpenLayersMap();
+    this.bookshelfAuth('terminator', 'terminator');
   }
 
   //sending date from UI to JsonService
@@ -164,6 +154,16 @@ export class MainComponent implements OnInit {
     this.password = approvalPsw;
     if (this.password == 'opensesame') {
       this.approval = "OK";
+      /*
+            const source = timer(1000,2000);
+              //output: 0,1,2,3,4,5......
+            const subscribe = source.subscribe(val => {
+              console.log(val)
+              if(val == 5){
+                this.approval = "FALSE";
+              }
+            });
+      */
     }
     else {
       alert("Wrong password!");
@@ -249,10 +249,10 @@ export class MainComponent implements OnInit {
 
   selectedCode: any;
 
-onChangeCode(code: any) {
-   this.selectedCode = code;
-   console.log(this.selectedCode)
-}
+  onChangeCode(code: any) {
+    this.selectedCode = code;
+    console.log(this.selectedCode)
+  }
 
   startValueChart: any = [];
   parser: any;
@@ -331,7 +331,7 @@ onChangeCode(code: any) {
   weatherFailMessage: string = '';
   weatherCity(city: any) {
     this.data.getWeatherResponse(city).subscribe((data: any) => {
-      if(data != null){
+      if (data != null) {
         this.weatherFailMessage = '';
         this.parseWeather = JSON.parse(JSON.stringify(data));
         this.parseWeather.map((item: any) => {
@@ -359,6 +359,11 @@ onChangeCode(code: any) {
       }
       else {
         this.weatherFailMessage = '*City not found or bad spelling';
+        countToFour.subscribe(x => {
+          if (x == 3) {
+            this.weatherFailMessage = '';
+          }
+        });
       }
     })
   }
@@ -395,10 +400,50 @@ onChangeCode(code: any) {
   //============================================================================== W E A T H E R
   //==============================================================================  E A R T H Q U A K E
 
-  myEarthquake(lon: any, lat: any) {
+  zoomLevel: any = '7';
+  radiusLevel: any = '35'
+  getZoom() {
+    this.zoomLevel = this.map.getView().getZoom();
+    if (this.zoomLevel > 7) {
+      this.radiusLevel = 35 - 2 * (this.zoomLevel);
+    } else {
+      this.radiusLevel = 35;
+    }
+  }
+
+  createOpenLayersMap() {
+    this.map = new Map({
+      target: 'hotel_map',
+      layers: [new TileLayer({
+        source: new OSM()
+      })],
+      view: new View({
+        center: olProj.fromLonLat([this.lng, this.lat]),
+        zoom: this.zoomLevel
+      })
+    });
+    this.crForm = this.fb.group({
+      crControl: [1],
+      crEndControl: [1]
+    });
+  }
+
+  showEarthquake(lon: any, lat: any) {
+    this.getZoom();
     this.lat = lat;
     this.lng = lon;
+    var layerArray, len, layer;
+    layerArray = this.map.getLayers().getArray(),
+      len = layerArray.length;
+    while (len > 0) {
+      layer = layerArray[len - 1];
+      this.map.removeLayer(layer);
+      len = layerArray.length;
+    }
     this.map.getView().setCenter(olProj.fromLonLat([this.lng, this.lat]));
+    var firstLayer = new TileLayer({
+      source: new OSM()
+    });
     var layer = new VectorLayer({
       source: new VectorSource({
         features: [
@@ -410,12 +455,12 @@ onChangeCode(code: any) {
     });
     var styles = new Style({
       image: new CircleStyle({
-        radius: 35,
+        radius: this.radiusLevel,
         stroke: new Stroke({ color: 'red', width: 2 })
       })
     })
-
     layer.setStyle(styles);
+    this.map.addLayer(firstLayer);
     this.map.addLayer(layer);
   }
 
@@ -454,46 +499,46 @@ onChangeCode(code: any) {
     this.deleteUserButton = 'INACTIVE';
     this.debtorButton = 'INACTIVE';
     this.userMessage = '';
-    if(uname == ''){
+    if (uname == '') {
       this.loading = false;
       this.userMessage = '*Please enter your username'
     }
-    else if(psw == ''){
+    else if (psw == '') {
       this.loading = false;
       this.userMessage = '*Please enter your password'
     }
     else {
-          this.data.authenticateUser(uname, psw).subscribe((data: any) => {
-            try {
-              this.authenticationMessage = JSON.parse(JSON.stringify(data));
-              this.authenticationMessage.map((item: any) => {
-                this.authenticationUser = item.uid;
-                this.bsAdmin = item.administrator;
-                this.userFirstName = item.firstName;
-                this.userLastName = item.lastName;
-                this.userUsername = item.username;
-                this.userPassword = item.passwords;
-              })
-              if (this.userUsername == uname && this.userPassword == psw) {
-                this.bsApproval = 'OK';
-                if (this.bsAdmin != 'true') {
-                  this.getLoanBooks(this.authenticationUser)
-                  this.updateBorrowedTable(this.authenticationUser)
-                }
-                this.userMessage = '';
-              }
-              else {
-                this.userMessage = '*username or password are incorecct'
-                this.loading = false;
-              }
-            } catch (parseError) {
-              this.loading = false;
-              alert("User not found!")
-            }
+      this.data.authenticateUser(uname, psw).subscribe((data: any) => {
+        try {
+          this.authenticationMessage = JSON.parse(JSON.stringify(data));
+          this.authenticationMessage.map((item: any) => {
+            this.authenticationUser = item.uid;
+            this.bsAdmin = item.administrator;
+            this.userFirstName = item.firstName;
+            this.userLastName = item.lastName;
+            this.userUsername = item.username;
+            this.userPassword = item.passwords;
           })
+          if (this.userUsername == uname && this.userPassword == psw) {
+            this.bsApproval = 'OK';
+            if (this.bsAdmin != 'true') {
+              this.getLoanBooks(this.authenticationUser)
+              this.updateBorrowedTable(this.authenticationUser)
+            }
+            this.userMessage = '';
+            this.updateDebtorTable();
           }
+          else {
+            this.userMessage = '*username or password are incorecct'
+            this.loading = false;
+          }
+        } catch (parseError) {
+          this.loading = false;
+          alert("User not found!")
+        }
+      })
+    }
     this.updateBookTable();
-    this.updateDebtorTable();
   }
 
   parseLoanBooks: any;
@@ -515,13 +560,17 @@ onChangeCode(code: any) {
       })
     }
     this.updateBookTable();
+    this.updateBorrowedTable(userID);
     this.updateDebtorTable();
   }
 
   userNotFound: any = '';
   parseUNF: any;
   verifiedName: any = '';
-  verifiedSurname: any;
+  verifiedSurname: any = '';
+  verifiedTelephone: any = '';
+  verifiedAddress: any = '';
+  verifiedEmail: any = '';
   verifyUser(uid: any) {  //verify that user is in the Autorisation table
     this.loanBookMessage = '';
     if (uid != '') {
@@ -530,12 +579,18 @@ onChangeCode(code: any) {
         this.parseUNF.map((item: any) => {
           this.verifiedName = item.name;
           this.verifiedSurname = item.surname;
+          this.verifiedTelephone = item.Telephone;
+          this.verifiedAddress = item.Address;
+          this.verifiedEmail = item.email;
         });
         if (this.parseUNF.length != 0) {
           this.userNotFound = 'User with UID ' + uid + ' verified';
         } else {
           this.verifiedName = '';
           this.verifiedSurname = '';
+          this.verifiedTelephone = '';
+          this.verifiedAddress = '';
+          this.verifiedEmail = '';
           this.userNotFound = 'User with UID ' + uid + ' does not exist';
         }
       })
@@ -546,7 +601,7 @@ onChangeCode(code: any) {
 
   bookshelfResponse: any;
   bookAddedNotification: any = '';// adding new book to Bookshelf table
-  newBookID:any;
+  newBookID: any;
   bookshelfAddBook(book: any, writerLastName: any, writerFirstName: any, genre: any) {
     this.bookAddedNotification = '';
     if (book == '' || genre == '' || writerLastName == '' || writerFirstName == '') {
@@ -557,14 +612,24 @@ onChangeCode(code: any) {
           this.bookshelfResponse = JSON.parse(JSON.stringify(data));
           this.newBookID = this.bookshelfResponse.id;
           if (this.newBookID != null) {
-              if(this.newBookID == '0') {
-                this.bookAddedNotification = 'Something went wrong!';
-              } else {
-                this.bookAddedNotification = 'Added by BID: ' + this.newBookID;
-              }
+            if (this.newBookID == '0') {
+              this.bookAddedNotification = 'Something went wrong!';
+              countToFour.subscribe(x => {
+                if (x == 3) {
+                  this.bookAddedNotification = '';
+                }
+              });
+            } else {
+              this.bookAddedNotification = 'Added by BID: ' + this.newBookID;
+            }
           }
         } catch (error) {
           this.bookAddedNotification = '*Ooops. something went wrong!';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.bookAddedNotification = '';
+            }
+          });
         }
       });
     }
@@ -581,8 +646,18 @@ onChangeCode(code: any) {
         this.risponz = JSON.parse(JSON.stringify(data));
         if (this.risponz == 'OK') {
           this.addNewUserMessage = '*New user has been added';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.addNewUserMessage = '';
+            }
+          });
         } else {
           this.addNewUserMessage = '*Existing user / error';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.addNewUserMessage = '';
+            }
+          });
         }
       })
     }
@@ -591,6 +666,11 @@ onChangeCode(code: any) {
   deleteUserFunc(user: any) {
     this.data.deleteUserFromDB(user).subscribe((item: any) => {
       this.deleteUserMessage = '*The user has been removed';
+      countToFour.subscribe(x => {
+        if (x == 3) {
+          this.deleteUserMessage = '';
+        }
+      });
       console.log(item)
     })
   }
@@ -599,21 +679,66 @@ onChangeCode(code: any) {
   bookLoanInput: any = '';
   userLoanInput: any = '';
   postLoanBook(user: any, book: any) {
-    this.data.loanBook(user, book).subscribe((data: any) => {
-      if(data.return == 'maximumThreeBorrowedBooks'){
-        this.loanBookMessage = 'Maximum of three books are borrowed'
-        this.bookLoanInput = '';
-      }
-      else if (data.return == 'exist') {
-        this.loanBookMessage = 'The book is already borowed!';
-        this.bookLoanInput = '';
-      } else {
-        this.loanBookMessage = '*Borowed to user!';
-        this.bookLoanInput = '';
-      }
-      this.getLoanBooks(this.userLoanInput);
+    if (book == '') {
+      this.loanBookMessage = 'Please enter book ID'
+      countToFour.subscribe(x => {
+        if (x == 3) {
+          this.loanBookMessage = '';
+        }
+      });
+    } else if (user == '') {
+      this.loanBookMessage = 'Please enter user ID'
+      countToFour.subscribe(x => {
+        if (x == 3) {
+          this.loanBookMessage = '';
+        }
+      });
+    } else {
+      this.data.loanBook(user, book).subscribe((data: any) => {
+        if (data.return == 'maximumThreeBorrowedBooks') {
+          this.loanBookMessage = 'Maximum of three books are borrowed'
+          this.bookLoanInput = '';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.loanBookMessage = '';
+            }
+          });
+        }
+        else if (data.return == 'exist') {
+          this.loanBookMessage = 'The book is already borowed!';
+          this.bookLoanInput = '';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.loanBookMessage = '';
+            }
+          });
+        } else {
+          this.loanBookMessage = '*Borowed to user!';
+          this.bookLoanInput = '';
+          countToFour.subscribe(x => {
+            if (x == 3) {
+              this.loanBookMessage = '';
+            }
+          });
+        }
+        this.getLoanBooks(this.userLoanInput);
+      })
+      this.updateBookTable();
+    }
+  }
+
+  extendLoan(user: any, book: any) {
+    this.data.extendBookLoan(user, book, 'true').subscribe((data: any) => {
+      this.getLoanBooks(user);
     })
-    this.updateBookTable();
+  }
+
+  extendLoanUserRequest(user: any, book: any){
+    this.data.extendBookLoan(user, book, 'false').subscribe((data: any) => {
+      if(data.response == 'sent'){
+        this.getLoanBooks(user);
+      }
+    })
   }
 
   returnBookNotification: any = '';
@@ -625,10 +750,20 @@ onChangeCode(code: any) {
       if (this.returnBookJson.result != 0) {
         this.returnBookNotification = '*The book has been returned!';
         this.bookReturnInput = '';
+        countToFour.subscribe(x => {
+          if (x == 3) {
+            this.returnBookNotification = '';
+          }
+        });
         this.getLoanBooks(this.userLoanInput);
       } else {
         this.returnBookNotification = '*Book not found!';
         this.bookReturnInput = '';
+        countToFour.subscribe(x => {
+          if (x == 3) {
+            this.returnBookNotification = '';
+          }
+        });
       }
     })
     this.updateBookTable();
@@ -685,7 +820,7 @@ onChangeCode(code: any) {
     }
   }
 
-  updateBookTable(){
+  updateBookTable() {
     this.getLookBooksFromDatabase().subscribe(
       books => {
         this.dataSourceLookBook = new MatTableDataSource(books);
@@ -695,9 +830,11 @@ onChangeCode(code: any) {
     );
   }
 
-  updateDebtorTable(){
+  numberOfDebtors: number = 0;
+  updateDebtorTable() {
     this.getBooksFromDatabase().subscribe(
       books => {
+        this.numberOfDebtors = books.length;
         this.dataSourceBook = new MatTableDataSource(books);
         this.dataSourceBook.paginator = this.tableDebtorsPaginator;
         this.dataSourceBook.sort = this.tableDebtorsSort;
@@ -705,7 +842,7 @@ onChangeCode(code: any) {
     );
   }
 
-  updateBorrowedTable(userID: any){
+  updateBorrowedTable(userID: any) {
     this.getBorrowedBooks(userID).subscribe(
       books => {
         this.dataSourceBorrowed = new MatTableDataSource(books);
@@ -715,7 +852,7 @@ onChangeCode(code: any) {
     )
   }
 
-  getBorrowedBooks(userID: any): Observable<BooksData[]> {
+  getBorrowedBooks(userID: any): Observable<BorrowedBooksData[]> {
     return this.data.getLoanBooks(userID).pipe(
       map(data => {
         return data
@@ -727,7 +864,8 @@ onChangeCode(code: any) {
               issuedDate: item.issuedDate,
               period: item.period,
               fine: item.fine,
-              warning: item.warning
+              warning: item.warning,
+              extend: item.extend
             }
           })
       })
