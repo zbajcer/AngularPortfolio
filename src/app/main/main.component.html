@@ -5,9 +5,7 @@
 
 <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a class="navbar-brand" href="#">zoran bajcer &nbsp;&nbsp;&nbsp;<i class="fa fa-spinner"></i></a>
-  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed"
-          data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-          aria-expanded="false" aria-label="Toggle navigation">
+  <button class="navbar-toggler" type="button" (click)="isNavbarCollapsed = !isNavbarCollapsed" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
   <div [ngbCollapse]="!isNavbarCollapsed" class="navbar-collapse" id="navbarSupportedContent">
@@ -19,8 +17,7 @@
       <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
       <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
       <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
-      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank"
-                  (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github"></i></a></li>
+      <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github"></i></a></li>
     </ul>
   </div>
 </nav><a name="home"></a>
@@ -46,38 +43,42 @@
   <h1>&biography</h1>
   <div class="row">
     <div class="col-sm-12 col-lg-6" id="biographyDiv">
-      <label for="autorithy">Please enter a password to unlock biography:</label>
-      <br><input type="password" class="form-control" id="psw" #bioPsw><br>
-      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval == 'OK')" class="form-control"
-                          (click)="PasswordAutorisation(bioPsw.value)" value="Submit">
-      <input type="submit" name="btnBio" id="selectBio" [hidden]="(approval != 'OK')" class="form-control"
-                          (click)="(approval = 'false')" value="Hide">
+      <br>
+      <form [formGroup]="myForm">
+        <mat-form-field>
+          <input matInput type="password" placeholder="password" formControlName="firstName" required #bioPsw maxlength="50">
+        </mat-form-field>
+      </form><span>{{bioSubmitMessage}}</span>
+      <input type="submit" name="btnBio" id="selectBio" *ngIf="(approval != true)" class="form-control" (click)="PasswordAutorisation(bioPsw.value)" value="Open biography">
+      <input type="submit" name="btnBio" id="selectBio" *ngIf="(approval == true)" class="form-control" (click)="(approval = false)" value="Hide">
     </div>
     <div class="col-sm-12 col-lg-6" id="sesame">
     </div>
   </div>
 </div>
-<div class="container" id="bio" [hidden]="(approval != 'OK')">
+<div class="container" id="bio" *ngIf="(approval == true)">
   <hr><br>
   <h6>Education:</h6>
   <p>
-  Osnovna škola Augusta Cesarca u Krapini – 8 years <br>
-  Srednja škola Zlatar - from 2006. to 2010. <br>
-  <span>&#9867;</span>Occupation : Post and telecommunicatios technician <br>
-  Tehničko veleučilište u Zagrebu - from 2018. <br>
-  <span>&#9867;</span>Occupation : e-Business, IT <br>
-  Additional knowledge: <br>
-  <span>&#9867;</span>English - 9/10 <br>
-  <span>&#9867;</span>German language – 3/10 <br>
-  <span>&#9867;</span>Programming - Java, SpringBoot, Angular, Typescript, HTML, CSS, SQL
-  </p><br><br><hr><br>
+    Osnovna škola Augusta Cesarca u Krapini – 8 years <br>
+    Srednja škola Zlatar - from 2006. to 2010. <br>
+    <span>&#9867;</span>Occupation : Post and telecommunicatios technician <br>
+    Tehničko veleučilište u Zagrebu - from 2018. <br>
+    <span>&#9867;</span>Occupation : e-Business, IT <br>
+    Additional knowledge: <br>
+    <span>&#9867;</span>English - 9/10 <br>
+    <span>&#9867;</span>German language – 3/10 <br>
+    <span>&#9867;</span>Programming - Java, SpringBoot, Angular, Typescript, HTML, CSS, SQL
+  </p><br><br>
+  <hr><br>
   <h6>Work experience:</h6>
   <p>
     Jari d.o.o. (shift manager ) -2011-2017 <br>
     Prostoria d.o.o. (CNC operator) - 2017 <br>
     Stražaplastika d.d. (shift manager) - 2017-2018 <br>
     Generali Osiguranje d.d. (Web developer) - 2018-2019 <br>
-  </p><br><hr><br>
+  </p><br>
+  <hr><br>
   <h6>Web development:</h6>
   <p>Since December of 2018 I work in Generali Osiguranje d.d. as web developer. I maintain and develop existing
     insurence application. Programming is also my favourite hobby. In free time I developed this great application
@@ -92,10 +93,63 @@
   <br>
   <hr><br>
 </div><a name="converter"></a>
-  <!--/*   ********************************************* B I O G R A P H Y  *********************************/-->
+<!--/*   ********************************************* B I O G R A P H Y  *********************************/-->
 
 <!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
 
+
+<!--
+<br>
+<hr><br>
+<div class="container">
+<h1>&currency converter</h1>
+<div class="row">
+  <div class="col-md-12 col-lg-6">
+    <div class="content" role="main">
+      <p id="boldP">Choose rate date:</p>
+      <input class="form-control" id="conv" type="date" [(ngModel)]="dt"
+                (change)='sendDateToService(dt)'
+                (change)='getConverterData()'>
+      <form [formGroup]="crForm">
+        <p id="p">Start value:</p>
+        <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl"
+                  (change)="onChangeCode($event.target.value)">
+          <option *ngFor="let a of parsedJson;" class="form-control"
+                  (click)="firstSelectValues(a.Jedinica, a.Valuta)"
+                  (click)="getAllStatistics(7,7,a.Valuta)"
+                  [(value)]="a.Srednji">{{a.SelectOption}}</option>
+        </select>
+        <p id="pSwapIcon">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter"
+                      (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrow-down"></i></a></p>
+        <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
+          <option *ngFor="let a of parsedJson;" class="form-control"
+                      (click)="secondSelectValues(a.Jedinica, a.Valuta)"
+                      [(value)]="a.Srednji">{{a.SelectOption}}</option>
+        </select>
+      </form>
+      <p id="boldP">Conversion amount:</p>
+      <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
+      <input type="submit" name="btn" class="form-control" id="submitConverter" value="Calculate"
+                  (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value)">
+      <p id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp;
+                  <span id="spanConversionResult">{{rezultat}} {{valutaEndView}}</span></p>
+    </div>
+  </div>
+  <div class="col-md-12 col-lg-6">
+    <div>
+      <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2"
+                        [options]="barChartOptions2" [colors]="barChartColors2"
+                        [legend]="barChartLegend2" [chartType]="barChartType2">
+      </canvas>
+    </div>
+    <hr>
+    <p><span id="spanStatistics">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
+    <p><span id="spanStatistics">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
+    <hr>
+  </div>
+</div>
+
+-->
 <br>
 <hr><br>
 <div class="container">
@@ -103,40 +157,46 @@
   <div class="row">
     <div class="col-md-12 col-lg-6">
       <div class="content" role="main">
-        <p id="boldP">Choose rate date:</p>
-        <input class="form-control" id="conv" type="date" [(ngModel)]="dt"
-                  (change)='sendDateToService(dt)'
-                  (change)='getConverterData()'>
-        <form [formGroup]="crForm">
-          <p id="p">Start value:</p>
-          <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl"
-                    (change)="onChangeCode($event.target.value)">
-            <option *ngFor="let a of parsedJson;" class="form-control"
-                    (click)="firstSelectValues(a.Jedinica, a.Valuta)"
-                    (click)="getAllStatistics(7,7,a.Valuta)"
-                    [(value)]="a.Srednji">{{a.SelectOption}}</option>
-          </select>
-          <p id="pSwapIcon">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter"
-                        (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrow-down"></i></a></p>
-          <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
-            <option *ngFor="let a of parsedJson;" class="form-control"
-                        (click)="secondSelectValues(a.Jedinica, a.Valuta)"
-                        [(value)]="a.Srednji">{{a.SelectOption}}</option>
-          </select>
+        <form [formGroup]="myForm">
+          <mat-form-field color="accent" appearance="fill" id="converterDateField">
+            <mat-label>Choose wisely</mat-label>
+            <input matInput [matDatepicker]="picker2" formControlName="materialDatePicker" #picker (dateChange)='sendDateToService(picker.value)' (dateChange)='getConverterData()'>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 color="primary"></mat-datepicker>
+          </mat-form-field><br><br>
         </form>
-        <p id="boldP">Conversion amount:</p>
-        <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
-        <input type="submit" name="btn" class="form-control" id="submitConverter" value="Calculate"
-                    (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value)">
+        <form>
+          <mat-form-field>
+            <mat-label>Start value</mat-label>
+            <mat-select #firstSelects placeholder="start value" [(ngModel)]='prviSelekt' name="hrenks">
+              <mat-option *ngFor="let a of parsedJson" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,7,a.Valuta)" [(value)]="a.Srednji">
+                {{a.SelectOption}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <a href="#converter" (click)="swapOption(prviSelekt, drugiSelekt, iznosZaPreracun)"><i class="fa fa-exchange"></i></a>
+          <mat-form-field>
+            <mat-label>End value</mat-label>
+            <mat-select #secondSelects placeholder="end value" [(ngModel)]='drugiSelekt' name="hrenks2">
+              <mat-option *ngFor="let a of parsedJson" (click)="secondSelectValues(a.Jedinica, a.Valuta)" [(value)]="a.Srednji">
+                {{a.SelectOption}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="amount" #inputValue [(ngModel)]="iznosZaPreracun" name="preracun" id="converterAmountInput">
+            </mat-form-field>
+          </form>
+        </form>
+        <input type="submit" name="btn" class="form-control" id="submitConverter" value="Calculate" (click)="calculation(prviSelekt, drugiSelekt, inputValue.value)">
         <p id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp;
-                    <span id="spanConversionResult">{{rezultat}} {{valutaEndView}}</span></p>
+          <span id="spanConversionResult">{{rezultat}} {{valutaEndView}}</span></p>
       </div>
     </div>
     <div class="col-md-12 col-lg-6">
       <div>
-        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2"
-                          [options]="barChartOptions2" [colors]="barChartColors2"
-                          [legend]="barChartLegend2" [chartType]="barChartType2">
+        <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
         </canvas>
       </div>
       <hr>
@@ -145,9 +205,10 @@
       <hr>
     </div>
   </div>
-<!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
 
-<!--  /*   ********************************************* W E A T H E R  *********************************/-->
+  <!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
+
+  <!--  /*   ********************************************* W E A T H E R  *********************************/-->
 
 </div><a name="weather"></a>
 <br>
@@ -239,7 +300,7 @@
       </ul>
     </div>
     <div class="col-sm-12 col-lg-6" id="quake">
-      <div id="hotel_map" (click)="getZoom()"></div>
+      <div id="hotel_map"></div>
     </div>
   </div>
 </div>
@@ -261,11 +322,7 @@
         <hr id="borderLibrary">
         <h4>no. of debtors: {{numberOfDebtors}}</h4>
         <hr id="borderLibrary">
-        <input type="submit" class="form-control" id="select" value="Sign Out"
-                        (click)="(bsApproval = 'false')"
-                        (click)="(loading = false)"
-                        (click)="(userLoanInput = '')"
-                        (click)="getLoanBooks('123')">
+        <input type="submit" class="form-control" id="select" value="Sign Out" (click)="(bsApproval = 'false')" (click)="(loading = false)" (click)="(userLoanInput = '')" (click)="getLoanBooks('123')">
       </div>
       <div class="userAutorised" [hidden]="(bsApproval != 'OK' || bsAdmin == 'true')">
         <h2>User: {{authenticationUser}}</h2>
@@ -274,10 +331,7 @@
         <hr id="borderLibrary">
         <h6>Overall debit is {{userDebit}} kn</h6>
         <hr id="borderLibrary">
-        <input type="submit" class="form-control" id="select" value="Sign Out"
-                        (click)='bsApproval = "false"'
-                        (click)='loading = false'
-                        (click)="getLoanBooks('123')">
+        <input type="submit" class="form-control" id="select" value="Sign Out" (click)='bsApproval = "false"' (click)='loading = false' (click)="getLoanBooks('123')">
       </div>
       <form [hidden]="(bsApproval == 'OK')" action="/action_page.php" method="post" id="formBackground">
         <div class="container">
@@ -300,11 +354,12 @@
           </div>
           <div class="col-sm-12" id="signInButton">
             <span>{{userMessage}}</span>
-            <button type="submit" class="form-control" id="selectSignIn" value="Sign In"
-                                      (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
+            <button type="submit" class="form-control" id="selectSignIn" value="Sign In" (click)="bookshelfAuth(username.value, bookshelfPassword.value)">
               Sign in&nbsp;&nbsp;&nbsp;&nbsp;
               <i class="fa fa-spinner fa-spin" *ngIf="loading"></i>
-            </button>
+            </button><br>
+            <mat-label id="accountQuestion">You dont have account?</mat-label>
+            &nbsp;&nbsp;&nbsp;&nbsp;<a (click)="open(content)" id="registerSpan"><span id="registerSpan">Register!</span></a>
           </div>
         </div>
       </form>
@@ -351,9 +406,9 @@
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Extend request </th>
             <td mat-cell *matCellDef="let row">
               <input type="submit" name="button" class="FormControl" [hidden]="row.extend == 'SENT' || row.extend == 'EXTENDED' || row.fine != '0'" id="userExtendLoanButton" value="+30 days"
-                        (click)="extendLoanUserRequest(authenticationUser,row.bid)"/>
+                (click)="extendLoanUserRequest(authenticationUser,row.bid)" />
               <p id="pLoanRequest" [hidden]="row.extend != 'SENT' && row.extend != 'EXTENDED'">{{row.extend}}</p>
-             </td>
+            </td>
           </ng-container>
           <tr mat-header-row *matHeaderRowDef="displayedBorrowedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedBorrowedColumns;"></tr>
@@ -404,8 +459,7 @@
             <mat-label>Book genre</mat-label>
             <input matInput placeholder="npr. selfhelp" #bookGenre required>
           </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Add book"
-                    (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
+          <input type="submit" class="form-control" id="select" value="Add book" (click)="bookshelfAddBook(bookTitle.value, bookWriterLastName.value, bookWriterFirstName.value, bookGenre.value)">
           <span>{{bookAddedNotification}}</span>
         </form>
       </div>
@@ -415,8 +469,10 @@
         <h4>Add new user:</h4>
         <form class="example-form">
           <mat-form-field class="example-full-width">
-            <mat-label>Administrator (true/false)</mat-label>
-            <input matInput placeholder="npr. false" #newUserAdmin required>
+            <mat-select placeholder="user/admin" #newUserAdmin>
+              <mat-option value="user">user</mat-option>
+              <mat-option value="administrator">administrator</mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field class="example-full-width">
             <mat-label>Username</mat-label>
@@ -439,11 +495,15 @@
             <input matInput placeholder="npr. 10460340513" #newUserTelephone required>
           </mat-form-field>
           <mat-form-field class="example-full-width">
+            <mat-label>E-mail</mat-label>
+            <input matInput placeholder="sample@gmail.com" #newUserEmail required>
+          </mat-form-field>
+          <mat-form-field class="example-full-width">
             <mat-label>Address</mat-label>
             <input matInput placeholder="npr. Russia, Krasnodar" #newUserAddress>
           </mat-form-field>
           <input type="submit" class="form-control" id="select" value="Add user"
-            (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value)">
+            (click)="bookshelfAddUser(newUserAdmin.value, newUserUsername.value, newUserPassword.value, newUserFirstname.value, newUserLastName.value, newUserTelephone.value, newUserAddress.value, newUserEmail.value)">
           <span>{{addNewUserMessage}}</span>
         </form>
       </div>
@@ -455,9 +515,9 @@
         <form class="example-form">
           <mat-form-field class="example-full-width"><br>
             <mat-label>User ID</mat-label>
-            <input matInput placeholder="npr. 47856214587" #deleteUser required>
+            <input matInput placeholder="npr. 47856214587" #deleteUser required [(ngModel)]="deleteUserInputField" name="deleteuserinput">
           </mat-form-field>
-          <input type="submit" class="form-control" id="select" value="Delete" (click)="deleteUserFunc(deleteUser.value)">
+          <input type="submit" class="form-control" id="select" value="Delete" (click)="deleteUserFunc(deleteUserInputField)">
           <span>{{deleteUserMessage}}</span>
         </form>
       </div>
@@ -478,16 +538,14 @@
             <br>{{verifiedName}}&nbsp;{{verifiedSurname}}&nbsp;&nbsp;
             <br><span>{{verifiedAddress}}</span>
             <br><span>tel:&nbsp;&nbsp;{{verifiedTelephone}}
-            <br> e-mail:&nbsp;&nbsp;{{verifiedEmail}} </span></li>
+              <br> e-mail:&nbsp;&nbsp;{{verifiedEmail}} </span></li>
         </ul>
         <mat-form-field class="example-full-width" name="userLoanBook">
           <mat-label>User ID</mat-label>
           <input matInput placeholder="npr. 4578457874" name="inputUserID" #userLoan [(ngModel)]="userLoanInput">
           <span>{{verifyUserNotification}}</span>
         </mat-form-field>
-        <input type="submit" class="form-control" id="select" value="Verify user"
-                (click)='getLoanBooks(userLoanInput)'
-                (click)='verifyUser(userLoanInput)'>
+        <input type="submit" class="form-control" id="select" value="Verify user" (click)='getLoanBooks(userLoanInput)' (click)='verifyUser(userLoanInput)'>
         <hr id="borderLibrary">
         <mat-form-field class="example-full-width">
           <mat-label>Book ID</mat-label>
@@ -508,8 +566,7 @@
             <span>{{loan.bid}}</span><br>
             {{loan.book}}<br>
             {{loan.issuedDate}}<br>
-            <input type="submit" name="button" class="FormControl" id="extendLoanButton" value="+30 days"
-                      (click)="extendLoan(userLoanInput, loan.bid)"/>
+            <input type="submit" name="button" class="FormControl" id="extendLoanButton" value="+30 days" (click)="extendLoan(userLoanInput, loan.bid)" />
             {{loan.period}} <span>days</span>&nbsp;{{loan.fine}}&nbsp;<span>kn</span>
           </div>
         </li>
@@ -626,6 +683,56 @@
       </div>
     </div>
   </div>
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Register to Bookshelf</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="clearModalFields()" (click)="modal.dismiss('Cross click')" #closebutton>&times;</button>
+    </div>
+    <div class="modal-body" class="registerTemplate">
+      <form [formGroup]="myForm" autocomplete="off">
+        <mat-form-field>
+          <input matInput placeholder="name" formControlName="nameOfOurLovelyUser" required #newFirstName maxlength="50">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="surname" formControlName="surname" required #newLastName maxlength="50">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="email" formControlName="email" required #newEmail maxlength="50">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="telephone number" formControlName="telephone" required #newTelephone maxlength="20">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="address" formControlName="address" required #newAddress maxlength="50">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="Username" formControlName="username" required #newUsername maxlength="20">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="New password" formControlName="password" required #newPassword maxlength="20" name="newUsername">
+          <mat-error *ngIf="myForm.hasError('required', 'password')">
+            Please enter your new password
+          </mat-error>
+        </mat-form-field>
+        <br><br>
+        <mat-form-field>
+          <input matInput placeholder="Confirm password" formControlName="confirmPassword" [errorStateMatcher]="matcher" #newVerifyPassword maxlength="20">
+          <mat-error *ngIf="myForm.hasError('notSame')">
+            Passwords do not match
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div class="modal-footer">
+        <button type="button" id="selectSignIn" class="form-control"
+          (click)="newUserRegistration(newFirstName.value, newLastName.value, newEmail.value, newTelephone.value,newAddress.value, newUsername.value, newPassword.value, newVerifyPassword.value)"
+          >Register!&nbsp;&nbsp;<i class="fa fa-spinner fa-spin" *ngIf="registrationLoading"></i></button>
+      </div>
+    <div class="modal-footer">
+      <mat-label *ngIf="registrationUID == ''">{{registrationMessage}}</mat-label><br>
+      <mat-label *ngIf="registrationUID != ''">New user ID {{registrationUID}}&nbsp;&nbsp;&nbsp;<i class="fa fa-user-plus" aria-hidden="true"></i></mat-label>
+    </div>
+  </div>
+  </ng-template>
   <!-- /*   ********************************************* B O O K S H E L F  *********************************/ -->
 
   <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
@@ -637,46 +744,30 @@
   <h1>&contact</h1>
   <div class="row">
     <div class="col-md-12 col-lg-6 col-xl-6" id="contactDrawing">
-      <form action="/action_page.php">
-        <div class="form-group">
-          <label for="text" id="contactLabel">Name:</label>
-          <input type="text" name="name" class="form-control" id="contactInput" placeholder="name" maxlength="50" #name [(ngModel)]="name.value"><span> {{50-name.value.length}} ch</span>
-        </div>
-        <div class="form-group">
-          <label for="text" id="contactLabel">Surname:</label>
-          <input type="text" class="form-control" name="surname" id="contactInput" placeholder="surname" maxlength="50" #surname [(ngModel)]="surname.value"><span> {{50-surname.value.length}} ch</span>
-        </div>
-        <div class="form-group">
-          <label for="email" id="contactLabel">Email:</label>
-          <input type="text" class="form-control" id="contactInput" placeholder="Enter email" name="email" #contact maxlength="50" [(ngModel)]="contact.value"><span> {{50-contact.value.length}} ch</span>
-        </div>
-        <div class="form-group">
-          <label for="message" id="contactLabel">Message:</label>
-          <textarea name="name" rows="8" cols="80" class="form-control" id="textarea" maxlength="1000" #message [(ngModel)]="message.value"></textarea><span> {{1000-message.value.length}} ch</span>
-        </div>
-        <input type="submit" class="form-control" id="select" name="push" value="Confirm" (click)="push(name.value, surname.value, contact.value, message.value)">
-      </form>
+      <form [formGroup]="myForm">
+        <mat-form-field id="contactField">
+          <input matInput placeholder="name" formControlName="contactName" required #name maxlength="50">
+        </mat-form-field><span id="redSpan"> {{50-name.value.length}} ch</span><br><br>
+        <mat-form-field id="contactField">
+          <input matInput placeholder="surname" formControlName="contactSurname" required #surname maxlength="50">
+        </mat-form-field><span id="redSpan"> {{50-surname.value.length}} ch</span><br><br>
+        <mat-form-field id="contactField">
+          <input matInput placeholder="email" formControlName="contactEmail" required #mail maxlength="50">
+        </mat-form-field><span id="redSpan"> {{50-mail.value.length}} ch</span><br><br>
+        <mat-form-field id="contactField">
+          <textarea matInput placeholder="message" formControlName="contactMessage" #message maxlength="800"></textarea>
+        </mat-form-field><span id="redSpan"> {{800-message.value.length}} ch</span><br><br>
+      </form><span>{{contactFormMessage}}</span><br>
+      <button type="submit" class="form-control" id="selectSignIn" name="push" value="Send!"
+              (click)="push(name.value, surname.value, mail.value, message.value)"
+              >Send!&nbsp;&nbsp;&nbsp;<i class="fa fa-spinner fa-spin" *ngIf="contactSendLoading"></i></button>
     </div><br>
     <div class="col-md-12 col-lg-6 col-xl-6" id="contactImage"></div>
   </div>
 </div>
 <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
-
-<br><hr><br><br><br>
-<!-- div class="container">
-  <div class="row">
-    <div class="col-lg-12">
-      <app-user-table></app-user-table>
-
-    </div>
-  </div>
-</div -->
-<!--
-<svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
-          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
-          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
-        </svg>
--->
+<br>
+<hr><br><br><br>
 <footer>
   <a href="#text" id="footerA"><span id="footerSpan">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
 </footer>

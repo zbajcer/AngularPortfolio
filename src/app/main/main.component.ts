@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, ElementRef } from '@angular/core';
 import { JsonServiceService } from './../json-service.service';
 import { Observable, of } from 'rxjs';
 import { toArray, take } from 'rxjs/operators';
@@ -10,7 +10,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { Label } from 'ng2-charts';
-import { FormControl, FormGroup, FormsModule, FormBuilder, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, FormBuilder, Validators, FormGroupDirective, NgForm } from '@angular/forms';
 import Map from 'ol/Map';
 import View from 'ol/View';
 import VectorLayer from 'ol/layer/Vector';
@@ -30,6 +30,10 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ErrorStateMatcher } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { DatePipe } from '@angular/common';
 
 
 export interface BooksData {
@@ -64,6 +68,15 @@ export interface BorrowedBooksData {
   extend: string;
 }
 
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
+    const invalidParent = !!(control && control.parent && control.parent.invalid && control.parent.dirty);
+
+    return (invalidCtrl || invalidParent);
+  }
+}
+
 const numbersInterval = interval(1000);
 const countToFour = numbersInterval.pipe(take(4));
 
@@ -82,7 +95,7 @@ export class MainComponent implements OnInit {
   displayedLookBookColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'authorFirstName', 'bookGenre', 'issuedDate'];
   dataSourceLookBook: MatTableDataSource<LookBookData>;
 
-  displayedBorrowedColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'issuedDate', 'period', 'fine', 'warning','extend'];
+  displayedBorrowedColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'issuedDate', 'period', 'fine', 'warning', 'extend'];
   dataSourceBorrowed: MatTableDataSource<BorrowedBooksData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -117,8 +130,28 @@ export class MainComponent implements OnInit {
     private data: JsonServiceService,
     private https: HttpClient,
     private fb: FormBuilder,
+    private formBuilder: FormBuilder,
+    private modalService: NgbModal,
+    private datePipe: DatePipe
   ) {
     this.jstoday = formatDate(this.today, 'dd.MM.yyyy.', 'en-US');
+    this.myForm = this.formBuilder.group({
+      password: ['', [Validators.required]],
+      confirmPassword: [''],
+      username: [''],
+      firstName: [''],
+      nameOfOurLovelyUser: [''],
+      surname: [''],
+      telephone: [''],
+      message: [''],
+      address: [''],
+      email: [''],
+      contactName: [''],
+      contactSurname: [''],
+      contactEmail: [''],
+      contactMessage: [''],
+      materialDatePicker: this.dt
+    }, { validator: this.checkPasswords });
   }
 
   ngOnInit() {
@@ -128,12 +161,13 @@ export class MainComponent implements OnInit {
     this.getEarthquakeData();
     this.getAllStatistics(7, 7, 'HRK');
     this.createOpenLayersMap();
-    this.bookshelfAuth('terminator', 'terminator');
+    //this.bookshelfAuth('terminator', 'terminator');
+    //this.bookshelfAuth('zbajcer','opensesame');
   }
 
   //sending date from UI to JsonService
   sendDateToService(value: string) {
-    this.data.sendDate(value);
+    this.data.sendDate(this.datePipe.transform(value, 'yyyy-MM-dd'));
   }
 
   //============================================================================== N A V B A R
@@ -148,29 +182,56 @@ export class MainComponent implements OnInit {
   //============================================================================== N A V B A R
   //============================================================================== B I O G R A P H Y
 
-  approval = "false";
+  approval: boolean = false;
   password: any;
+  bioSubmitMessage: any = '';
   PasswordAutorisation(approvalPsw: any) {
     this.password = approvalPsw;
+    this.bioSubmitMessage = '';
     if (this.password == 'opensesame') {
-      this.approval = "OK";
-      /*
-            const source = timer(1000,2000);
-              //output: 0,1,2,3,4,5......
-            const subscribe = source.subscribe(val => {
-              console.log(val)
-              if(val == 5){
-                this.approval = "FALSE";
-              }
-            });
-      */
-    }
-    else {
-      alert("Wrong password!");
+      this.approval = true;
+    } else {
+      this.bioSubmitMessage = '*wrong password';
+      countToFour.subscribe(x => {
+        if (x == 3) {
+          this.bioSubmitMessage = '';
+        }
+      });
     }
   }
   //============================================================================== B I O G R A P H Y
   //============================================================================== C O N V E R T E R
+
+  prviSelekt: any = 1;
+  drugiSelekt: any = 1;
+  iznosZaPreracun: any = '';
+  startSwaps: any;
+  endSwaps: any;
+  swapOption(firstOption: any, secondOption: any, amount: any) {
+    for (let i = 0; i < this.parsedJson.length; i++) {
+      if (firstOption == this.parsedJson[i].Srednji) {
+        this.endSwaps = this.parsedJson[i].Srednji;
+        this.valutaEndView = this.parsedJson[i].Valuta;
+        this.jedinicaSecond = this.parsedJson[i].Jedinica;
+      }
+      if (secondOption == this.parsedJson[i].Srednji) {
+        this.startSwaps = this.parsedJson[i].Srednji;
+        this.valutaStart = this.parsedJson[i].Valuta;
+        this.jedinicaFirst = this.parsedJson[i].Jedinica;
+      }
+    }
+    this.prviSelekt = this.startSwaps;
+    this.drugiSelekt = this.endSwaps;
+    /*
+      this.crForm = this.fb.group({
+        crControl: [this.startSwap],
+        crEndControl: [this.endSwap]
+      })
+      */
+    this.calculation(secondOption, firstOption, amount);
+    this.firstSelectValues(this.jedinicaFirst, this.valutaStart);
+    this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
+  }
 
   parsedJson: any;
   getConverterData() {
@@ -188,6 +249,7 @@ export class MainComponent implements OnInit {
 
   startSwap: any;
   endSwap: any;
+  temporary: any;
   swapOptions(firstOption: any, secondOption: any, amount: any) {
     for (let i = 0; i < this.parsedJson.length; i++) {
       if (firstOption == this.parsedJson[i].Srednji) {
@@ -205,6 +267,7 @@ export class MainComponent implements OnInit {
       crControl: [this.startSwap],
       crEndControl: [this.endSwap]
     })
+
     this.calculation(this.startSwap, this.endSwap, amount);
     this.firstSelectValues(this.jedinicaFirst, this.valutaStart);
     this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
@@ -225,8 +288,10 @@ export class MainComponent implements OnInit {
   }
 
   valutaEndView: string = 'HRK';
-  rezultat: any = 0;
+  rezultat: any = '0';
+  converterAmountMessage: any = '';
   calculation(srednjiTecajPrvi: number, srednjiTecajDrugi: number, vrijednost: number) {
+    this.rezultat = '';
     for (let i = 0; i < this.parsedJson.length; i++) {
       if (srednjiTecajDrugi == this.parsedJson[i].Srednji) {
         this.valutaEndView = this.parsedJson[i].Valuta;
@@ -238,8 +303,13 @@ export class MainComponent implements OnInit {
     else {
       this.rezultat = ((vrijednost * (Number(srednjiTecajPrvi.toLocaleString().replace(/,/g, '.')) / this.jedinicaFirst)) / (Number(srednjiTecajDrugi.toLocaleString().replace(/,/g, '.')) / this.jedinicaSecond)).toFixed(2);
       if (this.rezultat == 'NaN') {
-        alert("Iznos za preračun mora biti broj!")
-        this.rezultat = 0;
+        this.converterAmountMessage = 'The amount has to be a number!'
+        countToFour.subscribe(x => {
+          if (x == 2) {
+            this.converterAmountMessage = '';
+            this.rezultat = 0.00;
+          }
+        });
       }
     }
     this.postRequest();
@@ -248,10 +318,9 @@ export class MainComponent implements OnInit {
 
 
   selectedCode: any;
-
   onChangeCode(code: any) {
     this.selectedCode = code;
-    console.log(this.selectedCode)
+    console.log(this.selectedCode + "fadfs")
   }
 
   startValueChart: any = [];
@@ -271,13 +340,9 @@ export class MainComponent implements OnInit {
         item.mostCommonInterval.map(item => {
           this.mostCommonIntervalStatistic = item.value;
         })
-      })
-      this.parser.map(item => {
         item.mostCommonOverall.map(item => {
           this.mostCommonOverallStatistic = item.value;
         })
-      })
-      this.parser.map(item => {
         item.currencyInterval.map(item => {
           this.currencyIntervalStatistic.push(item.valuta);
           this.currencyIntervalCounter.push(item.counter);
@@ -400,17 +465,6 @@ export class MainComponent implements OnInit {
   //============================================================================== W E A T H E R
   //==============================================================================  E A R T H Q U A K E
 
-  zoomLevel: any = '7';
-  radiusLevel: any = '35'
-  getZoom() {
-    this.zoomLevel = this.map.getView().getZoom();
-    if (this.zoomLevel > 7) {
-      this.radiusLevel = 35 - 2 * (this.zoomLevel);
-    } else {
-      this.radiusLevel = 35;
-    }
-  }
-
   createOpenLayersMap() {
     this.map = new Map({
       target: 'hotel_map',
@@ -419,7 +473,7 @@ export class MainComponent implements OnInit {
       })],
       view: new View({
         center: olProj.fromLonLat([this.lng, this.lat]),
-        zoom: this.zoomLevel
+        zoom: 7
       })
     });
     this.crForm = this.fb.group({
@@ -429,7 +483,6 @@ export class MainComponent implements OnInit {
   }
 
   showEarthquake(lon: any, lat: any) {
-    this.getZoom();
     this.lat = lat;
     this.lng = lon;
     var layerArray, len, layer;
@@ -455,11 +508,22 @@ export class MainComponent implements OnInit {
     });
     var styles = new Style({
       image: new CircleStyle({
-        radius: this.radiusLevel,
-        stroke: new Stroke({ color: 'red', width: 2 })
+        radius: 15,
+        fill: new Fill({
+          color: 'rgba(200, 50, 50, 0.5)'
+        }),
       })
     })
-    layer.setStyle(styles);
+    var stylesSecond = new Style({
+      image: new CircleStyle({
+        radius: 40,
+        fill: new Fill({
+          color: 'rgba(20, 100, 240, 0.3)'
+        }),
+      })
+    })
+    const style = [styles, stylesSecond];
+    layer.setStyle(style);
     this.map.addLayer(firstLayer);
     this.map.addLayer(layer);
   }
@@ -537,8 +601,8 @@ export class MainComponent implements OnInit {
           alert("User not found!")
         }
       })
+      this.updateBookTable();
     }
-    this.updateBookTable();
   }
 
   parseLoanBooks: any;
@@ -605,7 +669,12 @@ export class MainComponent implements OnInit {
   bookshelfAddBook(book: any, writerLastName: any, writerFirstName: any, genre: any) {
     this.bookAddedNotification = '';
     if (book == '' || genre == '' || writerLastName == '' || writerFirstName == '') {
-      alert('All fields are required!');
+      this.bookAddedNotification = 'All fields are required!';
+      countToFour.subscribe(x => {
+        if (x == 1) {
+          this.bookAddedNotification = '';
+        }
+      });
     } else {
       this.data.addBook(book, writerLastName, writerFirstName, genre).subscribe((data: any) => {
         try {
@@ -638,11 +707,11 @@ export class MainComponent implements OnInit {
 
   addNewUserMessage: any;
   risponz: any;
-  bookshelfAddUser(newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any) {
-    if (newUserAdmin == '' || newUserUsername == '' || newUserPassword == '' || newUserFirstname == '' || newUserLastName == '' || newUserTelephone == '') {
+  bookshelfAddUser(newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any, newUserEmail: any) {
+    if (newUserAdmin == '' || newUserUsername == '' || newUserPassword == '' || newUserFirstname == '' || newUserLastName == '' || newUserTelephone == '' || newUserEmail == '') {
       alert("All fields except address are required!");
     } else {
-      this.data.addUser(newUserAdmin, newUserUsername, newUserPassword, newUserFirstname, newUserLastName, newUserTelephone, newUserAddress).subscribe((data: any) => {
+      this.data.addUser(newUserAdmin, newUserUsername, newUserPassword, newUserFirstname, newUserLastName, newUserTelephone, newUserAddress, newUserEmail).subscribe((data: any) => {
         this.risponz = JSON.parse(JSON.stringify(data));
         if (this.risponz == 'OK') {
           this.addNewUserMessage = '*New user has been added';
@@ -662,16 +731,28 @@ export class MainComponent implements OnInit {
       })
     }
   }
+
   deleteUserMessage: any;
+  deleteUserInputField: any = '';
   deleteUserFunc(user: any) {
     this.data.deleteUserFromDB(user).subscribe((item: any) => {
-      this.deleteUserMessage = '*The user has been removed';
-      countToFour.subscribe(x => {
-        if (x == 3) {
-          this.deleteUserMessage = '';
-        }
-      });
-      console.log(item)
+      if (item.result != 0) {
+        this.deleteUserMessage = '*The user has been removed';
+        countToFour.subscribe(x => {
+          if (x == 3) {
+            this.deleteUserMessage = '';
+            this.deleteUserInputField = '';
+          }
+        });
+      } else {
+        this.deleteUserMessage = '*User not found';
+        countToFour.subscribe(x => {
+          if (x == 3) {
+            this.deleteUserMessage = '';
+            this.deleteUserInputField = '';
+          }
+        });
+      }
     })
   }
 
@@ -733,9 +814,9 @@ export class MainComponent implements OnInit {
     })
   }
 
-  extendLoanUserRequest(user: any, book: any){
+  extendLoanUserRequest(user: any, book: any) {
     this.data.extendBookLoan(user, book, 'false').subscribe((data: any) => {
-      if(data.response == 'sent'){
+      if (data.response == 'sent') {
         this.getLoanBooks(user);
       }
     })
@@ -928,25 +1009,142 @@ export class MainComponent implements OnInit {
       this.dataSourceLookBook.paginator.firstPage();
     }
   }
+
+
+  newFirstName: any;
+  newLastName: any;
+  newEmail: any;
+  newAddress: any;
+  newTelephone: any;
+  newUsername: any;
+  newPassword: any;
+  newVerifyPassword: any;
+  registrationMessage: any = '';
+  registrationUID: any = '';
+  public registrationLoading: boolean;
+  newUserRegistration(newFirstName: any, newLastName: any, newEmail: any, newTelephone: any, newAddress: any, newUsername: any, newPassword: any, newVerifyPassword: any) {
+    this.registrationLoading = true;
+    this.registrationUID = '';
+    let notSejm = this.checkPasswords(this.myForm);
+    if (notSejm != null) {
+      this.registrationMessage = 'Passwords do not match!';
+    } else {
+      if (newFirstName == '' || newLastName == '' || newEmail == '' || newTelephone == '' || newAddress == '' || newUsername == '' || newPassword == '' || newVerifyPassword == '') {
+        this.registrationMessage = 'All fields required!';
+      } else {
+        this.data.registerUser(newFirstName, newLastName, newEmail, newTelephone, newAddress, newUsername, newPassword).subscribe((item: any) => {
+          if (item.response == 'exist') {
+            this.registrationMessage = 'Username already exists';
+          } else {
+            this.registrationMessage = 'Success!';
+            this.registrationUID = item.response;
+          }
+        })
+      }
+    }
+    countToFour.subscribe(x => {
+      if (x == 0) {
+        this.registrationLoading = false;
+      }
+    });
+    countToFour.subscribe(x => {
+      if (x == 1 && this.registrationUID != '') {
+        this.registrationMessage = '';
+      } else {
+        countToFour.subscribe(x => {
+          if (x == 2) {
+            this.registrationMessage = '';
+          }
+        });
+      }
+    });
+  }
+
+  closeResult = '';
+  open(content) {
+    this.modalService.open(content,
+      { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+        this.closeResult = `Closed with: ${result}`;
+      }, (reason) => {
+        this.closeResult =
+          `Dismissed ${this.getDismissReason(reason)}`;
+      });
+  }
+
+  clearModalFields() {
+    this.myForm.reset();
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  myForm: FormGroup;
+  matcher = new MyErrorStateMatcher();
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    let pass = group.controls.password.value;
+    let confirmPass = group.controls.confirmPassword.value;
+
+    return pass === confirmPass ? null : { notSame: true }
+  }
   //============================================================================== B O O K S H E L F
   //============================================================================== C O N T A C T  F O R M
+  clearContactFields() {
+    countToFour.subscribe(x => {
+      if (x == 2) {
+        this.myForm.reset();
+        this.contactFormMessage = '';
+      }
+    });
+  }
 
+  public contactSendLoading: boolean;
+  contactFormMessage: any = '';
   push(name, surname, contact, message) {
+    this.contactSendLoading = true;
     if (name == '') {
-      alert("You must enter your name!");
+      this.contactFormMessage = "You must enter your name!";
+      this.contactSendLoading = false;
     }
     else if (surname == '') {
-      alert("You must enter your surname!");
+      this.contactFormMessage = "You must enter your surname!";
+      this.contactSendLoading = false;
     }
     else if (contact == '') {
-      alert("You must enter your contact info!");
+      this.contactFormMessage = "You must enter your contact info!";
+      this.contactSendLoading = false;
     }
     else if (message == '') {
-      alert("You must enter a message!");
+      this.contactFormMessage = "You must enter a message!";
+      this.contactSendLoading = false;
     }
     else {
       this.data.contactPage(name, surname, contact, message);
+      this.contactFormMessage = 'Sending message...';
+      countToFour.subscribe(x => {
+        if (x == 2) {
+          this.contactFormMessage = '';
+          this.contactSendLoading = false;
+        }
+      });
+      countToFour.subscribe(x => {
+        if (x == 3) {
+          this.contactFormMessage = 'Message sent!';
+          this.clearContactFields();
+        }
+      });
     }
+    countToFour.subscribe(x => {
+      if (x == 2) {
+        this.contactFormMessage = '';
+      }
+    });
   }
   //============================================================================== C O N T A C T  F O R M
 

@@ -18,14 +18,18 @@ import { Pipefilter } from './pipefilter';
 import {MatTableModule} from '@angular/material/table';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatSortModule} from '@angular/material/sort';
-
-
+import {MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatSelectModule} from '@angular/material/select';
+import { MatMomentDateModule, MomentDateAdapter } from "@angular/material-moment-adapter";
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [
     AppComponent,
     MainComponent,
-    Pipefilter    ],
+    Pipefilter
+    ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -39,16 +43,21 @@ import {MatSortModule} from '@angular/material/sort';
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
+    MatSelectModule,
     BrowserAnimationsModule,
     MatButtonModule,
     MatRadioModule,
     MatAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: "AIzaSyAGABiW7HlasRXWUt2ywiUfvvGrwmp8yII"
-    })
+    }),
+    MatDatepickerModule,
+    MatMomentDateModule,
+    MatNativeDateModule
   ],
   providers: [
-
+    MatDatepickerModule,
+    DatePipe
   ],
   bootstrap: [AppComponent]
 })

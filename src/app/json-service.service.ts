@@ -53,7 +53,7 @@ export class JsonServiceService {
 
   public contactPage(name:any, surname:any, contact:any, message:any) {
     return this.http.get('http://localhost:8080/contact/'+name+'/'+surname+'/'+contact+'/'+message, { responseType: 'text' })
-    .subscribe((item: any) => alert(item));
+    .subscribe((item: any) => item);
   }
 
   public authenticateUser(id: any, psw: any): Observable<any> {
@@ -66,8 +66,8 @@ export class JsonServiceService {
     .pipe(map((response: any) => response));
   }
 
-  public addUser( newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any) {
-    return this.http.get('http://localhost:8080/addNewUser/' + newUserAdmin +'/'+ newUserUsername +'/'+ newUserPassword +'/'+ newUserFirstname +'/'+ newUserLastName +'/'+ newUserTelephone +'/'+ newUserAddress, { responseType: 'text'})
+  public addUser( newUserAdmin: any, newUserUsername: any, newUserPassword: any, newUserFirstname: any, newUserLastName: any, newUserTelephone: any, newUserAddress: any, newUserEmail: any) {
+    return this.http.get('http://localhost:8080/addNewUser/' + newUserAdmin +'/'+ newUserUsername +'/'+ newUserPassword +'/'+ newUserFirstname +'/'+ newUserLastName +'/'+ newUserTelephone +'/'+ newUserAddress +'/'+ newUserEmail, { responseType: 'text'})
     .pipe(map((response: any) => response));
   }
 
@@ -103,6 +103,11 @@ export class JsonServiceService {
 
   public extendBookLoan(user: any, book:any, admin: any): Observable<any> {
     return this.http.get('http://localhost:8080/extendLoan/' + user + '/' + book +'/'+ admin) //, { responseType: 'text' })
+    .pipe(map((response: any) => response));
+  }
+
+  public registerUser( newFirstName:any, newLastName:any, newEmail:any, newTelephone:any,newAddress:any, newUsername:any, newPassword:any) {
+    return this.http.get('http://localhost:8080/register/' + newFirstName +'/'+ newLastName +'/'+ newEmail +'/'+ newTelephone +'/'+ newAddress +'/'+ newUsername +'/'+ newPassword) //, { responseType: 'text'})
     .pipe(map((response: any) => response));
   }
 

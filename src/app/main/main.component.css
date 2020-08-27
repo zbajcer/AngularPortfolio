@@ -13,6 +13,9 @@ p {
   padding-left: 40px;
   padding-right: 200px;
 }
+.alert {
+  border-radius: 30px;
+}
 
 i {
   font-size: 24px;
@@ -151,6 +154,11 @@ span.psw {
   margin: 0;
 }
 
+#converterDateField {
+  margin-top: 30px;
+  width: 300px;
+}
+
 #conv {
   width: 200px;
   border: 1px solid #ccc;
@@ -184,7 +192,13 @@ span.psw {
   font-weight: bold;
 }
 
+#converterAmountInput {
+  margin-top: 30px;
+  width: 300px;
+}
+
 #submitConverter {
+  margin-bottom: 20px;
   width: 200px;
   border: 1px solid #ccc;
   border-radius: 15px;
@@ -197,7 +211,7 @@ span.psw {
 #spanConversionResult {
   font-weight: bolder;
   font-size: 20px;
-  color: red;
+  color: #ed5f5f;
 }
 
 #spanStatistics {
@@ -206,6 +220,9 @@ span.psw {
   color: grey;
 }
 
+.fa-exchange{
+  margin: 10px;
+}
 /*   ********************************************* C O N V E R T E R  *********************************/
 /*   ********************************************* W E A T H E R  *********************************/
 #weatherInputRow {
@@ -359,13 +376,6 @@ span.psw {
 
 /*   ********************************************* E A R T H Q U A K E  *********************************/
 /*   ********************************************* B O O K S H E L F  *********************************/
-#signInBookshelf {
-  height: 300px;
-  min-width: 300px;
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 4px;
-}
 
 #signInBookshelf {
   height: 300px;
@@ -379,7 +389,7 @@ span.psw {
   background-image: url("bookshelf2.PNG");
   height: 300px;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   border-radius: 4px;
 }
 
@@ -427,6 +437,30 @@ span.psw {
   display: inline-flex;
   align-items: center;
   padding-left: 70px;
+}
+
+#accountQuestion{
+  font-weight: normal;
+  font-size: 10px;
+}
+
+#registerSpan {
+  font-size: 14px;
+  font-weight: bold;
+  color: #ed5f5f;
+}
+
+.close {
+  width: 50px;
+  height: 50px;
+  border-radius: 0px;
+  color: black;
+}
+
+a:hover #registerSpan {
+    text-decoration: underline;
+    color: black;
+    cursor: pointer;
 }
 
 #borrowedTable {
@@ -579,6 +613,13 @@ table {
   padding: 0;
 }
 
+.registerTemplate {
+  background-image: url('register.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  padding-left: 20px;
+  padding-top: 30px;
+}
 /*   ********************************************* B O O K S H E L F  *********************************/
 /*   ********************************************* C O N T A C T  *********************************/
 #contactDrawing {
@@ -608,6 +649,14 @@ table {
   border-radius: 4px;
 }
 
+#contactField {
+  width: 350px;
+}
+
+#redSpan {
+  color: #ed5f5f;
+  font-weight: bold;
+}
 /*   ********************************************* C O N T A C T  *********************************/
 /*   ********************************************* F O O T E R  *********************************/
 #footerA {
@@ -619,7 +668,6 @@ table {
   font-size: 14px;
 }
 
-/*   ********************************************* F O O T E R  *********************************/
 footer {
   height: 80px;
   width: 100%;
