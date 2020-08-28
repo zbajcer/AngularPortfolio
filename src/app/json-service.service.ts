@@ -111,4 +111,14 @@ export class JsonServiceService {
     .pipe(map((response: any) => response));
   }
 
+  public getTVZrssFeed(): Observable<any> {
+    return this.http.get('http://localhost:8080/tvz')
+      .pipe(map((newsFeed: any) => newsFeed));
+  }
+
+  public xoScore(iks: any, oks: any, winner: any): Observable<any> {
+    return this.http.get('http://localhost:8080/xo/'+iks+'/'+oks+'/'+winner)
+      .pipe(map((xo: any) => xo));
+  }
+
 }

@@ -28,10 +28,25 @@
 <br><br><br>
 <div class="container">
   <h1>&home</h1>
-  <div class="row">
+  <div class="row" *ngIf="!tvz">
     <div class="col-sm-12 col-md-4" id="home1"></div>
-    <div class="col-sm-12 col-md-4" id="home2"></div>
+    <div class="col-sm-12 col-md-4" id="home2">
+      <button type="button" name="button" class="tvzButton" (click)="fetchTVZrssFeed()"></button>
+    </div>
     <div class="col-sm-12 col-md-4" id="home3"></div>
+  </div>
+  <div class="row" *ngIf="tvz">
+    <button type="button" class="close" aria-label="Close" (click)="tvz = false" id="closeTVZbutton">&times;</button>
+    <div class="col-sm-12" id="tvzNewsFeed">
+      <ul class="lista">
+        <li id="liQuake" *ngFor="let article of tvzJSON">
+          <h6>{{article.title}}</h6>
+          <a>{{article.description}}</a>
+          <p>{{article.pubDate}}</p>
+          <p>{{article.link}}</p>
+        </li>
+      </ul>
+    </div>
   </div>
 </div><a name="biography"></a>
 <hr><br>
@@ -174,7 +189,7 @@
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <a href="#converter" (click)="swapOption(prviSelekt, drugiSelekt, iznosZaPreracun)"><i class="fa fa-exchange"></i></a>
+          <a (click)="swapOption(prviSelekt, drugiSelekt, iznosZaPreracun)"><i class="fa fa-exchange"></i></a>
           <mat-form-field>
             <mat-label>End value</mat-label>
             <mat-select #secondSelects placeholder="end value" [(ngModel)]='drugiSelekt' name="hrenks2">
@@ -291,7 +306,7 @@
     <div class="col-sm-12 col-lg-6" id="quakeDiv">
       <ul class="lista">
         <li id="liQuake" *ngFor="let place of quakePlace">
-          <a href="#earthquake" (click)='showEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
+          <a class="quakeA" (click)='showEarthquake(place.longitude, place.latitude)'>{{place.time}}<br>{{place.place}} <br>
             <span id="spanMagnitude">{{place.magnitude}}</span><span>&nbsp;richter</span>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{place.depth}}<span>&nbsp;km of depth&nbsp;&nbsp;&nbsp;
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -300,7 +315,7 @@
       </ul>
     </div>
     <div class="col-sm-12 col-lg-6" id="quake">
-      <div id="hotel_map"></div>
+      <div id="hotel_map" ></div>
     </div>
   </div>
 </div>
@@ -724,14 +739,14 @@
       </form>
       <div class="modal-footer">
         <button type="button" id="selectSignIn" class="form-control"
-          (click)="newUserRegistration(newFirstName.value, newLastName.value, newEmail.value, newTelephone.value,newAddress.value, newUsername.value, newPassword.value, newVerifyPassword.value)"
-          >Register!&nbsp;&nbsp;<i class="fa fa-spinner fa-spin" *ngIf="registrationLoading"></i></button>
+          (click)="newUserRegistration(newFirstName.value, newLastName.value, newEmail.value, newTelephone.value,newAddress.value, newUsername.value, newPassword.value, newVerifyPassword.value)">Register!&nbsp;&nbsp;<i class="fa fa-spinner fa-spin"
+            *ngIf="registrationLoading"></i></button>
       </div>
-    <div class="modal-footer">
-      <mat-label *ngIf="registrationUID == ''">{{registrationMessage}}</mat-label><br>
-      <mat-label *ngIf="registrationUID != ''">New user ID {{registrationUID}}&nbsp;&nbsp;&nbsp;<i class="fa fa-user-plus" aria-hidden="true"></i></mat-label>
+      <div class="modal-footer">
+        <mat-label *ngIf="registrationUID == ''">{{registrationMessage}}</mat-label><br>
+        <mat-label *ngIf="registrationUID != ''">New user ID {{registrationUID}}&nbsp;&nbsp;&nbsp;<i class="fa fa-user-plus" aria-hidden="true"></i></mat-label>
+      </div>
     </div>
-  </div>
   </ng-template>
   <!-- /*   ********************************************* B O O K S H E L F  *********************************/ -->
 
@@ -758,9 +773,8 @@
           <textarea matInput placeholder="message" formControlName="contactMessage" #message maxlength="800"></textarea>
         </mat-form-field><span id="redSpan"> {{800-message.value.length}} ch</span><br><br>
       </form><span>{{contactFormMessage}}</span><br>
-      <button type="submit" class="form-control" id="selectSignIn" name="push" value="Send!"
-              (click)="push(name.value, surname.value, mail.value, message.value)"
-              >Send!&nbsp;&nbsp;&nbsp;<i class="fa fa-spinner fa-spin" *ngIf="contactSendLoading"></i></button>
+      <button type="submit" class="form-control" id="selectSignIn" name="push" value="Send!" (click)="push(name.value, surname.value, mail.value, message.value)">Send!&nbsp;&nbsp;&nbsp;<i class="fa fa-spinner fa-spin"
+          *ngIf="contactSendLoading"></i></button>
     </div><br>
     <div class="col-md-12 col-lg-6 col-xl-6" id="contactImage"></div>
   </div>
@@ -768,6 +782,102 @@
 <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
 <br>
 <hr><br><br><br>
+<div class="container">
+  <h1>&iks oks</h1><br>
+  <div class="row" id="xoRow">
+      <div class="col-sm-12 col-md-12 col-lg-4" id="xoOne">
+        <div class="grid-container">
+              <div class="grid-child purple">
+                <div id="xoButtonOne">
+                    <button [disabled]="isWinner" [style.backgroundColor]="b1Color" type="button" name="button" class="xoButton" value="first" #xoFirst (click)="xoClickedButton(xoFirst.value)">{{xoFirstButton}}</button>
+                </div>
+              </div>
+              <div class="grid-child green">
+                <div id="xoButtonTwo">
+                  <button [disabled]="isWinner" [style.backgroundColor]="b2Color" type="button" name="button" class="xoButton" value="second" #xoSecond (click)="xoClickedButton(xoSecond.value)">{{xoSecondButton}}</button>
+                </div>
+              </div>
+              <div class="grid-child red">
+                <div id="xoButtonThree">
+                  <button [disabled]="isWinner" [style.backgroundColor]="b3Color" type="button" name="button" class="xoButton" value="third" #xoThird (click)="xoClickedButton(xoThird.value)">{{xoThirdButton}}</button>
+                </div>
+              </div>
+          </div>
+
+
+          <div class="grid-container">
+                <div class="grid-child purple">
+                  <div id="xoButtonFour">
+                    <button [disabled]="isWinner" [style.backgroundColor]="b4Color" type="button" name="button" class="xoButton" value="fourth" #xoFourth (click)="xoClickedButton(xoFourth.value)">{{xoFourthButton}}</button>
+                  </div>
+                </div>
+                <div class="grid-child green">
+                  <div id="xoButtonFive">
+                    <button [disabled]="isWinner" [style.backgroundColor]="b5Color" type="button" name="button" class="xoButton" value="fifth" #xoFifth (click)="xoClickedButton(xoFifth.value)">{{xoFifthButton}}</button>
+                  </div>
+                </div>
+                <div class="grid-child red">
+                  <div id="xoButtonSix">
+                    <button [disabled]="isWinner" [style.backgroundColor]="b6Color" type="button" name="button" class="xoButton" value="sixth" #xoSixth (click)="xoClickedButton(xoSixth.value)">{{xoSixthButton}}</button>
+                  </div>
+
+                </div>
+            </div>
+
+            <div class="grid-container">
+                  <div class="grid-child purple">
+                    <div id="xoButtonSeven">
+                      <button [disabled]="isWinner" [style.backgroundColor]="b7Color" type="button" name="button" class="xoButton" value="seventh" #xoSeventh (click)="xoClickedButton(xoSeventh.value)">{{xoSeventhButton}}</button>
+                    </div>
+                  </div>
+                  <div class="grid-child green">
+                    <div id="xoButtonEight">
+                      <button [disabled]="isWinner" [style.backgroundColor]="b8Color" type="button" name="button" class="xoButton" value="eight" #xoEight (click)="xoClickedButton(xoEight.value)">{{xoEightButton}}</button>
+                    </div>
+                  </div>
+                  <div class="grid-child red">
+                    <div id="xoButtonNine">
+                      <button [disabled]="isWinner" [style.backgroundColor]="b9Color" type="button" name="button" class="xoButton" value="nineth" #xoNineth (click)="xoClickedButton(xoNineth.value)">{{xoNinethButton}}</button>
+                    </div>
+
+                  </div>
+              </div>
+
+
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4" id="xoTwo">
+          <label class="ticTacToeLabel">iks me oks me baby</label>
+          <form [formGroup]="TicTacToeForm">
+            <mat-form-field>
+              <input matInput placeholder="player 'iks'" formControlName="xoPlayerOne" #xoone maxlength="50">
+            </mat-form-field><br><br>
+            <mat-form-field>
+              <input matInput placeholder="player 'oks'" formControlName="xoPlayerTwo" #xotwo maxlength="50">
+            </mat-form-field><br><br>
+          </form>
+          <button type="submit" class="form-control" id="selectSignIn" name="play" value="Play!" (click)="xosubmitPlayers(xoone.value, xotwo.value)">Submit!</button><hr>
+          <button type="submit" class="form-control" id="selectSignIn" name="resetxo" value="R!" (click)="xoReset()">Reset!</button><br><hr>
+          <label *ngIf="!firstplay" id="previousGameLabel"><span>Previous play:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{xoPlayerOnePrevious}}&nbsp;&nbsp;&nbsp;{{xoScoreOnePrevious}} : {{xoScoreTwoPrevious}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwoPrevious}} </span></label>
+      </div>
+      <div class="col-sm-12 col-md-12 col-lg-4" id="xoThree">
+            <label class="xoScoreLabel">{{xoPlayerOne}}&nbsp;&nbsp;&nbsp;{{xoScoreOne}} : {{xoScoreTwo}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwo}}</label>
+            <table mat-table [dataSource]="xodataSource">
+              <ng-container matColumnDef="player">
+                <th mat-header-cell *matHeaderCellDef> Player </th>
+                <td mat-cell *matCellDef="let row"> {{row.player}} </td>
+              </ng-container>
+              <ng-container matColumnDef="score">
+                <th mat-header-cell *matHeaderCellDef> Score </th>
+                <td mat-cell *matCellDef="let row"> {{row.score}} </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedXOplayerStats"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedXOplayerStats;"></tr>
+            </table>
+            <mat-paginator #TableXOpaginator="matPaginator" [pageSizeOptions]="[5, 3]"></mat-paginator>
+      </div>
+  </div>
+</div>
+<br><br><br><hr><br>
 <footer>
   <a href="#text" id="footerA"><span id="footerSpan">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
 </footer>

@@ -68,6 +68,11 @@ export interface BorrowedBooksData {
   extend: string;
 }
 
+export interface XOplayerScores {
+  player: string;
+  score: string;
+}
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
@@ -98,6 +103,9 @@ export class MainComponent implements OnInit {
   displayedBorrowedColumns: string[] = ['bid', 'bookTitle', 'authorLastName', 'issuedDate', 'period', 'fine', 'warning', 'extend'];
   dataSourceBorrowed: MatTableDataSource<BorrowedBooksData>;
 
+  displayedXOplayerStats: string[] = ['player', 'score'];
+  xodataSource: MatTableDataSource<XOplayerScores>;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -109,6 +117,8 @@ export class MainComponent implements OnInit {
 
   @ViewChild('TableDebtorsPaginator', { static: true }) tableDebtorsPaginator: MatPaginator;
   @ViewChild('TableDebtorsSort', { static: true }) tableDebtorsSort: MatSort;
+
+  @ViewChild('TableXOpaginator', { static: true}) tableXOpaginator: MatPaginator;
 
   searchTitle: string = null;
   dt = new Date().toISOString().slice(0, 10);
@@ -152,6 +162,10 @@ export class MainComponent implements OnInit {
       contactMessage: [''],
       materialDatePicker: this.dt
     }, { validator: this.checkPasswords });
+    this.TicTacToeForm = this.formBuilder.group({
+      xoPlayerOne: [''],
+      xoPlayerTwo: ['']
+    });
   }
 
   ngOnInit() {
@@ -161,6 +175,7 @@ export class MainComponent implements OnInit {
     this.getEarthquakeData();
     this.getAllStatistics(7, 7, 'HRK');
     this.createOpenLayersMap();
+    this.updateXOTable('iks','oks','looser');
     //this.bookshelfAuth('terminator', 'terminator');
     //this.bookshelfAuth('zbajcer','opensesame');
   }
@@ -180,6 +195,16 @@ export class MainComponent implements OnInit {
     this.isNavbarCollapsed = false;
   }
   //============================================================================== N A V B A R
+  //============================================================================== TVZ RSS FEED
+  public tvz: boolean = false;
+  tvzJSON: any;
+  fetchTVZrssFeed(){
+    this.tvz = true;
+    this.data.getTVZrssFeed().subscribe( (news:any) => {
+        this.tvzJSON = JSON.parse(JSON.stringify(news));
+    })
+  }
+  //============================================================================== TVZ RSS FEED
   //============================================================================== B I O G R A P H Y
 
   approval: boolean = false;
@@ -465,6 +490,37 @@ export class MainComponent implements OnInit {
   //============================================================================== W E A T H E R
   //==============================================================================  E A R T H Q U A K E
 
+  setRadiusValue(zoom: any){
+    if(zoom <= 3){
+      return 1;
+    }
+    else if(zoom > 3 && zoom <= 5){
+      return 4;
+    }
+    else if (zoom > 5 && zoom <= 6){
+      return 14;
+    }
+    else if(zoom > 6 && zoom <= 7){
+      return 35;
+    }
+    else if(zoom > 7 && zoom <= 8){
+      return 90;
+    }
+    else if(zoom > 8 && zoom <= 9){
+      return 170;
+    }
+    else if(zoom > 9 && zoom <= 10){
+      return 250;
+    }
+    else if(zoom > 10){
+      return 300;
+    }
+    else {
+      return 7;
+    }
+  }
+
+  zoomLevel: any = 7;
   createOpenLayersMap() {
     this.map = new Map({
       target: 'hotel_map',
@@ -476,23 +532,21 @@ export class MainComponent implements OnInit {
         zoom: 7
       })
     });
-    this.crForm = this.fb.group({
-      crControl: [1],
-      crEndControl: [1]
-    });
   }
 
   showEarthquake(lon: any, lat: any) {
     this.lat = lat;
     this.lng = lon;
+    //*********************************************
     var layerArray, len, layer;
     layerArray = this.map.getLayers().getArray(),
       len = layerArray.length;
     while (len > 0) {
-      layer = layerArray[len - 1];
+      layer = layerArray[len - 1];        //remove layers
       this.map.removeLayer(layer);
       len = layerArray.length;
     }
+    //*********************************************
     this.map.getView().setCenter(olProj.fromLonLat([this.lng, this.lat]));
     var firstLayer = new TileLayer({
       source: new OSM()
@@ -522,6 +576,27 @@ export class MainComponent implements OnInit {
         }),
       })
     })
+    this.map.getView().on('change:resolution', () => {
+    this.zoomLevel = this.map.getView().getZoom();
+    var second = new Style({
+      image: new CircleStyle({
+        radius: this.setRadiusValue(this.zoomLevel),
+        fill: new Fill({
+          color: 'rgba(20, 100, 240, 0.3)'
+        }),
+      })
+    })
+    var first = new Style({
+      image: new CircleStyle({
+        radius: this.zoomLevel,
+        fill: new Fill({
+          color: 'rgba(200, 50, 50, 0.5)'
+        }),
+      })
+    })
+    const style = [first, second];
+    layer.setStyle(style);
+  })
     const style = [styles, stylesSecond];
     layer.setStyle(style);
     this.map.addLayer(firstLayer);
@@ -1147,5 +1222,227 @@ export class MainComponent implements OnInit {
     });
   }
   //============================================================================== C O N T A C T  F O R M
+  //==============================================================================   X   O
+  TicTacToeForm: FormGroup;
+  xoFirstButton: any = '';
+  xoSecondButton: any = '';
+  xoThirdButton: any = '';
+  xoFourthButton: any = '';
+  xoFifthButton: any = '';
+  xoSixthButton: any = '';
+  xoSeventhButton: any = '';
+  xoEightButton: any = '';
+  xoNinethButton: any = '';
+  b1Color: any;
+  b2Color: any;
+  b3Color: any;
+  b4Color: any;
+  b5Color: any;
+  b6Color: any;
+  b7Color: any;
+  b8Color: any;
+  b9Color: any;
+  xoPlayerOne: any = 'iks';
+  xoPlayerTwo: any = 'oks';
+  xoScoreOne: number = 0;
+  xoScoreTwo: number = 0;
+  xowinner: any = '';
+
+  public firstplay: boolean = true;
+  xoPlayerOnePrevious: any = 'iks';
+  xoPlayerTwoPrevious: any = 'oks';
+  xoScoreOnePrevious: number = 0;
+  xoScoreTwoPrevious: number = 0;
+
+  public isWinner: boolean = false;
+  private isFirstPlayer: boolean = true;
+  xoClickedButton(value: any){
+      this.setXO(value, this.isFirstPlayer);
+      if(this.checkXOwinningCombo()){
+        this.isWinner = true;
+        if(this.xowinner == this.xoPlayerOne){
+          this.xoScoreOne += 1;
+        }
+        else {
+          this.xoScoreTwo += 1;
+        }
+        this.updateXOTable(this.xoPlayerOne, this.xoPlayerTwo, this.xowinner);
+      }
+    }
+
+    getXOData(iks: any, oks: any, winner: any): Observable<XOplayerScores[]> {
+      return this.data.xoScore(iks,oks,winner).pipe(
+        map(data => {
+          return data
+          .map(item => {
+            return {
+              player: item.player,
+              score: item.score
+            }
+          })
+        })
+      )
+    }
+
+    updateXOTable(iks: any, oks: any, winner: any) {
+      this.getXOData(iks, oks, winner).subscribe(
+        players => {
+          this.xodataSource = new MatTableDataSource(players);
+          this.xodataSource.paginator = this.tableXOpaginator;
+        }
+      )
+
+    }
+
+  xosubmitPlayers(iks: any, oks: any){
+      this.firstplay = false;
+      this.xoPlayerOnePrevious = this.xoPlayerOne;
+      this.xoPlayerTwoPrevious = this.xoPlayerTwo;
+      this.xoScoreOnePrevious = this.xoScoreOne;
+      this.xoScoreTwoPrevious = this.xoScoreTwo;
+    if(iks == '' || oks == ''){
+      this.xoPlayerOne = 'iks';
+      this.xoPlayerTwo = 'oks';
+    } else {
+      this.xoPlayerOne = iks;
+      this.xoPlayerTwo = oks;
+    }
+    this.xoScoreOne = 0;
+    this.xoScoreTwo = 0;
+    this.isFirstPlayer = true;
+    this.xoReset();
+  }
+
+  xoReset(){
+    this.isWinner = false;
+    this.isFirstPlayer = true;
+    this.b1Color = 'transparent';
+    this.b2Color = 'transparent';
+    this.b3Color = 'transparent';
+    this.b4Color = 'transparent';
+    this.b5Color = 'transparent';
+    this.b6Color = 'transparent';
+    this.b7Color = 'transparent';
+    this.b8Color = 'transparent';
+    this.b9Color = 'transparent';
+    this.xoFirstButton = '';
+    this.xoSecondButton = '';
+    this.xoThirdButton = '';
+    this.xoFourthButton = '';
+    this.xoFifthButton = '';
+    this.xoSixthButton = '';
+    this.xoSeventhButton = '';
+    this.xoEightButton = '';
+    this.xoNinethButton = '';
+  }
+
+  setXO(button: any, firstPlayer: boolean){
+    if(button == "first"){
+      if(this.xoFirstButton != 'X' && this.xoFirstButton != 'O'){
+        this.xoFirstButton = firstPlayer ? 'X' : 'O';
+        this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }
+    }
+    else if(button == "second"){
+      if(this.xoSecondButton != 'X' && this.xoSecondButton != 'O'){
+      this.xoSecondButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "third"){
+      if(this.xoThirdButton != 'X' && this.xoThirdButton != 'O'){
+      this.xoThirdButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "fourth"){
+      if(this.xoFourthButton != 'X' && this.xoFourthButton != 'O'){
+      this.xoFourthButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "fifth"){
+      if(this.xoFifthButton != 'X' && this.xoFifthButton != 'O'){
+      this.xoFifthButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "sixth"){
+      if(this.xoSixthButton != 'X' && this.xoSixthButton != 'O'){
+      this.xoSixthButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "seventh"){
+      if(this.xoSeventhButton != 'X' && this.xoSeventhButton != 'O'){
+      this.xoSeventhButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "eight"){
+      if(this.xoEightButton != 'X' && this.xoEightButton != 'O'){
+      this.xoEightButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+    else if(button == "nineth"){
+      if(this.xoNinethButton != 'X' && this.xoNinethButton != 'O'){
+      this.xoNinethButton = firstPlayer ? 'X' : 'O';
+      this.isFirstPlayer = this.isFirstPlayer ? false : true;
+    }}
+  }
+
+  checkXOwinningCombo(){
+    if(this.xoSecondButton === this.xoThirdButton && this.xoThirdButton === this.xoFirstButton && this.xoFirstButton != ''){
+      this.b1Color = '#5df585';
+      this.b2Color = '#5df585';
+      this.b3Color = '#5df585';
+      this.xowinner = this.xoSecondButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoFourthButton === this.xoFifthButton && this.xoFifthButton === this.xoSixthButton && this.xoFourthButton != ''){
+      this.b4Color = '#5df585';
+      this.b5Color = '#5df585';
+      this.b6Color = '#5df585';
+      this.xowinner = this.xoFourthButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoSeventhButton === this.xoEightButton && this.xoEightButton === this.xoNinethButton && this.xoNinethButton != ''){
+      this.b7Color = '#5df585';
+      this.b8Color = '#5df585';
+      this.b9Color = '#5df585';
+      this.xowinner = this.xoSeventhButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoFirstButton === this.xoFourthButton && this.xoFourthButton === this.xoSeventhButton && this.xoFirstButton != ''){
+      this.b1Color = '#5df585';
+      this.b4Color = '#5df585';
+      this.b7Color = '#5df585';
+      this.xowinner = this.xoFirstButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoSecondButton === this.xoFifthButton && this.xoFifthButton === this.xoEightButton && this.xoSecondButton != ''){
+      this.b2Color = '#5df585';
+      this.b5Color = '#5df585';
+      this.b8Color = '#5df585';
+      this.xowinner = this.xoSecondButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoThirdButton === this.xoSixthButton && this.xoSixthButton === this.xoNinethButton && this.xoSixthButton != ''){
+      this.b3Color = '#5df585';
+      this.b6Color = '#5df585';
+      this.b9Color = '#5df585';
+      this.xowinner = this.xoThirdButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoFirstButton === this.xoFifthButton && this.xoFifthButton === this.xoNinethButton && this.xoNinethButton != ''){
+      this.b1Color = '#5df585';
+      this.b5Color = '#5df585';
+      this.b9Color = '#5df585';
+      this.xowinner = this.xoFirstButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else if(this.xoSeventhButton === this.xoFifthButton && this.xoFifthButton === this.xoThirdButton && this.xoThirdButton != ''){
+      this.b3Color = '#5df585';
+      this.b5Color = '#5df585';
+      this.b7Color = '#5df585';
+      this.xowinner = this.xoSeventhButton == 'X' ? this.xoPlayerOne : this.xoPlayerTwo;
+      return true;
+    }
+    else return false;
+  }
 
 }

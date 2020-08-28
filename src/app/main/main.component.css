@@ -102,6 +102,25 @@ span {
   background-image: url("controller.PNG");
 }
 
+.tvzButton {
+  height: 100%;
+  width: 100%;
+  background-color: transparent;
+}
+
+#tvzNewsFeed {
+  margin: 0 auto;
+  width: 100%;
+  height:300px;
+  overflow: auto;
+}
+
+#closeTVZbutton {
+  background-color: gray;
+  font-size: 30px;
+  border-radius: 50%;
+}
+
 /*   ********************************************* H O M E  *********************************/
 /*   ********************************************* B I O G R A P H Y  *********************************/
 #biographyDiv {
@@ -347,6 +366,10 @@ span.psw {
 
 .lista span {
   color: white;
+}
+
+.quakeA:hover {
+  cursor: pointer;
 }
 
 #liQuake {
@@ -658,6 +681,126 @@ table {
   font-weight: bold;
 }
 /*   ********************************************* C O N T A C T  *********************************/
+/*****************************************************   I    O    *******************************/
+#xoRow {
+  height: 400px;
+}
+
+#xoOne {
+background-image: url('xo.jpeg');
+background-repeat: no-repeat;
+background-size: cover;
+}
+
+#xoTwo {
+  align-items: center;
+  padding-left: 50px;
+  background-image: url('players.jpeg');
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+#xoThree {
+  overflow: auto;
+}
+
+.xoScoreLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.ticTacToeLabel {
+  width: 100%;
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.xoButton {
+  color: #02046e !important;
+  width: 100%;
+  height: 100%;
+  margin-top: 0;
+  font-size: 70px;
+  font-weight: bold;
+  background-color: transparent;
+  border-radius: 0px !important;
+}
+
+#xoButtonOne {
+  border-right: 1px solid black;
+  border-bottom: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+  }
+
+#xoButtonTwo {
+  border-bottom: 1px solid black;
+  color: black !important;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonThree {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonFour {
+  border-bottom: 1px solid black;
+  border-right: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonFive {
+  border-bottom: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonSix {
+  border-left: 1px solid black;
+  border-bottom: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonSeven {
+  border-right: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonEight {
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+
+#xoButtonNine {
+  border-left: 1px solid black;
+  color: black;
+  height: 130px;
+  width: 100%;
+}
+/*****************************************************   I    O    *******************************/
 /*   ********************************************* F O O T E R  *********************************/
 #footerA {
   font-weight: bold;
