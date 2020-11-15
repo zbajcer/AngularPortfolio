@@ -54,7 +54,7 @@ import { DatePipe } from '@angular/common';
     MatDatepickerModule,
     MatMomentDateModule,
     MatNativeDateModule
-  ],
+    ],
   providers: [
     MatDatepickerModule,
     DatePipe

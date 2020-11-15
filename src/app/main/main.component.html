@@ -17,6 +17,7 @@
       <li class="nav-item"><a href="#earthquake" (click)="collapseAll()">*earthquake</a></li>
       <li class="nav-item"><a href="#bookshelf" (click)="collapseAll()">*bookshelf</a></li>
       <li class="nav-item"><a href="#contact" (click)="collapseAll()">*contact</a></li>
+      <li class="nav-item"><a href="#xo" (click)="collapseAll()">*x/o</a></li>
       <li class="nav-item"><a href="https://github.com/zbajcer?tab=repositories" target="_blank" (click)="collapseAll()">*github&nbsp;&nbsp;<i class="fa fa-github"></i></a></li>
     </ul>
   </div>
@@ -112,59 +113,6 @@
 
 <!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
 
-
-<!--
-<br>
-<hr><br>
-<div class="container">
-<h1>&currency converter</h1>
-<div class="row">
-  <div class="col-md-12 col-lg-6">
-    <div class="content" role="main">
-      <p id="boldP">Choose rate date:</p>
-      <input class="form-control" id="conv" type="date" [(ngModel)]="dt"
-                (change)='sendDateToService(dt)'
-                (change)='getConverterData()'>
-      <form [formGroup]="crForm">
-        <p id="p">Start value:</p>
-        <select name="options" #firstSelect id="slc" class="form-control" formControlName="crControl"
-                  (change)="onChangeCode($event.target.value)">
-          <option *ngFor="let a of parsedJson;" class="form-control"
-                  (click)="firstSelectValues(a.Jedinica, a.Valuta)"
-                  (click)="getAllStatistics(7,7,a.Valuta)"
-                  [(value)]="a.Srednji">{{a.SelectOption}}</option>
-        </select>
-        <p id="pSwapIcon">End value:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="#converter"
-                      (click)="swapOptions(firstSelect.value, secondSelect.value, inputValue.value)"><i class="fa fa-arrow-down"></i></a></p>
-        <select name="options2" #secondSelect id="slc" class="form-control" formControlName="crEndControl">
-          <option *ngFor="let a of parsedJson;" class="form-control"
-                      (click)="secondSelectValues(a.Jedinica, a.Valuta)"
-                      [(value)]="a.Srednji">{{a.SelectOption}}</option>
-        </select>
-      </form>
-      <p id="boldP">Conversion amount:</p>
-      <input type="text" name="iznos" placeholder="0.0" id="amountInput" #inputValue class="form-control">
-      <input type="submit" name="btn" class="form-control" id="submitConverter" value="Calculate"
-                  (click)="calculation(firstSelect.value, secondSelect.value, inputValue.value)">
-      <p id="boldP">Result of conversion is &nbsp;&nbsp;&nbsp;&nbsp;
-                  <span id="spanConversionResult">{{rezultat}} {{valutaEndView}}</span></p>
-    </div>
-  </div>
-  <div class="col-md-12 col-lg-6">
-    <div>
-      <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2"
-                        [options]="barChartOptions2" [colors]="barChartColors2"
-                        [legend]="barChartLegend2" [chartType]="barChartType2">
-      </canvas>
-    </div>
-    <hr>
-    <p><span id="spanStatistics">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
-    <p><span id="spanStatistics">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
-    <hr>
-  </div>
-</div>
-
--->
 <br>
 <hr><br>
 <div class="container">
@@ -184,12 +132,12 @@
           <mat-form-field>
             <mat-label>Start value</mat-label>
             <mat-select #firstSelects placeholder="start value" [(ngModel)]='prviSelekt' name="hrenks">
-              <mat-option *ngFor="let a of parsedJson" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,7,a.Valuta)" [(value)]="a.Srednji">
+              <mat-option *ngFor="let a of parsedJson" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,canvasSelect.value,a.Valuta)" [(value)]="a.Srednji">
                 {{a.SelectOption}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-          <a (click)="swapOption(prviSelekt, drugiSelekt, iznosZaPreracun)"><i class="fa fa-exchange"></i></a>
+          <a id="pSwapIcon" (click)="swapOption(prviSelekt, drugiSelekt, iznosZaPreracun)"><i class="fa fa-exchange"></i></a>
           <mat-form-field>
             <mat-label>End value</mat-label>
             <mat-select #secondSelects placeholder="end value" [(ngModel)]='drugiSelekt' name="hrenks2">
@@ -213,12 +161,30 @@
       <div>
         <canvas baseChart [datasets]="barChartData2" [labels]="barChartLabels2" [options]="barChartOptions2" [colors]="barChartColors2" [legend]="barChartLegend2" [chartType]="barChartType2">
         </canvas>
+        <mat-select #canvasSelect [(ngModel)]='canvasInterval' name="canvas" id="canvasSelect">
+          <mat-option *ngFor="let canvasValue of canvasValues, let i = index" [(value)]="canvasValues[i]" (click)="reloadCanvas(canvasInterval)">
+            {{canvasValue}}<span id="spanStatistics"> days</span>
+          </mat-option>
+        </mat-select>
       </div>
       <hr>
       <p><span id="spanStatistics">Overall:</span> {{mostCommonOverallStatistic}} is most common start currency!</p>
-      <p><span id="spanStatistics">7 days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last 7 days!</p>
+      <p><span id="spanStatistics">{{canvasInterval}} days:</span> {{mostCommonIntervalStatistic}} is most common start currency within last {{canvasInterval}} days!</p>
       <hr>
     </div>
+  </div>
+<a (click)="currListBoolean()" id="registerSpan" *ngIf="(currList == true)"><span id="registerSpan">Hide currency list!</span></a>
+<a (click)="currListBoolean()" id="registerSpan" *ngIf="(currList == false)"><span id="registerSpan">Show currency list!</span></a>
+  <div class="row" *ngIf="(currList == true)">
+    <hr><br>
+    <div class="col-md-12">
+      <div>
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [colors]="barChartColors" [legend]="barChartLegend" [chartType]="barChartType">
+        </canvas>
+      </div>
+    </div>
+    <br><hr>
+
   </div>
 
   <!--  /*   ********************************************* C O N V E R T E R  *********************************/-->
@@ -315,7 +281,7 @@
       </ul>
     </div>
     <div class="col-sm-12 col-lg-6" id="quake">
-      <div id="hotel_map" ></div>
+      <div id="hotel_map"></div>
     </div>
   </div>
 </div>
@@ -751,7 +717,6 @@
   <!-- /*   ********************************************* B O O K S H E L F  *********************************/ -->
 
   <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
-
 </div>
 <a name="contact"></a>
 <hr><br>
@@ -780,104 +745,117 @@
   </div>
 </div>
 <!-- /*   ********************************************* C O N T A C T  *********************************/ -->
+<!-- /*   ********************************************* I K S    O K S  *********************************/ -->
 <br>
-<hr><br><br><br>
+<hr><a name="xo"></a>
+<br><br><br>
 <div class="container">
   <h1>&iks oks</h1><br>
-  <div class="row" id="xoRow">
-      <div class="col-sm-12 col-md-12 col-lg-4" id="xoOne">
-        <div class="grid-container">
-              <div class="grid-child purple">
-                <div id="xoButtonOne">
-                    <button [disabled]="isWinner" [style.backgroundColor]="b1Color" type="button" name="button" class="xoButton" value="first" #xoFirst (click)="xoClickedButton(xoFirst.value)">{{xoFirstButton}}</button>
-                </div>
-              </div>
-              <div class="grid-child green">
-                <div id="xoButtonTwo">
-                  <button [disabled]="isWinner" [style.backgroundColor]="b2Color" type="button" name="button" class="xoButton" value="second" #xoSecond (click)="xoClickedButton(xoSecond.value)">{{xoSecondButton}}</button>
-                </div>
-              </div>
-              <div class="grid-child red">
-                <div id="xoButtonThree">
-                  <button [disabled]="isWinner" [style.backgroundColor]="b3Color" type="button" name="button" class="xoButton" value="third" #xoThird (click)="xoClickedButton(xoThird.value)">{{xoThirdButton}}</button>
-                </div>
-              </div>
+  <div class="row">
+    <div class="col-sm-12 col-lg-4">
+
+    </div>
+    <div class="col-sm-12 col-lg-4">
+
+    </div>
+    <div class="col-sm-12 col-lg-4" id="previousScoreDiv">
+      <label *ngIf="!firstplay" class="xoPreviousScoreLabel">{{xoPlayerOnePrevious}}&nbsp;&nbsp;&nbsp;{{xoScoreOnePrevious}} :
+          {{xoScoreTwoPrevious}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwoPrevious}}</label>
+    </div>
+
+  </div>
+  <div class="row">
+    <div class="col-sm-12 col-lg-4" id="xoOne">
+      <div class="grid-container">
+        <div class="grid-child purple">
+          <div id="xoButtonOne">
+            <button [disabled]="isWinner" [style.backgroundColor]="b1Color" type="button" name="button" class="xoButton" value="first" #xoFirst (click)="xoClickedButton(xoFirst.value)">{{xoFirstButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child green">
+          <div id="xoButtonTwo">
+            <button [disabled]="isWinner" [style.backgroundColor]="b2Color" type="button" name="button" class="xoButton" value="second" #xoSecond (click)="xoClickedButton(xoSecond.value)">{{xoSecondButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child red">
+          <div id="xoButtonThree">
+            <button [disabled]="isWinner" [style.backgroundColor]="b3Color" type="button" name="button" class="xoButton" value="third" #xoThird (click)="xoClickedButton(xoThird.value)">{{xoThirdButton}}</button>
+          </div>
+        </div>
+      </div>
+      <div class="grid-container">
+        <div class="grid-child purple">
+          <div id="xoButtonFour">
+            <button [disabled]="isWinner" [style.backgroundColor]="b4Color" type="button" name="button" class="xoButton" value="fourth" #xoFourth (click)="xoClickedButton(xoFourth.value)">{{xoFourthButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child green">
+          <div id="xoButtonFive">
+            <button [disabled]="isWinner" [style.backgroundColor]="b5Color" type="button" name="button" class="xoButton" value="fifth" #xoFifth (click)="xoClickedButton(xoFifth.value)">{{xoFifthButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child red">
+          <div id="xoButtonSix">
+            <button [disabled]="isWinner" [style.backgroundColor]="b6Color" type="button" name="button" class="xoButton" value="sixth" #xoSixth (click)="xoClickedButton(xoSixth.value)">{{xoSixthButton}}</button>
           </div>
 
-
-          <div class="grid-container">
-                <div class="grid-child purple">
-                  <div id="xoButtonFour">
-                    <button [disabled]="isWinner" [style.backgroundColor]="b4Color" type="button" name="button" class="xoButton" value="fourth" #xoFourth (click)="xoClickedButton(xoFourth.value)">{{xoFourthButton}}</button>
-                  </div>
-                </div>
-                <div class="grid-child green">
-                  <div id="xoButtonFive">
-                    <button [disabled]="isWinner" [style.backgroundColor]="b5Color" type="button" name="button" class="xoButton" value="fifth" #xoFifth (click)="xoClickedButton(xoFifth.value)">{{xoFifthButton}}</button>
-                  </div>
-                </div>
-                <div class="grid-child red">
-                  <div id="xoButtonSix">
-                    <button [disabled]="isWinner" [style.backgroundColor]="b6Color" type="button" name="button" class="xoButton" value="sixth" #xoSixth (click)="xoClickedButton(xoSixth.value)">{{xoSixthButton}}</button>
-                  </div>
-
-                </div>
-            </div>
-
-            <div class="grid-container">
-                  <div class="grid-child purple">
-                    <div id="xoButtonSeven">
-                      <button [disabled]="isWinner" [style.backgroundColor]="b7Color" type="button" name="button" class="xoButton" value="seventh" #xoSeventh (click)="xoClickedButton(xoSeventh.value)">{{xoSeventhButton}}</button>
-                    </div>
-                  </div>
-                  <div class="grid-child green">
-                    <div id="xoButtonEight">
-                      <button [disabled]="isWinner" [style.backgroundColor]="b8Color" type="button" name="button" class="xoButton" value="eight" #xoEight (click)="xoClickedButton(xoEight.value)">{{xoEightButton}}</button>
-                    </div>
-                  </div>
-                  <div class="grid-child red">
-                    <div id="xoButtonNine">
-                      <button [disabled]="isWinner" [style.backgroundColor]="b9Color" type="button" name="button" class="xoButton" value="nineth" #xoNineth (click)="xoClickedButton(xoNineth.value)">{{xoNinethButton}}</button>
-                    </div>
-
-                  </div>
-              </div>
-
-
+        </div>
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-4" id="xoTwo">
-          <label class="ticTacToeLabel">iks me oks me baby</label>
-          <form [formGroup]="TicTacToeForm">
-            <mat-form-field>
-              <input matInput placeholder="player 'iks'" formControlName="xoPlayerOne" #xoone maxlength="50">
-            </mat-form-field><br><br>
-            <mat-form-field>
-              <input matInput placeholder="player 'oks'" formControlName="xoPlayerTwo" #xotwo maxlength="50">
-            </mat-form-field><br><br>
-          </form>
-          <button type="submit" class="form-control" id="selectSignIn" name="play" value="Play!" (click)="xosubmitPlayers(xoone.value, xotwo.value)">Submit!</button><hr>
-          <button type="submit" class="form-control" id="selectSignIn" name="resetxo" value="R!" (click)="xoReset()">Reset!</button><br><hr>
-          <label *ngIf="!firstplay" id="previousGameLabel"><span>Previous play:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{xoPlayerOnePrevious}}&nbsp;&nbsp;&nbsp;{{xoScoreOnePrevious}} : {{xoScoreTwoPrevious}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwoPrevious}} </span></label>
+      <div class="grid-container">
+        <div class="grid-child purple">
+          <div id="xoButtonSeven">
+            <button [disabled]="isWinner" [style.backgroundColor]="b7Color" type="button" name="button" class="xoButton" value="seventh" #xoSeventh (click)="xoClickedButton(xoSeventh.value)">{{xoSeventhButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child green">
+          <div id="xoButtonEight">
+            <button [disabled]="isWinner" [style.backgroundColor]="b8Color" type="button" name="button" class="xoButton" value="eight" #xoEight (click)="xoClickedButton(xoEight.value)">{{xoEightButton}}</button>
+          </div>
+        </div>
+        <div class="grid-child red">
+          <div id="xoButtonNine">
+            <button [disabled]="isWinner" [style.backgroundColor]="b9Color" type="button" name="button" class="xoButton" value="nineth" #xoNineth (click)="xoClickedButton(xoNineth.value)">{{xoNinethButton}}</button>
+          </div>
+
+        </div>
       </div>
-      <div class="col-sm-12 col-md-12 col-lg-4" id="xoThree">
-            <label class="xoScoreLabel">{{xoPlayerOne}}&nbsp;&nbsp;&nbsp;{{xoScoreOne}} : {{xoScoreTwo}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwo}}</label>
-            <table mat-table [dataSource]="xodataSource">
-              <ng-container matColumnDef="player">
-                <th mat-header-cell *matHeaderCellDef> Player </th>
-                <td mat-cell *matCellDef="let row"> {{row.player}} </td>
-              </ng-container>
-              <ng-container matColumnDef="score">
-                <th mat-header-cell *matHeaderCellDef> Score </th>
-                <td mat-cell *matCellDef="let row"> {{row.score}} </td>
-              </ng-container>
-              <tr mat-header-row *matHeaderRowDef="displayedXOplayerStats"></tr>
-              <tr mat-row *matRowDef="let row; columns: displayedXOplayerStats;"></tr>
-            </table>
-            <mat-paginator #TableXOpaginator="matPaginator" [pageSizeOptions]="[5, 3]"></mat-paginator>
-      </div>
+    </div>
+    <div class="col-sm-12 col-lg-4" id="xoTwo">
+      <label class="ticTacToeLabel">iks me oks me baby</label>
+      <form [formGroup]="TicTacToeForm">
+        <mat-form-field>
+          <input matInput placeholder="player 'iks'" formControlName="xoPlayerOne" #xoone maxlength="50">
+        </mat-form-field><br><br>
+        <mat-form-field>
+          <input matInput placeholder="player 'oks'" formControlName="xoPlayerTwo" #xotwo maxlength="50">
+        </mat-form-field><br><br>
+      </form>
+      <button type="submit" class="form-control" id="selectSignIn" name="play" value="Play!" (click)="xosubmitPlayers(xoone.value, xotwo.value)">Submit!</button>
+      <hr>
+      <button type="submit" class="form-control" id="selectSignIn" name="resetxo" value="R!" (click)="xoReset()">Reset!</button><br>
+      <hr>
+    </div>
+    <div class="col-sm-12 col-lg-4" id="xoThree">
+      <label class="xoScoreLabel">{{xoPlayerOne}}&nbsp;&nbsp;&nbsp;{{xoScoreOne}} : {{xoScoreTwo}}&nbsp;&nbsp;&nbsp;{{xoPlayerTwo}}</label>
+      <table mat-table [dataSource]="xodataSource">
+        <ng-container matColumnDef="player">
+          <th mat-header-cell *matHeaderCellDef> Player </th>
+          <td mat-cell *matCellDef="let row"> {{row.player}} </td>
+        </ng-container>
+        <ng-container matColumnDef="score">
+          <th mat-header-cell *matHeaderCellDef> Score </th>
+          <td mat-cell *matCellDef="let row"> {{row.score}} </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedXOplayerStats"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedXOplayerStats;"></tr>
+      </table>
+      <mat-paginator #TableXOpaginator="matPaginator" [pageSizeOptions]="[5, 3]"></mat-paginator>
+    </div>
   </div>
 </div>
-<br><br><br><hr><br>
+<br><br><br>
+<!-- /*   ********************************************* I K S    O K S  *********************************/ -->
+<hr><br>
 <footer>
   <a href="#text" id="footerA"><span id="footerSpan">SvaSilaSvega &#174; by Zoran Bajcer<i class="w3-small glyphicon glyphicon-refresh w3-spin"></i> </span></a>
 </footer>

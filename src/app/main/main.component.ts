@@ -120,6 +120,7 @@ export class MainComponent implements OnInit {
 
   @ViewChild('TableXOpaginator', { static: true}) tableXOpaginator: MatPaginator;
 
+  canvasInterval: number = 7;
   searchTitle: string = null;
   dt = new Date().toISOString().slice(0, 10);
   today = new Date();
@@ -173,7 +174,7 @@ export class MainComponent implements OnInit {
     this.getConverterData();
     this.weatherCity("Zagreb");
     this.getEarthquakeData();
-    this.getAllStatistics(7, 7, 'HRK');
+    this.getAllStatistics(7, this.canvasInterval, 'HRK');
     this.createOpenLayersMap();
     this.updateXOTable('iks','oks','looser');
     //this.bookshelfAuth('terminator', 'terminator');
@@ -258,11 +259,19 @@ export class MainComponent implements OnInit {
     this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
   }
 
+  currListNames: any = [];
+  currListValues: any = [];
   parsedJson: any;
   getConverterData() {
+    this.currListNames.splice(0, this.currListNames.length);
+    this.currListValues.splice(0, this.currListValues.length);
     this.data.getJsonResponse().subscribe((dataByDate: any) => {
       this.parsedJson = JSON.parse(JSON.stringify(dataByDate)
         .replace(/Država/g, "Drzava").replace(/Srednji za devize/g, "Srednji"));
+      this.parsedJson.map(item => {
+        this.currListNames.push(item.Valuta);
+        this.currListValues.push(item.Srednji/item.Jedinica);
+      })
     })
     this.firstSelectValues(1, "HRK");
     this.secondSelectValues(1, "HRK");
@@ -338,20 +347,19 @@ export class MainComponent implements OnInit {
       }
     }
     this.postRequest();
-    this.getAllStatistics(7, 7, this.valutaStart);
+    this.getAllStatistics(7, this.canvasInterval, this.valutaStart);
   }
 
 
   selectedCode: any;
   onChangeCode(code: any) {
     this.selectedCode = code;
-    console.log(this.selectedCode + "fadfs")
   }
 
   startValueChart: any = [];
   parser: any;
-  mostCommonIntervalStatistic: any;
-  mostCommonOverallStatistic: any;
+  mostCommonIntervalStatistic: any = "Casper";
+  mostCommonOverallStatistic: any = "Casper";
   currencyIntervalStatistic: any = [];
   currencyIntervalCounter: any = [];
   getAllStatistics(intervalMostCommon: any, intervalCurrency: any, value: any) {
@@ -363,10 +371,14 @@ export class MainComponent implements OnInit {
       this.parser = JSON.parse(JSON.stringify(data));
       this.parser.map(item => {
         item.mostCommonInterval.map(item => {
-          this.mostCommonIntervalStatistic = item.value;
+          if(item.value != ""){
+            this.mostCommonIntervalStatistic = item.value;
+          }
         })
         item.mostCommonOverall.map(item => {
-          this.mostCommonOverallStatistic = item.value;
+          if(item.value != ""){
+            this.mostCommonOverallStatistic = item.value;
+          }
         })
         item.currencyInterval.map(item => {
           this.currencyIntervalStatistic.push(item.valuta);
@@ -376,6 +388,12 @@ export class MainComponent implements OnInit {
     })
   }
 
+  reloadCanvas(value: any){
+    this.canvasInterval = value;
+    this.getAllStatistics(value, this.canvasInterval, this.valutaStart);
+  }
+
+  canvasValues: any = [3,5,7,10,15,20,30,50,100];
   public barChartOptions2: ChartOptions = {
     responsive: true, scales: { xAxes: [{}], yAxes: [{}] },
     plugins: {
@@ -393,6 +411,41 @@ export class MainComponent implements OnInit {
   }];
   public barChartColors2: any[] = [{
     backgroundColor: '#f8fa70',
+    borderColor: 'black',
+    pointBackgroundColor: 'white',
+    pointBorderColor: 'red',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgba(225,10,24,0.2)'
+  }];
+
+  currList: boolean = false;
+
+  currListBoolean(){
+    if(this.currList == false){
+      this.currList = true;
+    }
+    else{
+      this.currList = false;
+    }
+  }
+
+  public barChartOptions: ChartOptions = {
+    responsive: true, scales: { xAxes: [{}], yAxes: [{}] },
+    plugins: {
+      datalabels: {
+        anchor: 'end', align: 'end',
+      }
+    }
+  };
+  public barChartLabels: Label[] = this.currListNames;
+  public barChartType: ChartType = 'bar';
+  public barChartLegend = true;
+  public barChartData: ChartDataSets[] = [{
+    data: this.currListValues,
+    label: "Value"
+  }];
+  public barChartColors: any[] = [{
+    backgroundColor: 'grey',
     borderColor: 'black',
     pointBackgroundColor: 'white',
     pointBorderColor: 'red',
@@ -1444,5 +1497,6 @@ export class MainComponent implements OnInit {
     }
     else return false;
   }
+  //==============================================================================   X   O
 
 }

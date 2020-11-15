@@ -185,7 +185,7 @@ span.psw {
   box-sizing: border-box;
 }
 
-#p, #pSwapIcon{
+#p{
   padding-left: 150px;
   font-weight: bold;
 }
@@ -237,6 +237,11 @@ span.psw {
   font-weight: bold;
   font-size: 14px;
   color: grey;
+}
+
+#canvasSelect {
+  width: 30%;
+  padding-left: 10px;
 }
 
 .fa-exchange{
@@ -681,10 +686,7 @@ table {
   font-weight: bold;
 }
 /*   ********************************************* C O N T A C T  *********************************/
-/*****************************************************   I    O    *******************************/
-#xoRow {
-  height: 400px;
-}
+/*****************************************************   X    O    *******************************/
 
 #xoOne {
 background-image: url('xo.jpeg');
@@ -709,6 +711,18 @@ background-size: cover;
   text-align: center;
   font-size: 30px;
   font-weight: bold;
+}
+
+.xoPreviousScoreLabel {
+  width: 100%;
+  text-align: center;
+  font-size: 10px;
+  font-weight: bold;
+  color: grey;
+}
+
+#previousScoreDiv {
+  height: 20px;
 }
 
 .ticTacToeLabel {
@@ -800,7 +814,8 @@ background-size: cover;
   height: 130px;
   width: 100%;
 }
-/*****************************************************   I    O    *******************************/
+
+/*****************************************************   X    O    *******************************/
 /*   ********************************************* F O O T E R  *********************************/
 #footerA {
   font-weight: bold;
