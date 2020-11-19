@@ -1202,6 +1202,7 @@ export class MainComponent implements OnInit {
   clearModalFields() {
     this.myForm.reset();
   }
+  
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
