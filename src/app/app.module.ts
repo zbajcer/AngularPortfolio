@@ -23,6 +23,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatSelectModule} from '@angular/material/select';
 import { MatMomentDateModule, MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DatePipe } from '@angular/common';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -56,6 +57,7 @@ import { DatePipe } from '@angular/common';
     MatNativeDateModule
     ],
   providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
     MatDatepickerModule,
     DatePipe
   ],

@@ -123,7 +123,7 @@
         <form [formGroup]="myForm">
           <mat-form-field color="accent" appearance="fill" id="converterDateField">
             <mat-label>Choose wisely</mat-label>
-            <input matInput [matDatepicker]="picker2" formControlName="materialDatePicker" #picker (dateChange)='sendDateToService(picker.value)' (dateChange)='getConverterData()'>
+            <input matInput [matDatepicker]="picker2" formControlName="materialDatePicker" #picker (dateChange)='sendDateToService(picker.value, false)' (dateChange)='getConverterData()'>
             <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
             <mat-datepicker #picker2 color="primary"></mat-datepicker>
           </mat-form-field><br><br>
@@ -132,7 +132,7 @@
           <mat-form-field>
             <mat-label>Start value</mat-label>
             <mat-select #firstSelects placeholder="start value" [(ngModel)]='prviSelekt' name="hrenks">
-              <mat-option *ngFor="let a of parsedJson" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,canvasSelect.value,a.Valuta)" [(value)]="a.Srednji">
+              <mat-option *ngFor="let a of parsedJson" (click)="firstSelectValues(a.Jedinica, a.Valuta)" (click)="getAllStatistics(7,canvasInterval,a.Valuta)" [(value)]="a.Srednji">
                 {{a.SelectOption}}
               </mat-option>
             </mat-select>
@@ -256,6 +256,87 @@
       </div>
     </div>
     <div class="col-sm-12 col-md-12 col-lg-4" id="weatherImage">
+    </div>
+  </div>
+  <a (click)="weatherHistoryFlag()" id="registerSpan" *ngIf="(weatherHistory == true)"><span id="registerSpan">Hide search history!</span></a>
+  <a (click)="getWeatherHistory()" (click)="weatherHistoryFlag()" id="registerSpan" *ngIf="(weatherHistory == false)"><span id="registerSpan">Show search history!</span></a>
+  <div class="row" [hidden]="(weatherHistory == false)" id="debtorRow">
+    <div class="col-md-12">
+      <h6>Weather search history</h6>
+      <mat-form-field>
+        <mat-label>Filter</mat-label>
+        <input matInput (keyup)="applyWeatherHistoryFilter($event)" placeholder="Ex. Zagreb" #input id="event">
+      </mat-form-field>
+      <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="dataSourceWeatherHistory" matSort #TableWeatherHistorySort="matSort">
+          <ng-container matColumnDef="query">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Query </th>
+            <td mat-cell *matCellDef="let row"> {{row.query}} </td>
+          </ng-container>
+          <ng-container matColumnDef="observationTime">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Obs. time </th>
+            <td mat-cell *matCellDef="let row"> {{row.observationTime}} </td>
+          </ng-container>
+          <ng-container matColumnDef="temperature">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Temp </th>
+            <td mat-cell *matCellDef="let row"> {{row.temperature}}&#8451; </td>
+          </ng-container>
+          <ng-container matColumnDef="windSpeed">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header style="width: 5%;"> Wind speed </th>
+            <td mat-cell *matCellDef="let row" style="width: 5%;"> {{row.windSpeed}} </td>
+          </ng-container>
+          <ng-container matColumnDef="windDirection">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Wind dir. </th>
+            <td mat-cell *matCellDef="let row"> {{row.windDirection}} </td>
+          </ng-container>
+          <ng-container matColumnDef="pressure">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Pressure </th>
+            <td mat-cell *matCellDef="let row"> {{row.pressure}} </td>
+          </ng-container>
+          <ng-container matColumnDef="precipitation">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Precip. </th>
+            <td mat-cell *matCellDef="let row"> {{row.precipitation}} </td>
+          </ng-container>
+          <ng-container matColumnDef="humidity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Humidity </th>
+            <td mat-cell *matCellDef="let row"> {{row.humidity}} </td>
+          </ng-container>
+          <ng-container matColumnDef="cloudcover">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Clouds </th>
+            <td mat-cell *matCellDef="let row"> {{row.cloudcover}} </td>
+          </ng-container>
+          <ng-container matColumnDef="feelsLike">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Feels like </th>
+            <td mat-cell *matCellDef="let row"> {{row.feelsLike}}&#8451; </td>
+          </ng-container>
+          <ng-container matColumnDef="uvIndex">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> uvIndex </th>
+            <td mat-cell *matCellDef="let row"> {{row.uvIndex}} </td>
+          </ng-container>
+          <ng-container matColumnDef="visibility">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Visibility </th>
+            <td mat-cell *matCellDef="let row"> {{row.visibility}} </td>
+          </ng-container>
+          <ng-container matColumnDef="isDay">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> isDay </th>
+            <td mat-cell *matCellDef="let row"> {{row.isDay}} </td>
+          </ng-container>
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let row"> {{row.date}} </td>
+          </ng-container>
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Description </th>
+            <td mat-cell *matCellDef="let row"> {{row.description}} </td>
+          </ng-container>
+          <tr mat-header-row *matHeaderRowDef="displayedWeatherHistoryColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedWeatherHistoryColumns;"></tr>
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
+        </table>
+        <mat-paginator #TableWeatherHistoryPaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+      </div>
     </div>
   </div>
   <br>
@@ -610,7 +691,7 @@
             <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
           </tr>
         </table>
-        <mat-paginator #TableDebtorsSort="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+        <mat-paginator #TableDebtorsPaginator="matPaginator" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
       </div>
     </div>
 

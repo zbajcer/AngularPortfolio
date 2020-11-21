@@ -46,6 +46,11 @@ export class JsonServiceService {
     .pipe(map((responseWeather: any) => responseWeather));
   }
 
+  public getWeatherSearchHistory(): Observable<any> {
+    return this.http.get('http://localhost:8080/weatherHistory')
+      .pipe(map((weatherHistory: any) => weatherHistory));
+  }
+
   public getEarthquake(): Observable<any> {
     return this.http.get('http://localhost:8080/earthquake')
       .pipe(map((quake: any) => quake));

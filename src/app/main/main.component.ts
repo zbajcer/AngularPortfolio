@@ -32,7 +32,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatepickerModule, MatDateRangePicker } from '@angular/material/datepicker';
 import { DatePipe } from '@angular/common';
 
 
@@ -73,6 +73,24 @@ export interface XOplayerScores {
   score: string;
 }
 
+export interface WeatherHistory {
+  query: string;
+  observationTime: string;
+  temperature: string;
+  windSpeed: string;
+  windDirection: string;
+  pressure: string;
+  precipitation: string;
+  humidity: string;
+  cloudcover: string;
+  feelsLike: string;
+  uvIndex: string;
+  visibility: string;
+  isDay: string;
+  date: string;
+  description: string;
+}
+
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
     const invalidCtrl = !!(control && control.invalid && control.parent.dirty);
@@ -106,6 +124,10 @@ export class MainComponent implements OnInit {
   displayedXOplayerStats: string[] = ['player', 'score'];
   xodataSource: MatTableDataSource<XOplayerScores>;
 
+  displayedWeatherHistoryColumns: string[] =[  'query', 'observationTime', 'temperature','windSpeed','windDirection','pressure','precipitation','humidity','cloudcover',
+    'feelsLike','uvIndex', 'visibility','isDay','date','description'];
+  dataSourceWeatherHistory: MatTableDataSource<WeatherHistory>;
+
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
@@ -118,7 +140,10 @@ export class MainComponent implements OnInit {
   @ViewChild('TableDebtorsPaginator', { static: true }) tableDebtorsPaginator: MatPaginator;
   @ViewChild('TableDebtorsSort', { static: true }) tableDebtorsSort: MatSort;
 
-  @ViewChild('TableXOpaginator', { static: true}) tableXOpaginator: MatPaginator;
+  @ViewChild('TableXOpaginator', { static: true }) tableXOpaginator: MatPaginator;
+
+  @ViewChild('TableWeatherHistoryPaginator', { static: true }) tableWeatherHistoryPaginator: MatPaginator;
+  @ViewChild('TableWeatherHistorySort', { static: true }) tableWeatherHistorySort: MatSort;
 
   canvasInterval: number = 7;
   searchTitle: string = null;
@@ -169,8 +194,8 @@ export class MainComponent implements OnInit {
     });
   }
 
-  ngOnInit() {
-    this.sendDateToService(this.dt);
+  ngOnInit() { 
+    this.sendDateToService(this.dt, true);
     this.getConverterData();
     this.weatherCity("Zagreb");
     this.getEarthquakeData();
@@ -178,12 +203,17 @@ export class MainComponent implements OnInit {
     this.createOpenLayersMap();
     this.updateXOTable('iks','oks','looser');
     //this.bookshelfAuth('terminator', 'terminator');
-    //this.bookshelfAuth('zbajcer','opensesame');
+    this.bookshelfAuth('zbajcer','opensesame');
   }
 
   //sending date from UI to JsonService
-  sendDateToService(value: string) {
-    this.data.sendDate(this.datePipe.transform(value, 'yyyy-MM-dd'));
+  substrDate: string;
+  sendDateToService(value: string, flag: boolean) {
+    if(flag == true){
+      this.data.sendDate(value);
+    }else {
+      this.data.sendDate(value.substring(6,10)+"-"+value.substring(3,5)+"-"+value.substring(0,2));
+    }
   }
 
   //============================================================================== N A V B A R
@@ -248,12 +278,6 @@ export class MainComponent implements OnInit {
     }
     this.prviSelekt = this.startSwaps;
     this.drugiSelekt = this.endSwaps;
-    /*
-      this.crForm = this.fb.group({
-        crControl: [this.startSwap],
-        crEndControl: [this.endSwap]
-      })
-      */
     this.calculation(secondOption, firstOption, amount);
     this.firstSelectValues(this.jedinicaFirst, this.valutaStart);
     this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
@@ -279,32 +303,6 @@ export class MainComponent implements OnInit {
 
   postRequest() {
     this.data.postStartValue(this.valutaStart);
-  }
-
-  startSwap: any;
-  endSwap: any;
-  temporary: any;
-  swapOptions(firstOption: any, secondOption: any, amount: any) {
-    for (let i = 0; i < this.parsedJson.length; i++) {
-      if (firstOption == this.parsedJson[i].Srednji) {
-        this.endSwap = this.parsedJson[i].Srednji;
-        this.valutaEndView = this.parsedJson[i].Valuta;
-        this.jedinicaSecond = this.parsedJson[i].Jedinica;
-      }
-      if (secondOption == this.parsedJson[i].Srednji) {
-        this.startSwap = this.parsedJson[i].Srednji;
-        this.valutaStart = this.parsedJson[i].Valuta;
-        this.jedinicaFirst = this.parsedJson[i].Jedinica;
-      }
-    }
-    this.crForm = this.fb.group({
-      crControl: [this.startSwap],
-      crEndControl: [this.endSwap]
-    })
-
-    this.calculation(this.startSwap, this.endSwap, amount);
-    this.firstSelectValues(this.jedinicaFirst, this.valutaStart);
-    this.secondSelectValues(this.jedinicaSecond, this.valutaEnd);
   }
 
   jedinicaFirst = 1;
@@ -475,6 +473,7 @@ export class MainComponent implements OnInit {
   weatherCity(city: any) {
     this.data.getWeatherResponse(city).subscribe((data: any) => {
       if (data != null) {
+        this.updateWeatherHistoryTable();
         this.weatherFailMessage = '';
         this.parseWeather = JSON.parse(JSON.stringify(data));
         this.parseWeather.map((item: any) => {
@@ -509,6 +508,60 @@ export class MainComponent implements OnInit {
         });
       }
     })
+  }
+  weatherHistory: boolean = false;
+  weatherHistoryFlag(){
+    if(this.weatherHistory == true){
+      this.weatherHistory = false;
+    }
+    else{
+      this.updateWeatherHistoryTable();
+      this.weatherHistory = true;
+    }
+  }
+  getWeatherHistory(): Observable<WeatherHistory[]> {
+    return this.data.getWeatherSearchHistory().pipe(
+      map( data => {
+        return data.map(item => {
+          return {
+            query: item.query,
+            observationTime: item.observationTime,
+            temperature: item.temperature,
+            windSpeed: item.windSpeed,
+            windDirection: item.windDirection,
+            pressure: item.pressure,
+            precipitation: item.precipitation,
+            humidity: item.humidity,
+            cloudcover: item.cloudcover,
+            feelsLike: item.feelsLike,
+            uvIndex: item.uvIndex,
+            visibility: item.visibility,
+            isDay: item.isDay,
+            date: item.date,
+            description: item.description
+          }
+        })
+      })
+    )
+  }
+
+  updateWeatherHistoryTable() {
+    this.getWeatherHistory().subscribe(
+      history => {
+        this.dataSourceWeatherHistory = new MatTableDataSource(history);
+        this.dataSourceWeatherHistory.paginator = this.tableWeatherHistoryPaginator;
+        this.dataSourceWeatherHistory.sort = this.tableWeatherHistorySort;
+      }
+    )
+  }
+
+  applyWeatherHistoryFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSourceWeatherHistory.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSourceWeatherHistory.paginator) {
+      this.dataSourceWeatherHistory.paginator.firstPage();
+    }
   }
 
   getBase64ImageFromURL(url: string) {
