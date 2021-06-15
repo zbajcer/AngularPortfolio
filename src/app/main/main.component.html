@@ -62,7 +62,7 @@
       <br>
       <form [formGroup]="myForm">
         <mat-form-field>
-          <input matInput type="password" placeholder="password" formControlName="firstName" required #bioPsw maxlength="50">
+          <input matInput type="password" placeholder="password" formControlName="firstName" required #bioPsw maxlength="50" id="pswFieldBiography">
         </mat-form-field>
       </form><span>{{bioSubmitMessage}}</span>
       <input type="submit" name="btnBio" id="selectBio" *ngIf="(approval != true)" class="form-control" (click)="PasswordAutorisation(bioPsw.value)" value="Open biography">
@@ -364,6 +364,30 @@
     <div class="col-sm-12 col-lg-6" id="quake">
       <div id="hotel_map"></div>
     </div>
+  </div>
+</div>
+<div class="container">
+  <div class="row">
+    
+
+    <div class="col-sm-12 col-lg-6">
+      <form>
+      <mat-form-field>
+        <mat-label>Alert level</mat-label>
+        <mat-select #alertSelect placeholder="alert" name="minAlert" [(ngModel)]='ngAlertLevel' name="alertColor">
+          <mat-option *ngFor="let alert of alertLevel" (click)='changeAlertLevel(alert.alert)' [(value)]="alert.alert">
+            {{alert.alert}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+    </div>
+    <div class="col-sm-12 col-lg-6" id="quakeColorsExplained">
+
+    </div>
+
+
   </div>
 </div>
 <hr>

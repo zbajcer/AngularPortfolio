@@ -595,6 +595,38 @@ export class MainComponent implements OnInit {
   }
   //============================================================================== W E A T H E R
   //==============================================================================  E A R T H Q U A K E
+  //open layers map wrong position on loading -> solution: resize browser
+
+  lat = 45.815010;
+  lng = 15.951919;
+  parseQuake: any;
+  parsePlace: any = [];
+  quakePlace: any = [];
+  alertLevel: any = [{alert:"any"},{alert:"blue"},{alert:"green"},{alert:"orange"},{alert:"red"}];
+  ngAlertLevel: any = 'any';
+  getEarthquakeData() {
+    this.data.getEarthquake().subscribe((data: any) => {
+      this.parseQuake = JSON.parse(JSON.stringify(data));
+      this.parseQuake.map((place: any) =>
+        this.quakePlace.push(place));
+      })
+  }
+
+
+  changeAlertLevel(value: any){
+    if(value != 'any'){
+    this.ngAlertLevel = value;
+    this.quakePlace.splice(0, this.quakePlace.length)
+    this.parseQuake.map((place:any) => {
+      if(place.alert == this.ngAlertLevel){
+        this.quakePlace.push(place)
+      }
+    })
+    } else {
+      this.quakePlace.splice(0, this.quakePlace.length)
+      this.getEarthquakeData()
+    }
+  }
 
   setRadiusValue(zoom: any){
     if(zoom <= 3){
@@ -709,18 +741,7 @@ export class MainComponent implements OnInit {
     this.map.addLayer(layer);
   }
 
-  lat = 46.164059;
-  lng = 15.869980;
-  parseQuake: any;
-  parsePlace: any = [];
-  quakePlace: any = [];
-  getEarthquakeData() {
-    this.data.getEarthquake().subscribe((data: any) => {
-      this.parseQuake = JSON.parse(JSON.stringify(data));
-      this.parseQuake.map((place: any) =>
-        this.quakePlace.push(place));
-    })
-  }
+  
   //==============================================================================  E A R T H Q U A K E
   //============================================================================== B O O K S H E L F
   bsApproval: String = 'false';
