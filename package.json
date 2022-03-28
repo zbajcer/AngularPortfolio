@@ -39,7 +39,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.8",
+    "@angular-devkit/build-angular": "^13.3.0",
     "@angular/cli": "~9.1.8",
     "@angular/compiler-cli": "~9.1.11",
     "@types/googlemaps": "^3.39.11",
@@ -49,12 +49,12 @@
     "codelyzer": "^5.1.2",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~4.2.1",
-    "karma": "~5.0.0",
+    "karma": "^6.3.17",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~2.1.0",
     "karma-jasmine": "~3.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
-    "parcel": "^1.12.4",
+    "parcel": "^2.4.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.3.0",
     "tslint": "~6.1.0",
