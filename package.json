@@ -24,7 +24,7 @@
     "@types/bingmaps": "0.0.1",
     "angular": "^1.8.0",
     "angular-maps": "^6.0.3",
-    "async": "^2.5.0",
+    "async": "^2.6.4",
     "bingmaps": "^2.0.3",
     "chart.js": "^2.9.4",
     "core-js": "^3.6.5",
